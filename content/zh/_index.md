@@ -3,9 +3,9 @@ title: Google Style Guides
 type: docs
 --- 
 
-# Google Style Guides
+# Go 风格指南
 
-[《Google Style Guides》](https://github.com/gocn/styleguide)采用 [Hugo](https://gohugo.io) 发布。欢迎大家通过 [issue](https://github.com/gocn/styleguide/issues) 提供建议，也可以通过 [pull requests](https://github.com/gocn/styleguide/pulls) 来共同参与贡献。
+[《Go 风格指南》](https://github.com/gocn/styleguide)采用 [Hugo](https://gohugo.io) 发布。欢迎大家通过 [issue](https://github.com/gocn/styleguide/issues) 提供建议，也可以通过 [pull requests](https://github.com/gocn/styleguide/pulls) 来共同参与贡献。
 
 贡献者（按昵称首字母排序）:
 
@@ -27,7 +27,9 @@ hugo server
 
 ## 目录
 
+1. 概览
+2. 风格指南
 
 ## 授权
 
-The articles in 《Google Style Guides》 are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+The articles in 《Go 风格指南》 are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).

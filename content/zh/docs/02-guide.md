@@ -1,110 +1,110 @@
-# Go Style Guide
+# Go 风格指南
 
-## Style principles
+## 风格原则
 
-There are a few overarching principles that summarize how to think about writing readable Go code. The following are attributes of readable code, in order of importance:
+以下几条总体原则总结了如何编写可读的 Go 代码。以下为具有可读性的代码特征，按重要性排序：
 
-1. [Clarity](https://google.github.io/styleguide/go/guide#clarity): The code’s purpose and rationale is clear to the reader.
-2. [Simplicity](https://google.github.io/styleguide/go/guide#simplicity): The code accomplishes its goal in the simplest way possible.
-3. [Concision](https://google.github.io/styleguide/go/guide#concision): The code has a high signal-to-noise ratio.
-4. [Maintainability](https://google.github.io/styleguide/go/guide#maintainability): The code is written such that it can be easily maintained.
-5. [Consistency](https://google.github.io/styleguide/go/guide#consistency): The code is consistent with the broader Google codebase.
+1. [清晰](https://google.github.io/styleguide/go/guide#clarity)：代码的目的和理由对读者来说是清楚的。
+2. [简单](https://google.github.io/styleguide/go/guide#simplicity)：代码以最简洁的方式完成了它的目的。
+3. [简约](https://google.github.io/styleguide/go/guide#concision)：代码具有很高的信噪比。
+4. [可维护](https://google.github.io/styleguide/go/guide#maintainability)：代码可以很容易地维护。
+5. [一致](https://google.github.io/styleguide/go/guide#consistency)：代码与更广泛的谷歌代码库一致。
 
-### Clarity
+### 清晰
 
-The core goal of readability is to produce code that is clear to the reader.
+可读性的核心目标是写出对读者来说很清晰的代码。
 
-Clarity is primarily achieved with effective naming, helpful commentary, and efficient code organization.
+清晰性主要是通过有效的命名、有用的注释和有效的代码组织来实现的。
 
-Clarity is to be viewed through the lens of the reader, not the author of the code. It is more important that code be easy to read than easy to write. Clarity in code has two distinct facets:
+清晰性要从读者的角度来看，而不是从代码的作者的角度来看，代码的易读性比易写性更重要。代码的清晰性有两个不同的方面：
 
-- [What is the code actually doing?](https://google.github.io/styleguide/go/guide#clarity-purpose)
-- [Why is the code doing what it does?](https://google.github.io/styleguide/go/guide#clarity-rationale)
+- [该代码实际上在做什么？](https://google.github.io/styleguide/go/guide#clarity-purpose)
+- [为什么代码会这么做？](https://google.github.io/styleguide/go/guide#clarity-rationale)
 
-#### What is the code actually doing?
+#### 该代码实际上在做什么
 
-Go is designed such that it should be relatively straightforward to see what the code is doing. In cases of uncertainty or where a reader may require prior knowledge in order to understand the code, it is worth investing time in order to make the code’s purpose clearer for future readers. For example, it may help to:
+Go 的设计是可以比较直接地看到代码在做什么。在比较未知的或者读者可能需要先验知识才能理解代码的情况下，我们值得投入时间以使代码的目的对未来的读者更加明确。例如，它可能有助于：
 
-- Use more descriptive variable names
-- Add additional commentary
-- Break up the code with whitespace and comments
-- Refactor the code into separate functions/methods to make it more modular
+- 使用更具描述性的变量名称
+- 添加额外的评论
+- 使用空白与注释来划分代码
+- 将代码重构为独立的函数/方法，使其更加模块化
 
-There is no one-size-fits-all approach here, but it is important to prioritize clarity when developing Go code.
+这里没有一个放之四海而皆准的方法，但在开发 Go 代码时，优先考虑清晰性是很重要的。
 
-#### Why is the code doing what it does?
+#### 为什么代码会这么做
 
-The code’s rationale is often sufficiently communicated by the names of variables, functions, methods, or packages. Where it is not, it is important to add commentary. The “Why?” is especially important when the code contains nuances that a reader may not be familiar with, such as:
+代码的基本原理通常由变量、函数、方法或包的名称充分传达。如果不是这样，添加注释是很重要的。当代码中包含读者可能不熟悉的细节时，“为什么？”就显得尤为重要，例如：
 
-- A nuance in the language, e.g., a closure will be capturing a loop variable, but the closure is many lines away
-- A nuance of the business logic, e.g., an access control check that needs to distinguish between the actual user and someone impersonating a user
+- 编程语言中的细微差别，例如，一个闭包将捕获一个循环变量，但闭包在许多行之外
+- 业务逻辑的细微差别，例如，需要区分实际用户和虚假用户的访问控制检查
 
-An API might require care to use correctly. For example, a piece of code may be intricate and difficult to follow for performance reasons, or a complex sequence of mathematical operations may use type conversions in an unexpected way. In these cases and many more, it is important that accompanying commentary and documentation explain these aspects so that future maintainers don’t make a mistake and so that readers can understand the code without needing to reverse-engineer it.
+一个 API 可能需要小心翼翼才能正确使用。例如，由于性能原因，一段代码可能错综复杂，难以理解，或者一连串复杂的数学运算可能以一种意想不到的方式使用类型转换。在这些以及更多的情况下，附带的注释和文档对这些方面进行解释是很重要的，这样未来的维护者就不会犯错，读者也可以理解代码而不需要进行逆向工程。
 
-It is also important to be aware that some attempts to provide clarity (such as adding extra commentary) can actually obscure the code’s purpose by adding clutter, restating what the code already says, contradicting the code, or adding maintenance burden to keep the comments up-to-date. Allow the code to speak for itself (e.g., by making the symbol names themselves self-describing) rather than adding redundant comments. It is often better for comments to explain why something is done, not what the code is doing.
+同样重要的是，我们要意识到，一些基于清晰性考虑的尝试（如添加额外的注释）实际上会通过增加杂乱无章的内容、重述代码已经说过的内容、与代码相矛盾或增加维护负担以保持注释的最新性来掩盖代码的目的。让代码自己说话（例如，通过代码中的名称本身进行描述），而不是添加多余的注释。通常情况下，注释最好是解释为什么要做某事，而不是解释代码在做什么。
 
-The Google codebase is largely uniform and consistent. It is often the case that code that stands out (e.g., by using an unfamiliar pattern) is doing so for a good reason, typically for performance. Maintaining this property is important to make it clear to readers where they should focus their attention when reading a new piece of code.
+谷歌的代码库基本上是统一和一致的。通常情况下，那些比较突兀的代码（例如，应用一个不熟悉的模式）是基于充分的理由，通常是为了性能。保持这种特性很重要，可以让读者在阅读一段新的代码时清楚地知道他们应该把注意力放在哪里。
 
-The standard library contains many examples of this principle in action. Among them:
+标准库中包含了许多这一原则发挥作用的例子。例如：
 
-- Maintainer comments in `package sort`.
-- Good [runnable examples in the same package](https://cs.opensource.google/go/go/+/refs/tags/go1.19.2:src/sort/example_search_test.go), which benefit both users (they [show up in godoc](https://pkg.go.dev/sort#pkg-examples)) and maintainers (they [run as part of tests](https://google.github.io/styleguide/go/decisions#examples)).
-- `strings.Cut` is only four lines of code, but they improve the [clarity and correctness of callsites](https://github.com/golang/go/issues/46336).
+- 在 `package sort` 中的维护者注释
+- 好的[同一软件包中可运行的例子](https://cs.opensource.google/go/go/+/refs/tags/go1.19.2:src/sort/example_search_test.go)，这对用户（他们会[查看 godoc](https://pkg.go.dev/sort#pkg-examples)）和维护者（他们[作为测试的一部分运行](https://google.github.io/styleguide/go/decisions#examples)）都有利
+- `strings.Cut` 只有四行代码，但它们提高了[callsites 的清晰性和正确性](https://github.com/golang/go/issues/46336)
 
-### Simplicity
+### 简单
 
-Your Go code should be simple for those using, reading, and maintaining it.
+你的 Go 代码对于使用、阅读和维护它的人来说应该是简单的。
 
-Go code should be written in the simplest way that accomplishes its goals, both in terms of behavior and performance. Within the Google Go codebase, simple code:
+Go 代码应该以最简单的方式编写，在行为和性能方面都能实现其目标。在 Google Go 代码库中，简单的代码：
 
-- Is easy to read from top to bottom
-- Does not assume that you already know what it is doing
-- Does not assume that you can memorize all of the preceding code
-- Does not have unnecessary levels of abstraction
-- Does not have names that call attention to something mundane
-- Makes the propagation of values and decisions clear to the reader
-- Has comments that explain why, not what, the code is doing to avoid future deviation
-- Has documentation that stands on its own
-- Has useful errors and useful test failures
-- May often be mutually exclusive with “clever” code
+- 从头至尾都易于阅读
+- 不预设你已经知道它在做什么
+- 不预设你能记住前面所有的代码
+- 不含非必要的抽象层次
+- 不含过于通用的命名
+- 让读者清楚地了解到传值与决定的传播情况
+- 有注释，解释为什么，而不是代码正在做什么，以避免未来的歧义
+- 有独立的文档
+- 包含有效的错误与失败用例测试
+- 往往不是看起来“聪明”的代码
 
-Tradeoffs can arise between code simplicity and API usage simplicity. For example, it may be worthwhile to have the code be more complex so that the end user of the API may more easily call the API correctly. In contrast, it may also be worthwhile to leave a bit of extra work to the end user of the API so that the code remains simple and easy to understand.
+在代码的简单性和 API 使用的简单性之间可能会需要权衡。例如，让代码更复杂可能是值得的，这样 API 的终端用户可以更容易地正确调用 API。相反，把一些额外的工作留给 API 的终端用户也是值得的，这样代码就会保持简单和容易理解。
 
-When code needs complexity, the complexity should be added deliberately. This is typically necessary if additional performance is required or where there are multiple disparate customers of a particular library or service. Complexity may be justified, but it should come with accompanying documentation so that clients and future maintainers are able to understand and navigate the complexity. This should be supplemented with tests and examples that demonstrate its correct usage, especially if there is both a “simple” and a “complex” way to use the code.
+当代码需要复杂性时，应该有意地增加复杂性。如果需要额外的性能，或者一个特定的库或服务有多个不同的客户，这通常是必要的。复杂性可能是合理的，但它应该有相应的文档，以便客户和未来的维护者能够理解和驾驭这种复杂性。这应该用测试和例子来补充，以证明其正确的用法，特别是如果同时有一个“简单”和“复杂”的方法来使用代码。
 
-This principle does not imply that complex code cannot or should not be written in Go or that Go code is not allowed to be complex. We strive for a codebase that avoids unnecessary complexity so that when complexity does appear, it indicates that the code in question requires care to understand and maintain. Ideally, there should be accompanying commentary that explains the rationale and identifies the care that should be taken. This often arises when optimizing code for performance; doing so often requires a more complex approach, like preallocating a buffer and reusing it throughout a goroutine lifetime. When a maintainer sees this, it should be a clue that the code in question is performance-critical, and that should influence the care that is taken when making future changes. If employed unnecessarily, on the other hand, this complexity is a burden on those who need to read or change the code in the future.
+这一原则并不意味着复杂的代码不能或不应该用 Go 编写，也不意味着 Go 代码不允许复杂。我们努力使代码库避免不必要的复杂性，因此当复杂性出现时，它表明有关的代码需要仔细理解和维护。理想情况下，应该有相应的注释来解释其中的道理，并指出应该注意的地方。在优化代码以提高性能时，经常会出现这种情况；这样做往往需要更复杂的方法，比如预先分配一个缓冲区并在整个 goroutine 生命周期内重复使用它。当维护者看到这种情况时，应该是一个线索，说明相关的代码是基于性能的关键考虑，这应该影响到未来修改时的谨慎。另一方面，如果不必要地使用，这种复杂性会给那些需要在未来阅读或修改代码的人带来负担。
 
-If code turns out to be very complex when its purpose should be simple, this is often a signal to revisit the implementation to see if there is a simpler way to accomplish the same thing.
+如果代码非常复杂，但其目的应该是简单的，这往往是一个我们可以重新审视代码实现的信号，看看是否有更简单的方法来完成同样的事情。
 
-#### Least mechanism
+#### 最小化机制
 
-Where there are several ways to express the same idea, prefer the one that uses the most standard tools. Sophisticated machinery often exists, but should not be employed without reason. It is easy to add complexity to code as needed, whereas it is much harder to remove existing complexity after it has been found to be unnecessary.
+如果有几种方法来表达同一个想法，最好选择使用最标准工具的方法。复杂的机制经常存在，但不应该无缘无故地使用。根据需要增加代码的复杂性是很容易的，而在发现没有必要的情况下删除现有的复杂性则要难得多。
 
-1. Aim to use a core language construct (for example a channel, slice, map, loop, or struct) when sufficient for your use case.
-2. If there isn’t one, look for a tool within the standard library (like an HTTP client or a template engine).
-3. Finally, consider whether there is a core library in the Google codebase that is sufficient before introducing a new dependency or creating your own.
+1. 当足以满足你的使用情况时，争取使用一个核心语言结构（例如通道、切片、地图、循环或结构）
+2. 如果没有，就在标准库中寻找一个工具（如 HTTP 客户端或模板引擎）
+3. 最后，在引入新的依赖或创建自己的依赖之前，考虑谷歌代码库中是否有一个能够满足的核心库
 
-As an example, consider production code that contains a flag bound to a variable with a default value which must be overridden in tests. Unless intending to test the program’s command-line interface itself (say, with `os/exec`), it is simpler and therefore preferable to override the bound value directly rather than by using flag.Set.
+例如，考虑生产代码包含一个绑定在变量上的标志，它的默认值必须在测试中被覆盖。除非打算测试程序的命令行界面本身（例如，用`os/exec`），否则直接覆盖绑定的值比使用 `flag.Set` 更简单，因此更可取。
 
-Similarly, if a piece of code requires a set membership check, a boolean-valued map (e.g., `map[string]bool`) often suffices. Libraries that provide set-like types and functionality should only be used if more complicated operations are required that are impossible or overly complicated with a map.
+同样，如果一段代码需要检查集合的成员资格，一个布尔值的映射（例如，`map[string]bool`）通常就足够了。只有在需要更复杂的操作，不能使用 map 或过于复杂时，才应使用提供类似集合类型和功能的库。
 
-### Concision
+### 简洁
 
-Concise Go code has a high signal-to-noise ratio. It is easy to discern the relevant details, and the naming and structure guide the reader through these details.
+简洁的 Go 代码具有很高的信噪比。它很容易分辨出相关的细节，而命名和结构则引导读者了解这些细节。
 
-There are many things that can get in the way of surfacing the most salient details at any given time:
+而有很多东西会常常会阻碍这些最突出的细节：
 
-- Repetitive code
-- Extraneous syntax
-- [Opaque names](https://google.github.io/styleguide/go/guide#naming)
-- Unnecessary abstraction
-- Whitespace
+- 重复代码
+- 外来的语法
+- [含义不明的名称](https://google.github.io/styleguide/go/guide#naming)
+- 不必要的抽象
+- 空白
 
-Repetitive code especially obscures the differences between each nearly-identical section, and requires a reader to visually compare similar lines of code to find the changes. [Table-driven testing](https://github.com/golang/go/wiki/TableDrivenTests) is a good example of a mechanism that can concisely factor out the common code from the important details of each repetition, but the choice of which pieces to include in the table will have an impact on how easy the table is to understand.
+重复代码尤其容易掩盖每个相似代码之间的差异，需要读者直观地比较相似的代码行来发现变化。[表驱动测试](https://github.com/golang/go/wiki/TableDrivenTests)是一个很好的例子，这种机制可以简明地从每个重复的重要细节中找出共同的代码，但是选择哪些部分包括在表中，会对表格的易懂程度产生影响。
 
-When considering multiple ways to structure code, it is worth considering which way makes important details the most apparent.
+在考虑多种结构代码的方式时，值得考虑哪种方式能使重要的细节最显著。
 
-Understanding and using common code constructions and idioms are also important for maintaining a high signal-to-noise ratio. For example, the following code block is very common in [error handling](https://go.dev/blog/errors-are-values), and the reader can quickly understand the purpose of this block.
+理解和使用常见的代码结构和规范对于保持高信噪比也很重要。例如，下面的代码块在[错误处理](https://go.dev/blog/errors-are-values)中非常常见，读者可以很快理解这个代码块的目的。
 
 ```go
 // Good:
@@ -113,7 +113,7 @@ if err := doSomething(); err != nil {
 }
 ```
 
-If code looks very similar to this but is subtly different, a reader may not notice the change. In cases like this, it is worth intentionally [“boosting”](https://google.github.io/styleguide/go/best-practices#signal-boost) the signal of the error check by adding a comment to call attention to it.
+如果代码看起来非常相似但却有细微的不同，读者可能不会注意到这种变化。在这样的情况下，值得故意[“提高”](https://google.github.io/styleguide/go/best-practices#signal-boost)错误检查的信号，增加一个注释以引起关注。
 
 ```go
 // Good:
@@ -122,25 +122,25 @@ if err := doSomething(); err == nil { // if NO error
 }
 ```
 
-### Maintainability
+### 可维护性
 
-Code is edited many more times than it is written. Readable code not only makes sense to a reader who is trying to understand how it works, but also to the programmer who needs to change it. Clarity is key.
+代码被编辑的次数比它写它的次数多得多。可读的代码不仅对试图了解其工作原理的读者有意义，而且对需要改写它的程序员也有意义，清晰性很关键。
 
-Maintainable code:
+可维护的代码：
 
-- Is easy for a future programmer to modify correctly
-- Has APIs that are structured so that they can grow gracefully
-- Is clear about the assumptions that it makes and chooses abstractions that map to the structure of the problem, not to the structure of the code
-- Avoids unnecessary coupling and doesn’t include features that are not used
-- Has a comprehensive test suite to ensure promised behaviors are maintained and important logic is correct, and the tests provide clear, actionable diagnostics in case of failure
+- 容易让未来的程序员正确进行修改
+- 拥有结构化的 API，使其能够优雅地增加
+- 清楚代码预设条件，并选择映射到问题结构而不是代码结构的抽象
+- 避免不必要的耦合，不包括不使用的功能
+- 有一个全面的测试套件，以确保预期行为可控、重要逻辑正确，并且测试在失败的情况下提供清晰、可操作的诊断
 
-When using abstractions like interfaces and types which by definition remove information from the context in which they are used, it is important to ensure that they provide sufficient benefit. Editors and IDEs can connect directly to a method definition and show the corresponding documentation when a concrete type is used, but can only refer to an interface definition otherwise. Interfaces are a powerful tool, but come with a cost, since the maintainer may need to understand the specifics of the underlying implementation in order to correctly use the interface, which must be explained within the interface documentation or at the call-site.
+当使用像接口和类型这样的抽象时，根据定义，它们会从使用的上下文中移除信息，因此必须确保它们提供足够的好处。当使用具体类型时，编辑器和 IDE 可以直接连接到方法定义并显示相应的文档，但在其他情况下只能参考接口定义。接口是一个强大的工具，但也是有代价的，因为维护者可能需要了解底层实现的具体细节才能正确使用接口，这必须在接口文档中或在调用现场进行解释。
 
-Maintainable code also avoids hiding important details in places that are easy to overlook. For example, in each of the following lines of code, the presence or lack of a single character is critical to understand the line:
+可维护的代码还可以避免在容易忽视的地方隐藏重要的细节。例如，在下面的每一行代码中，是否有 `:` 字符对于理解这一行至关重要。
 
 ```go
 // Bad:
-// The use of = instead of := can change this line completely.
+// 使用 = 而不是 := 可以完全改变这一行的含义
 if user, err = db.UserByID(userID); err != nil {
     // ...
 }
@@ -148,11 +148,11 @@ if user, err = db.UserByID(userID); err != nil {
 
 ```go
 // Bad:
-// The ! in the middle of this line is very easy to miss.
+// 这行中间的 ！ 很容易错过
 leap := (year%4 == 0) && (!(year%100 == 0) || (year%400 == 0))
 ```
 
-Neither of these are incorrect, but both could be written in a more explicit fashion, or could have an accompanying comment that calls attention to the important behavior:
+这两种写法不能说错误，但都可以写得更明确，或者可以有一个附带的评论，提醒注意重要的行为。
 
 ```go
 // Good:
@@ -165,8 +165,8 @@ user = u
 
 ```go
 // Good:
-// Gregorian leap years aren't just year%4 == 0.
-// See https://en.wikipedia.org/wiki/Leap_year#Algorithm.
+// 公历闰年不仅仅是 year%4 == 0
+// 查看 https://en.wikipedia.org/wiki/Leap_year#Algorithm.
 var (
     leap4   = year%4 == 0
     leap100 = year%100 == 0
@@ -175,73 +175,73 @@ var (
 leap := leap4 && (!leap100 || leap400)
 ```
 
-In the same way, a helper function that hides critical logic or an important edge-case could make it easy for a future change to fail to account for it properly.
+同样地，一个隐藏了关键逻辑或重要边界情况的辅助函数可能会使未来的变化很容易无法正确地被解释。
 
-Predictable names are another feature of maintainable code. A user of a package or a maintainer of a piece of code should be able to predict the name of a variable, method, or function in a given context. Function parameters and receiver names for identical concepts should typically share the same name, both to keep documentation understandable and to facilitate refactoring code with minimal overhead.
+易联想的名字是可维护代码的另一个特点。一个包的用户或一段代码的维护者应该能够联想到一个变量、方法或函数在特定情况下的名称。相同概念的函数参数和接收器名称通常应该共享相同的名称，这既是为了保持文档的可理解性，也是为了方便以最小的开销重构代码。
 
-Maintainable code minimizes its dependencies (both implicit and explicit). Depending on fewer packages means fewer lines of code that can affect behavior. Avoiding dependencies on internal or undocumented behavior makes code less likely to impose a maintenance burden when those behaviors change in the future.
+可维护的代码尽量减少其依赖性（包括隐性和显性）。对更少包的依赖意味着更少的代码行可以影响其行为。避免对内部或未记录的行为的依赖，使得代码在未来这些行为发生变化时，不太容易造成维护负担。
 
-When considering how to structure or write code, it is worth taking the time to think through ways in which the code may evolve over time. If a given approach is more conducive to easier and safer future changes, that is often a good trade-off, even if it means a slightly more complicated design.
+在考虑如何构造或编写代码时，值得花时间去思考代码可能随着时间的推移而演变的方式。如果一个给定的方法更有利于未来更容易和更安全的变化，这往往是一个很好的权衡，即使它意味着一个稍微复杂的设计。
 
-### Consistency
+### 一致
 
-Consistent code is code that looks, feels, and behaves like similar code throughout the broader codebase, within the context of a team or package, and even within a single file.
+一致性的代码是指在更广泛的代码库中，在一个团队或包的范围内，甚至在一个文件中，看起来、感觉和行为都是类似的代码。
 
-Consistency concerns do not override any of the principles above, but if a tie must be broken, it is often beneficial to break it in favor of consistency.
+一致性的问题并不凌驾于上述的任何原则之上，但如果必须有所取舍，那往往有利于一致性的实现。
 
-Consistency within a package is often the most immediately important level of consistency. It can be very jarring if the same problem is approached in multiple ways throughout a package, or if the same concept has many names within a file. However, even this should not override documented style principles or global consistency.
+一个包内的一致性通常是最直接重要的一致性水平。如果同一个问题在一个包里有多种处理方式，或者同一个概念在一个文件里有很多名字，那就会非常不优雅。然而，即使这样，也不应该凌驾于文件的风格原则或全局一致性之上。
 
-## Core guidelines
+## 核心准则
 
-These guidelines collect the most important aspects of Go style that all Go code is expected to follow. We expect that these principles be learned and followed by the time readability is granted. These are not expected to change frequently, and new additions will have to clear a high bar.
+这些准则收集了所有 Go 代码都应遵循的 Go 风格的最重要方面。我们希望这些原则在你被保障可读性的时候就已经学会并遵循了。这些不会经常改变，新增加内容也有较高准入门槛。
 
-The guidelines below expand on the recommendations in [Effective Go](https://go.dev/doc/effective_go), which provide a common baseline for Go code across the entire community.
+下面的准则是对 [Effective Go](https://go.dev/doc/effective_go) 中建议的扩展，它为整个社区的 Go 代码提供了一个共同的基准线。
 
-### Formatting
+### 格式化
 
-All Go source files must conform to the format outputted by the gofmt tool. This format is enforced by a presubmit check in the Google codebase. [Generated code](https://docs.bazel.build/versions/main/be/general.html#genrule) should generally also be formatted (e.g., by using `format.Source`), as it is also browsable in Code Search.
+所有 Go 源文件必须符合 gofmt 工具所输出的格式。这个格式是由 Google 代码库中的预提交检查强制执行的。[生成的代码](https://docs.bazel.build/versions/main/be/general.html#genrule)通常也应该被格式化（例如，通过使用`format.Source`），因为它也可以在代码搜索中浏览。
 
-### MixedCaps
+### 大小写混合
 
-Go source code uses `MixedCaps` or `mixedCaps` (camel case) rather than underscores (snake case) when writing multi-word names.
+Go 源代码在编写包含多个字的名称时使用`MixedCaps`或`mixedCaps`（驼峰大写）而不是下划线（蛇形大写）。
 
-This applies even when it breaks conventions in other languages. For example, a constant is `MaxLength` (not `MAX_LENGTH`) if exported and `maxLength` (not `max_length`) if unexported.
+即使在其他语言中打破惯例，这也适用。例如，一个常量如果被导出，则为`MaxLength`（而不是`MAX_LENGTH`），如果未被导出，则为`maxLength`（而不是`max_length`）。
 
-Local variables are considered [unexported](https://go.dev/ref/spec#Exported_identifiers) for the purpose of choosing the initial capitalization.
+基于初始化大小写的考量，本地变量被认为是 [不可导出的](https://go.dev/ref/spec#Exported_identifiers)。
 
-### Line length
+### 行长度
 
-There is no fixed line length for Go source code. If a line feels too long, it should be refactored instead of broken. If it is already as short as it is practical for it to be, the line should be allowed to remain long.
+Go 源代码没有固定的行长度。如果觉得某一行太长，就应该对其进行重构而不是破坏。如果它已经很短了，那么就应该允许它继续增加。
 
-Do not split a line:
+不要在以下情况进行分行：
 
-- Before an [indentation change](https://google.github.io/styleguide/go/decisions#indentation-confusion) (e.g., function declaration, conditional)
-- To make a long string (e.g., a URL) fit into multiple shorter lines
+- 在[缩进变化](https://google.github.io/styleguide/go/decisions#indentation-confusion)之前(例如，函数声明、条件)
+- 要使一个长的字符串（例如，一个 URL）适合于多个较短的行
 
-### Naming
+### 命名
 
-Naming is more art than science. In Go, names tend to be somewhat shorter than in many other languages, but the same [general guidelines](https://testing.googleblog.com/2017/10/code-health-identifiernamingpostforworl.html) apply. Names should:
+命名是艺术而不是科学。在 Go 中，名字往往比许多其他语言的名字短一些，但同样的[一般准则](https://testing.googleblog.com/2017/10/code-health-identifiernamingpostforworl.html)也适用，名称应：
 
-- Not feel [repetitive](https://google.github.io/styleguide/go/decisions#repetition) when they are used
-- Take the context into consideration
-- Not repeat concepts that are already clear
+- 使用时不感到[重复](https://google.github.io/styleguide/go/decisions#repetition)
+- 将上下文考虑在内
+- 不重复已经明确的概念
 
-You can find more specific guidance on naming in [decisions](https://google.github.io/styleguide/go/decisions#naming).
+你可以在[决定](https://google.github.io/styleguide/go/decisions#naming)中找到关于命名的更具体的指导。
 
-### Local consistency
+### 本地化一致性
 
-Where the style guide has nothing to say about a particular point of style, authors are free to choose the style that they prefer, unless the code in close proximity (usually within the same file or package, but sometimes within a team or project directory) has taken a consistent stance on the issue.
+如果风格指南对某一特定的风格点没有说明，作者可以自由选择他们喜欢的风格，除非相近的代码（通常在同一个文件或包内，但有时在一个团队或项目目录内）对这个问题采取了一致的立场。
 
-Examples of **valid** local style considerations:
+**有效的**本地风格化考虑例子：
 
-- Use of `%s` or `%v` for formatted printing of errors
-- Usage of buffered channels in lieu of mutexes
+- 使用 `%s` or `%v` 来打印错误
+- 使用缓冲通道来代替 mutexes
 
-Examples of **invalid** local style considerations:
+**无效的**本地化风格化考虑例子：
 
-- Line length restrictions for code
-- Use of assertion-based testing libraries
+- 代码的行长限制
+- 使用基于断言的测试库
 
-If the local style disagrees with the style guide but the readability impact is limited to one file, it will generally be surfaced in a code review for which a consistent fix would be outside the scope of the CL in question. At that point, it is appropriate to file a bug to track the fix.
+如果本地化风格与风格指南不一致，但对可读性的影响仅限于一个文件，它通常会在代码审查中浮出水面，而一致的修复将超出有关 CL 的范围。在这一点上，提交一个 bug 来跟踪修复是合适的。
 
-If a change would worsen an existing style deviation, expose it in more API surfaces, expand the number of files in which the deviation is present, or introduce an actual bug, then local consistency is no longer a valid justification for violating the style guide for new code. In these cases, it is appropriate for the author to clean up the existing codebase in the same CL, perform a refactor in advance of the current CL, or find an alternative that at least does not make the local problem worse.
+如果一个改变会使现有的风格偏差变大，在更多的 API 表面暴露出来，扩大存在偏差的文件数量，或者引入一个实际的错误，那么局部一致性就不再是违反新代码风格指南的有效理由。在这些情况下，作者应该在同一 CL 中清理现有的代码库，在当前 CL 之前进行重构，或者找到一个至少不会使本地化问题恶化的替代方案。
