@@ -1,0 +1,45 @@
+# hugo server --themesDir ...
+
+baseURL: https://gocn.github.io/styleguide/
+title: Google Style Guides
+theme: hugo-book
+
+# language setting
+defaultContentLanguage: zh
+defaultContentLanguageInSubdir: true
+
+PygmentsCodeFences: true
+
+languages:
+    zh:
+        languageCode: zh
+        languageName: 中文
+        contentDir: content/zh
+        weight: 1
+
+    # en:
+    #   languageCode: en-US
+    #   languageName: English
+    #   contentDir: content/en
+    #   weight: 2
+
+# Book configuration
+disablePathToLower: true
+
+params:
+    Description: How To Code in Go
+
+    # show or hide table of contents for page
+    BookShowToC: true
+
+    # Set bundle to render side menu
+    # if not specified file structure and weights will be used
+    BookMenuBundle: /menu
+
+    # specify section of content to render as menu
+    # if bookMenuBundle is not set, 'docs' is value by default
+    BookSection: docs
+
+    # Enable "Edit this page" links for 'doc' page type.
+    # Disabled by default. Uncomment to enable.
+    BookEditURL: https://github.com/gocn/styleguide/edit/main/content/zh/
