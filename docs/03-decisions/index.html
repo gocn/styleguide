@@ -1,0 +1,1278 @@
+<!doctype html><html lang=zh dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Go 风格决策 # https://google.github.io/styleguide/go/decisions
+概述 | 指南 | 决策 | 最佳实践
+**注意：**本文是 Google Go 风格 系列文档的一部分。本文档是 规范性(normative) 但不是强制规范(canonical)，并且从属于Google 风格指南。请参阅概述获取更多详细信息。
+关于 # 本文包含旨在统一和为 Go 可读性导师给出的建议提供标准指导、解释和示例的风格决策。
+本文档并不详尽，且会随着时间的推移而增加。如果风格指南 与此处给出的建议相矛盾，风格指南优先，并且本文档应相应更新。
+参见 关于 获取 Go 风格的全套文档。
+以下部分已从样式决策移至指南的一部分：
+混合大写字母MixedCaps: 参见 https://google.github.io/styleguide/go/guide#mixed-caps 格式化Formatting: 参见 https://google.github.io/styleguide/go/guide#formatting 行长度Line Length: 参见 https://google.github.io/styleguide/go/guide#line-length 命名Naming # 有关命名的总体指导，请参阅核心风格指南 中的命名部分，以下部分对命名中的特定区域提供进一步的说明。
+下划线Underscores # Go 中的命名通常不应包含下划线。 这个原则有三个例外：
+仅由生成代码导入的包名称可能包含下划线。有关如何选择多词包名称的更多详细信息，请参阅包名称。 *_test.go 文件中的测试、基准和示例函数名称可能包含下划线。 与操作系统或 cgo 互操作的低级库可能会重用标识符，如 syscall 中所做的那样。在大多数代码库中，这预计是非常罕见的。 包名称Package names # Go 包名称应该简短并且只包含小写字母。由多个单词组成的包名称应全部小写。例如，包 tabwriter 不应该命名为 tabWriter、TabWriter 或 tab_writer。"><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content><meta property="og:description" content="Go 风格决策 # https://google.github.io/styleguide/go/decisions
+概述 | 指南 | 决策 | 最佳实践
+**注意：**本文是 Google Go 风格 系列文档的一部分。本文档是 规范性(normative) 但不是强制规范(canonical)，并且从属于Google 风格指南。请参阅概述获取更多详细信息。
+关于 # 本文包含旨在统一和为 Go 可读性导师给出的建议提供标准指导、解释和示例的风格决策。
+本文档并不详尽，且会随着时间的推移而增加。如果风格指南 与此处给出的建议相矛盾，风格指南优先，并且本文档应相应更新。
+参见 关于 获取 Go 风格的全套文档。
+以下部分已从样式决策移至指南的一部分：
+混合大写字母MixedCaps: 参见 https://google.github.io/styleguide/go/guide#mixed-caps 格式化Formatting: 参见 https://google.github.io/styleguide/go/guide#formatting 行长度Line Length: 参见 https://google.github.io/styleguide/go/guide#line-length 命名Naming # 有关命名的总体指导，请参阅核心风格指南 中的命名部分，以下部分对命名中的特定区域提供进一步的说明。
+下划线Underscores # Go 中的命名通常不应包含下划线。 这个原则有三个例外：
+仅由生成代码导入的包名称可能包含下划线。有关如何选择多词包名称的更多详细信息，请参阅包名称。 *_test.go 文件中的测试、基准和示例函数名称可能包含下划线。 与操作系统或 cgo 互操作的低级库可能会重用标识符，如 syscall 中所做的那样。在大多数代码库中，这预计是非常罕见的。 包名称Package names # Go 包名称应该简短并且只包含小写字母。由多个单词组成的包名称应全部小写。例如，包 tabwriter 不应该命名为 tabWriter、TabWriter 或 tab_writer。"><meta property="og:type" content="article"><meta property="og:url" content="https://gocn.github.io/styleguide/docs/03-decisions/"><meta property="article:section" content="docs"><title>03 Decisions | Google Style Guides</title><link rel=manifest href=/styleguide/manifest.json><link rel=icon href=/styleguide/favicon.png type=image/x-icon><link rel=stylesheet href=/styleguide/book.min.c58292d36b18b675680ab9baea2029204537b839ea72f258746ec0f32ce8d6c8.css integrity="sha256-xYKS02sYtnVoCrm66iApIEU3uDnqcvJYdG7A8yzo1sg=" crossorigin=anonymous><script defer src=/styleguide/flexsearch.min.js></script>
+<script defer src=/styleguide/zh.search.min.c5750a78421e7c1af4220284127809427e8a435f11e3616bf636c145c0e6e9ad.js integrity="sha256-xXUKeEIefBr0IgKEEngJQn6KQ18R42Fr9jbBRcDm6a0=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/styleguide/><span>Google Style Guides</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li><p><strong>开始学习</strong></p><ul><li><a href=/styleguide/docs/01-overview/>1. 概览</a></li><li><a href=/styleguide/docs/02-guide/>2. Go 编程规范</a></li></ul></li><li><p><a href=https://github.com/gocn/styleguide><strong>Fork on Github</strong></a></p></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/styleguide/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>03 Decisions</strong>
+<label for=toc-control><img src=/styleguide/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#关于>关于</a></li><li><a href=#命名naming>命名Naming</a><ul><li><a href=#下划线underscores>下划线Underscores</a></li><li><a href=#包名称package-names>包名称Package names</a></li><li><a href=#接收者命名receiver-names>接收者命名Receiver names</a></li><li><a href=#常量命名constant-names>常量命名Constant names</a></li><li><a href=#缩写词initialisms>缩写词Initialisms</a></li><li><a href=#get方法getters>Get方法Getters</a></li><li><a href=#变量名variable-names>变量名Variable names</a></li><li><a href=#重复repetition>重复Repetition</a></li></ul></li><li><a href=#评论commentary>评论Commentary</a><ul><li><a href=#注释行长度comment-line-length>注释行长度Comment line length</a></li><li><a href=#文档注释doc-comments>文档注释Doc comments</a></li><li><a href=#注释语句comment-sentences>注释语句Comment sentences</a></li><li><a href=#示例examples>示例Examples</a></li><li><a href=#命名的结果参数named-result-parameters>命名的结果参数Named result parameters</a></li><li><a href=#package-comments>Package comments</a></li></ul></li><li><a href=#imports>Imports</a><ul><li><a href=#import-renaming>Import renaming</a></li><li><a href=#import-grouping>Import grouping</a></li><li><a href=#import-blank-import-_>Import “blank” (<code>import _</code>)</a></li><li><a href=#import-dot-import->Import “dot” (<code>import .</code>)</a></li></ul></li><li><a href=#errors>Errors</a><ul><li><a href=#returning-errors>Returning errors</a></li><li><a href=#error-strings>Error strings</a></li><li><a href=#handle-errors>Handle errors</a></li><li><a href=#in-band-errors>In-band errors</a></li><li><a href=#indent-error-flow>Indent error flow</a></li></ul></li><li><a href=#language>Language</a><ul><li><a href=#literal-formatting>Literal formatting</a></li><li><a href=#nil-slices>Nil slices</a></li><li><a href=#indentation-confusion>Indentation confusion</a></li><li><a href=#function-formatting>Function formatting</a></li><li><a href=#conditionals-and-loops>Conditionals and loops</a></li><li><a href=#copying>Copying</a></li><li><a href=#dont-panic>Don’t panic</a></li><li><a href=#must-functions>Must functions</a></li><li><a href=#goroutine-lifetimes>Goroutine lifetimes</a></li><li><a href=#interfaces>Interfaces</a></li><li><a href=#generics>Generics</a></li><li><a href=#pass-values>Pass values</a></li><li><a href=#receiver-type>Receiver type</a></li><li><a href=#switch-and-break><code>switch</code> and <code>break</code></a></li><li><a href=#synchronous-functions>Synchronous functions</a></li><li><a href=#type-aliases>Type aliases</a></li><li><a href=#use-q>Use %q</a></li><li><a href=#use-any>Use any</a></li></ul></li><li><a href=#common-libraries>Common libraries</a><ul><li><a href=#flags>Flags</a></li><li><a href=#logging>Logging</a></li><li><a href=#contexts>Contexts</a></li><li><a href=#cryptorand>crypto/rand</a></li></ul></li><li><a href=#useful-test-failures>Useful test failures</a><ul><li><a href=#assertion-libraries>Assertion libraries</a></li><li><a href=#identify-the-function>Identify the function</a></li><li><a href=#identify-the-input>Identify the input</a></li><li><a href=#got-before-want>Got before want</a></li><li><a href=#full-structure-comparisons>Full structure comparisons</a></li><li><a href=#compare-stable-results>Compare stable results</a></li><li><a href=#keep-going>Keep going</a></li><li><a href=#equality-comparison-and-diffs>Equality comparison and diffs</a></li><li><a href=#level-of-detail>Level of detail</a></li><li><a href=#print-diffs>Print diffs</a></li><li><a href=#test-error-semantics>Test error semantics</a></li></ul></li><li><a href=#test-structure>Test structure</a><ul><li><a href=#subtests>Subtests</a></li><li><a href=#table-driven-tests>Table-driven tests</a></li><li><a href=#test-helpers>Test helpers</a></li><li><a href=#test-package>Test package</a></li><li><a href=#use-package-testing>Use package <code>testing</code></a></li></ul></li><li><a href=#non-decisions>Non-decisions</a></li></ul></nav></aside></header><article class=markdown><h1 id=go-风格决策>Go 风格决策
+<a class=anchor href=#go-%e9%a3%8e%e6%a0%bc%e5%86%b3%e7%ad%96>#</a></h1><p><a href=https://google.github.io/styleguide/go/decisions>https://google.github.io/styleguide/go/decisions</a></p><p><a href=https://google.github.io/styleguide/go/index>概述</a> | <a href=https://google.github.io/styleguide/go/guide>指南</a> | <a href=https://google.github.io/styleguide/go/decisions>决策</a> | <a href=https://google.github.io/styleguide/go/best-practices>最佳实践</a></p><p>**注意：**本文是 Google <a href=https://google.github.io/styleguide/go/index>Go 风格</a> 系列文档的一部分。本文档是 <strong><a href=https://google.github.io/styleguide/go/index#normative>规范性(normative)</a> 但不是<a href=https://google.github.io/styleguide/go/index#canonical>强制规范(canonical)</a></strong>，并且从属于<a href=https://google.github.io/styleguide/go/guide>Google 风格指南</a>。请参阅<a href=https://google.github.io/styleguide/go/index#about>概述</a>获取更多详细信息。</p><h2 id=关于>关于
+<a class=anchor href=#%e5%85%b3%e4%ba%8e>#</a></h2><p>本文包含旨在统一和为 Go 可读性导师给出的建议提供标准指导、解释和示例的风格决策。</p><p>本文档<strong>并不详尽</strong>，且会随着时间的推移而增加。如果<a href=https://google.github.io/styleguide/go/guide>风格指南</a> 与此处给出的建议相矛盾，<strong>风格指南优先</strong>，并且本文档应相应更新。</p><p>参见 <a href=https://google.github.io/styleguide/go#about>关于</a> 获取 Go 风格的全套文档。</p><p>以下部分已从样式决策移至指南的一部分：</p><ul><li><strong>混合大写字母MixedCaps</strong>: 参见 <a href=https://google.github.io/styleguide/go/guide#mixed-caps>https://google.github.io/styleguide/go/guide#mixed-caps</a></li><li><strong>格式化Formatting</strong>: 参见 <a href=https://google.github.io/styleguide/go/guide#formatting>https://google.github.io/styleguide/go/guide#formatting</a></li><li><strong>行长度Line Length</strong>: 参见 <a href=https://google.github.io/styleguide/go/guide#line-length>https://google.github.io/styleguide/go/guide#line-length</a></li></ul><h2 id=命名naming>命名Naming
+<a class=anchor href=#%e5%91%bd%e5%90%8dnaming>#</a></h2><p>有关命名的总体指导，请参阅<a href=https://google.github.io/styleguide/go/guide#naming>核心风格指南</a> 中的命名部分，以下部分对命名中的特定区域提供进一步的说明。</p><h3 id=下划线underscores>下划线Underscores
+<a class=anchor href=#%e4%b8%8b%e5%88%92%e7%ba%bfunderscores>#</a></h3><p>Go 中的命名通常不应包含下划线。 这个原则有三个例外：</p><ol><li>仅由生成代码导入的包名称可能包含下划线。有关如何选择多词包名称的更多详细信息，请参阅<a href=https://google.github.io/styleguide/go/decisions#package-names>包名称</a>。</li><li><code>*_test.go</code> 文件中的测试、基准和示例函数名称可能包含下划线。</li><li>与操作系统或 cgo 互操作的低级库可能会重用标识符，如 <a href=https://pkg.go.dev/syscall#pkg-constants><code>syscall</code></a> 中所做的那样。在大多数代码库中，这预计是非常罕见的。</li></ol><h3 id=包名称package-names>包名称Package names
+<a class=anchor href=#%e5%8c%85%e5%90%8d%e7%a7%b0package-names>#</a></h3><p>Go 包名称应该简短并且只包含小写字母。由多个单词组成的包名称应全部小写。例如，包 <a href=https://pkg.go.dev/text/tabwriter><code>tabwriter</code></a> 不应该命名为 <code>tabWriter</code>、<code>TabWriter</code> 或 <code>tab_writer</code>。</p><p>避免选择可能被常用局部变量<a href=https://google.github.io/styleguide/go/best-practices#shadowing>遮蔽覆盖</a> 的包名称。例如，<code>usercount</code> 是比 <code>count</code> 更好的包名，因为 <code>count</code> 是常用变量名。</p><p>Go 包名称不应该有下划线。如果您需要导入名称中确实有一个包（通常来自生成的或第三方代码），则必须在导入时将其重命名为适合在 Go 代码中使用的名称。</p><p>一个例外是仅由生成的代码导入的包名称可能包含下划线。具体例子包括：</p><ul><li>对外部测试包使用 _test 后缀，例如集成测试</li><li>使用 <code>_test</code> 后缀作为 <a href=https://go.dev/blog/examples>包级文档示例</a></li></ul><p>避免使用无意义的包名称，例如 <code>util</code>、<code>utility</code>、<code>common</code>、<code>helper</code> 等。查看更多关于<a href=https://google.github.io/styleguide/go/best-practices#util-packages>所谓的“实用程序包”</a>。</p><p>当导入的包被重命名时（例如 <code>import foob "path/to/foo_go_proto"</code>），包的本地名称必须符合上述规则，因为本地名称决定了包中的符号在文件中的引用方式.如果给定的导入在多个文件中重命名，特别是在相同或附近的包中，则应尽可能使用相同的本地名称以保持一致性。</p><p>另请参阅：https://go.dev/blog/package-names</p><h3 id=接收者命名receiver-names>接收者命名Receiver names
+<a class=anchor href=#%e6%8e%a5%e6%94%b6%e8%80%85%e5%91%bd%e5%90%8dreceiver-names>#</a></h3><p><a href=https://golang.org/ref/spec#Method_declarations>接收者</a> 变量名必须满足:</p><ul><li>短（通常是一两个字母的长度）</li><li>类型本身的缩写</li><li>始终如一地应用于该类型的每个接收者</li></ul><table><thead><tr><th>长名称</th><th>更好命名</th></tr></thead><tbody><tr><td><code>func (tray Tray)</code></td><td><code>func (t Tray)</code></td></tr><tr><td><code>func (info *ResearchInfo)</code></td><td><code>func (ri *ResearchInfo)</code></td></tr><tr><td><code>func (this *ReportWriter)</code></td><td><code>func (w *ReportWriter)</code></td></tr><tr><td><code>func (self *Scanner)</code></td><td><code>func (s *Scanner)</code></td></tr></tbody></table><h3 id=常量命名constant-names>常量命名Constant names
+<a class=anchor href=#%e5%b8%b8%e9%87%8f%e5%91%bd%e5%90%8dconstant-names>#</a></h3><p>常量名称必须像 Go 中的所有其他名称一样使用 <a href=https://google.github.io/styleguide/go/guide#mixed-caps>混合大写字母MixedCaps</a>。 （<a href=https://tour.golang.org/basics/3>导出</a> 常量以大写字母开头，而未导出的常量以小写字母开头。）即使打破了其他语言的约定，这也是适用的。常量名称不应是其值的派生词，而应该解释值锁表示的含义。</p><pre tabindex=0><code>// Good:
+const MaxPacketSize = 512
+
+const (
+    ExecuteBit = 1 &lt;&lt; iota
+    WriteBit
+    ReadBit
+)
+</code></pre><p>不要使用非混合大写常量名称或带有 <code>K</code> 前缀的常量。</p><pre tabindex=0><code>// Bad:
+const MAX_PACKET_SIZE = 512
+const kMaxBufferSize = 1024
+const KMaxUsersPergroup = 500
+</code></pre><p>根据它们的角色而不是它们的值来命名常量。 如果一个常量除了它的值之外没有其他作用，那么就没有必要将它定义为一个常量。</p><pre tabindex=0><code>// Bad:
+const Twelve = 12
+
+const (
+    UserNameColumn = &#34;username&#34;
+    GroupColumn    = &#34;group&#34;
+)
+</code></pre><h3 id=缩写词initialisms>缩写词Initialisms
+<a class=anchor href=#%e7%bc%a9%e5%86%99%e8%af%8dinitialisms>#</a></h3><p>名称中的首字母缩略词或单独的首字母缩略词（例如，“URL”和“NATO”）应该具有相同的大小写。 <code>URL</code> 应显示为 <code>URL</code> 或 <code>url</code>（如 <code>urlPony</code> 或 <code>URLPony</code>），绝不能显示为 <code>Url</code>。 这也适用于 <code>ID</code> 是“identifier”的缩写； 写 <code>appID</code> 而不是 <code>appId</code>。</p><ul><li>在具有多个首字母缩写的名称中（例如 <code>XMLAPI</code> 因为它包含 <code>XML</code> 和 <code>API</code>），给定首字母缩写中的每个字母都应该具有相同的大小写，但名称中的每个首字母缩写不需要具有相同的大小写。</li><li>在带有包含小写字母的首字母缩写的名称中（例如<code>DDoS</code>、<code>iOS</code>、<code>gRPC</code>），首字母缩写应该像在标准中一样出现，除非您需要为了满足 <a href=https://golang.org/ref/spec#Exported_identifiers>导出</a> 而更改第一个字母。在这些情况下，整个缩写词应该是相同的情况（例如 <code>ddos</code>、<code>IOS</code>、<code>GRPC</code>）。</li></ul><table><thead><tr><th>缩写词</th><th>范围</th><th>正确</th><th>错误</th></tr></thead><tbody><tr><td>XML API</td><td>Exported</td><td><code>XMLAPI</code></td><td><code>XmlApi</code>, <code>XMLApi</code>, <code>XmlAPI</code>, <code>XMLapi</code></td></tr><tr><td>XML API</td><td>Unexported</td><td><code>xmlAPI</code></td><td><code>xmlapi</code>, <code>xmlApi</code></td></tr><tr><td>iOS</td><td>Exported</td><td><code>IOS</code></td><td><code>Ios</code>, <code>IoS</code></td></tr><tr><td>iOS</td><td>Unexported</td><td><code>iOS</code></td><td><code>ios</code></td></tr><tr><td>gRPC</td><td>Exported</td><td><code>GRPC</code></td><td><code>Grpc</code></td></tr><tr><td>gRPC</td><td>Unexported</td><td><code>gRPC</code></td><td><code>grpc</code></td></tr><tr><td>DDoS</td><td>Exported</td><td><code>DDoS</code></td><td><code>DDOS</code>, <code>Ddos</code></td></tr><tr><td>DDoS</td><td>Unexported</td><td><code>ddos</code></td><td><code>dDoS</code>, <code>dDOS</code></td></tr></tbody></table><h3 id=get方法getters>Get方法Getters
+<a class=anchor href=#get%e6%96%b9%e6%b3%95getters>#</a></h3><p>函数和方法名称不应使用 <code>Get</code> 或 <code>get</code> 前缀，除非底层概念使用单词“get”（例如 HTTP GET）。此时，更应该直接以名词开头的名称，例如使用 <code>Counts</code> 而不是 <code>GetCounts</code>。</p><p>如果该函数涉及执行复杂的计算或执行远程调用，则可以使用<code>Compute</code> 或 <code>Fetch</code>等不同的词代替<code>Get</code>，以使读者清楚函数调用可能需要时间和 可能会阻塞或失败。</p><h3 id=变量名variable-names>变量名Variable names
+<a class=anchor href=#%e5%8f%98%e9%87%8f%e5%90%8dvariable-names>#</a></h3><p>一般的经验法则是，名称的长度应与其范围的大小成正比，并与其在该范围内使用的次数成反比。在文件范围内创建的变量可能需要多个单词，而单个内部块作用域内的变量可能是单个单词甚至只是一两个字符，以保持代码清晰并避免无关信息。</p><p>这是一条粗略的基线。这些数字准则不是严格的规则。要根据上下文、<a href=https://google.github.io/styleguide/go/guide#clarity>清晰</a> 和[简洁](<a href=https://google.github.io/styleguide/go/guide#>https://google.github.io/styleguide/go/guide#</a>简洁）来进行判断。</p><ul><li>小范围是执行一两个小操作的范围，比如 1-7 行。</li><li>中等范围是一些小的或一个大的操作，比如 8-15 行。</li><li>大范围是一个或几个大操作，比如 15-25 行。</li><li>非常大的范围是指超过一页（例如，超过 25 行）的任何内容。</li></ul><p>在小范围内可能非常清楚的名称（例如，<code>c</code> 表示计数器）在较大范围内可能不够用，并且需要澄清以提醒进一步了解其在代码中的用途。一个作用域中有很多变量，或者表示相似值或概念的变量，那就可能需要比作用域建议的采用更长的变量名称。</p><p>概念的特殊性也有助于保持变量名称的简洁。例如，假设只有一个数据库在使用，像<code>db</code>这样的短变量名通常可能保留给非常小的范围，即使范围非常大，也可能保持完全清晰。在这种情况下，根据范围的大小，单个词<code>database</code>可能是可接受的，但不是必需的，因为<code>db</code>是该词的一种非常常见的缩写，几乎没有其他解释。</p><p>局部变量的名称应该反映它包含的内容以及它在当前上下文中的使用方式，而不是值的来源。例如，通常情况下最佳局部变量名称与结构或协议缓冲区字段名称不同。</p><p>一般来说：</p><ul><li><p>像 <code>count</code> 或 <code>options</code> 这样的单字名称是一个很好的起点。</p></li><li><p>可以添加其他词来消除相似名称的歧义，例如 <code>userCount</code> 和 <code>projectCount</code>。</p></li><li><p>不要简单地省略字母来节省打字时间。例如，<code>Sandbox</code> 优于 <code>Sbx</code>，特别是对于导出的名称。</p></li><li><p>大多数变量名可省略 <a href=https://google.github.io/styleguide/go/decisions#repetitive-with-type>类型和类似类型的词</a></p><ul><li>对于数字，<code>userCount</code> 是比 <code>numUsers</code> 或 <code>usersInt</code> 更好的名称。</li><li>对于切片，<code>users</code> 是一个比 <code>userSlice</code> 更好的名字。</li><li>如果范围内有两个版本的值，则包含类似类型的限定符是可以接受的，例如，您可能将输入存储在 <code>ageString</code> 中，并使用 <code>age</code> 作为解析值。</li></ul></li><li><p>省略<a href=https://google.github.io/styleguide/go/decisions#repetitive-in-context>上下文</a> 中清楚的单词。例如，在 UserCount 方法的实现中，名为 userCount 的局部变量可能是多余的； <code>count</code>、<code>users</code> 甚至 <code>c</code> 都具有可读性。</p></li></ul><h4 id=单字母变量名single-letter-variable-names>单字母变量名Single-letter variable names
+<a class=anchor href=#%e5%8d%95%e5%ad%97%e6%af%8d%e5%8f%98%e9%87%8f%e5%90%8dsingle-letter-variable-names>#</a></h4><p>单字母变量名是可以减少<a href=https://google.github.io/styleguide/go/decisions#repetition>重复</a> 的有用工具，但也可能使代码变得不透明。将它们的使用限制在完整单词很明显以及它会重复出现以代替单字母变量的情况。</p><p>一般来说：</p><ul><li>对于<a href=https://google.github.io/styleguide/go/decisions#receiver-names>方法接收者变量</a>，最好使用一个字母或两个字母的名称。</li><li>对常见类型使用熟悉的变量名通常很有帮助：<ul><li><code>r</code> 用于 <code>io.Reader</code> 或 <code>*http.Request</code></li><li><code>w</code> 用于 <code>io.Writer</code> 或 <code>http.ResponseWriter</code></li></ul></li><li>单字母标识符作为整数循环变量是可接受的，特别是对于索引（例如，<code>i</code>）和坐标（例如，<code>x</code> 和 <code>y</code>）。</li><li>当范围很短时，循环标识符使用缩写是可接受的，例如<code>for _, n := range nodes { ... }</code>。</li></ul><h3 id=重复repetition>重复Repetition
+<a class=anchor href=#%e9%87%8d%e5%a4%8drepetition>#</a></h3><p>一段 Go 源代码应该避免不必要的重复。 一个常见的情形是重复名称，其中通常包含不必要的单词或重复其上下文或类型。 如果相同或相似的代码段在很近的地方多次出现，代码本身也可能是不必要的重复。</p><p>重复命名可以有多种形式，包括：</p><h4 id=包名-vs-可导出符号名package-vs-exported-symbol-name>包名 vs 可导出符号名Package vs. exported symbol name
+<a class=anchor href=#%e5%8c%85%e5%90%8d-vs-%e5%8f%af%e5%af%bc%e5%87%ba%e7%ac%a6%e5%8f%b7%e5%90%8dpackage-vs-exported-symbol-name>#</a></h4><p>当命名导出的符号时，包的名称始终在包外可见，因此应减少或消除两者之间的冗余信息。如果一个包如果需要仅导出一种类型并且以包本身命名，则构造函数的规范名称是<code>New</code>（如果需要的话）。</p><blockquote><p><strong>实例:</strong> 重复的名称 -> 更好的名称</p><ul><li><code>widget.NewWidget</code> -> <code>widget.New</code></li><li><code>widget.NewWidgetWithName</code> -> <code>widget.NewWithName</code></li><li><code>db.LoadFromDatabase</code> -> <code>db.Load</code></li><li><code>goatteleportutil.CountGoatsTeleported</code> -> <code>gtutil.CountGoatsTeleported</code> or <code>goatteleport.Count</code></li><li><code>myteampb.MyTeamMethodRequest</code> -> <code>mtpb.MyTeamMethodRequest</code> or <code>myteampb.MethodRequest</code></li></ul></blockquote><h4 id=变量名-vs-类型variable-name-vs-type>变量名 vs 类型Variable name vs. type
+<a class=anchor href=#%e5%8f%98%e9%87%8f%e5%90%8d-vs-%e7%b1%bb%e5%9e%8bvariable-name-vs-type>#</a></h4><p>编译器总是知道变量的类型，并且在大多数情况下，阅读者也可以通过变量的使用方式清楚地知道变量是什么类型。只有当一个变量的值在同一范围内出现两次时，才有需要明确变量的类型。</p><table><thead><tr><th>重复的名称</th><th>更好的名称</th></tr></thead><tbody><tr><td><code>var numUsers int</code></td><td><code>var users int</code></td></tr><tr><td><code>var nameString string</code></td><td><code>var name string</code></td></tr><tr><td><code>var primaryProject *Project</code></td><td><code>var primary *Project</code></td></tr></tbody></table><p>如果该值以多种形式出现，这可以通过额外的词（如<code>raw</code>和<code>parsed</code>）或底层表示来澄清：</p><pre tabindex=0><code>// Good:
+limitStr := r.FormValue(&#34;limit&#34;)
+limit, err := strconv.Atoi(limitStr)
+// Good:
+limitRaw := r.FormValue(&#34;limit&#34;)
+limit, err := strconv.Atoi(limitRaw)
+</code></pre><h4 id=外部上下文-vs-本地名称external-context-vs-local-names>外部上下文 vs 本地名称External context vs. local names
+<a class=anchor href=#%e5%a4%96%e9%83%a8%e4%b8%8a%e4%b8%8b%e6%96%87-vs-%e6%9c%ac%e5%9c%b0%e5%90%8d%e7%a7%b0external-context-vs-local-names>#</a></h4><p>包含来自周围上下文信息的名称通常会产生额外的噪音，而没有任何好处。 包名、方法名、类型名、函数名、导入路径，甚至文件名都可以提供自动限定其名称的上下文。
+Names that include information from their surrounding context often create extra noise without benefit. The package name, method name, type name, function name, import path, and even filename can all provide context that automatically qualifies all names within.</p><pre tabindex=0><code>// Bad:
+// In package &#34;ads/targeting/revenue/reporting&#34;
+type AdsTargetingRevenueReport struct{}
+
+func (p *Project) ProjectName() string
+// Good:
+// In package &#34;ads/targeting/revenue/reporting&#34;
+type Report struct{}
+
+func (p *Project) Name() string
+// Bad:
+// In package &#34;sqldb&#34;
+type DBConnection struct{}
+// Good:
+// In package &#34;sqldb&#34;
+type Connection struct{}
+// Bad:
+// In package &#34;ads/targeting&#34;
+func Process(in *pb.FooProto) *Report {
+    adsTargetingID := in.GetAdsTargetingID()
+}
+// Good:
+// In package &#34;ads/targeting&#34;
+func Process(in *pb.FooProto) *Report {
+    id := in.GetAdsTargetingID()
+}
+</code></pre><p>重复通常应该在符号用户的上下文中进行评估，而不是孤立地进行评估。例如，下面的代码有很多名称，在某些情况下可能没问题，但在上下文中是多余的：</p><pre tabindex=0><code>// Bad:
+func (db *DB) UserCount() (userCount int, err error) {
+    var userCountInt64 int64
+    if dbLoadError := db.LoadFromDatabase(&#34;count(distinct users)&#34;, &amp;userCountInt64); dbLoadError != nil {
+        return 0, fmt.Errorf(&#34;failed to load user count: %s&#34;, dbLoadError)
+    }
+    userCount = int(userCountInt64)
+    return userCount, nil
+}
+</code></pre><p>相反，在上下文和使用上信息是清楚的情况下，常常可以忽略：</p><pre tabindex=0><code>// Good:
+func (db *DB) UserCount() (int, error) {
+    var count int64
+    if err := db.Load(&#34;count(distinct users)&#34;, &amp;count); err != nil {
+        return 0, fmt.Errorf(&#34;failed to load user count: %s&#34;, err)
+    }
+    return int(count), nil
+}
+</code></pre><h2 id=评论commentary>评论Commentary
+<a class=anchor href=#%e8%af%84%e8%ae%bacommentary>#</a></h2><p>关于评论的约定（包括评论什么、使用什么风格、如何提供可运行的示例等）旨在支持阅读公共 API 文档的体验。 有关详细信息，请参阅 <a href=http://golang.org/doc/effective_go.html#commentary>Effective Go</a>。</p><p>最佳实践文档关于 <a href=https://google.github.io/styleguide/go/best-practices#documentation-conventions>文档约定</a> 的部分进一步讨论了这一点。</p><p>**最佳实践：**在开发和代码审查期间使用<a href=https://google.github.io/styleguide/go/best-practices#documentation-preview>文档预览</a> 查看文档和可运行示例是否有用 并以您期望的方式呈现。</p><p><strong>提示：</strong> Godoc 使用很少的特殊格式； 列表和代码片段通常应该缩进以避免换行。 除缩进外，通常应避免装饰。</p><h3 id=注释行长度comment-line-length>注释行长度Comment line length
+<a class=anchor href=#%e6%b3%a8%e9%87%8a%e8%a1%8c%e9%95%bf%e5%ba%a6comment-line-length>#</a></h3><p>确保即使在较窄的屏幕上注释的可读性。</p><p>当评论变得太长时，建议将其包装成多个单行评论。在可能的情况下，争取在 80 列宽的终端上阅读良好的注释，但这并不是硬性限制； Go 中的注释没有固定的行长度限制。例如，标准库经常选择根据标点符号来打断注释，这有时会使个别行更接近 60-70 个字符标记。</p><p>有很多现有代码的注释长度超过 80 个字符。本指南不应作为更改此类代码作为可读性审查的一部分的理由（请参阅<a href=https://google.github.io/styleguide/go/guide#consistency>一致性</a>），但鼓励团队作为其他重构的一部分，有机会时更新注释以遵循此指南。本指南的主要目标是确保所有 Go 可读性导师在提出建议时以及是否提出相同的建议。</p><p>有关评论的更多信息，请参阅此 <a href=https://blog.golang.org/godoc-documenting-go-code>来自 The Go Blog 的帖子</a>。</p><pre tabindex=0><code># Good:
+// This is a comment paragraph.
+// The length of individual lines doesn&#39;t matter in Godoc;
+// but the choice of wrapping makes it easy to read on narrow screens.
+//
+// Don&#39;t worry too much about the long URL:
+// https://supercalifragilisticexpialidocious.example.com:8080/Animalia/Chordata/Mammalia/Rodentia/Geomyoidea/Geomyidae/
+//
+// Similarly, if you have other information that is made awkward
+// by too many line breaks, use your judgment and include a long line
+// if it helps rather than hinders.
+</code></pre><p>避免在小屏幕上重复换行的评论，这是一种糟糕的阅读体验。</p><pre tabindex=0><code># Bad:
+// This is a comment paragraph. The length of individual lines doesn&#39;t matter in
+Godoc;
+// but the choice of wrapping causes jagged lines on narrow screens or in
+Critique,
+// which can be annoying, especially when in a comment block that will wrap
+repeatedly.
+//
+// Don&#39;t worry too much about the long URL:
+// https://supercalifragilisticexpialidocious.example.com:8080/Animalia/Chordata/Mammalia/Rodentia/Geomyoidea/Geomyidae/
+</code></pre><h3 id=文档注释doc-comments>文档注释Doc comments
+<a class=anchor href=#%e6%96%87%e6%a1%a3%e6%b3%a8%e9%87%8adoc-comments>#</a></h3><p>所有顶级导出名称都必须有文档注释，具有不明显行为或含义的未导出类型或函数声明也应如此。 这些注释应该是<a href=https://google.github.io/styleguide/go/decisions#comment-sentences>完整句子</a>，以所描述对象的名称开头。 冠词（“a”、“an”、“the”）可以放在名字前面，使其读起来更自然。</p><pre tabindex=0><code>// Good:
+// A Request represents a request to run a command.
+type Request struct { ...
+
+// Encode writes the JSON encoding of req to w.
+func Encode(w io.Writer, req *Request) { ...
+</code></pre><p>文档注释出现在 <a href=https://pkg.go.dev/>Godoc</a> 中，并通过 IDE 显示，因此应该为使用该包的任何人编写文档注释。</p><p>如果出现在结构中，文档注释适用于以下符号或字段组：</p><pre tabindex=0><code>// Good:
+// Options configure the group management service.
+type Options struct {
+    // General setup:
+    Name  string
+    Group *FooGroup
+
+    // Dependencies:
+    DB *sql.DB
+
+    // Customization:
+    LargeGroupThreshold int // optional; default: 10
+    MinimumMembers      int // optional; default: 2
+}
+</code></pre><p>**最佳实践：**如果你对未导出的代码有文档注释，请遵循与导出代码相同的习惯（即，以未导出的名称开始注释）。 这使得以后导出它变得容易，只需在注释和代码中用新导出的名称替换未导出的名称即可。</p><h3 id=注释语句comment-sentences>注释语句Comment sentences
+<a class=anchor href=#%e6%b3%a8%e9%87%8a%e8%af%ad%e5%8f%a5comment-sentences>#</a></h3><p>完整句子的注释应该像标准英语句子一样大写和标点符号。 （作为一个例外，如果在其他方面很清楚，可以以非大写的标识符名称开始一个句子。这种情况最好只在段落的开头进行。）</p><p>作为句子片段的注释对标点符号或大小写没有此类要求。</p><p><a href=https://google.github.io/styleguide/go/decisions#doc-comments>文档注释</a> 应始终是完整的句子，因此应始终大写和标点符号。 简单的行尾注释（特别是对于结构字段）可以假设字段名称是主语的简单短语。</p><pre tabindex=0><code>// Good:
+// A Server handles serving quotes from the collected works of Shakespeare.
+type Server struct {
+    // BaseDir points to the base directory under which Shakespeare&#39;s works are stored.
+    //
+    // The directory structure is expected to be the following:
+    //   {BaseDir}/manifest.json
+    //   {BaseDir}/{name}/{name}-part{number}.txt
+    BaseDir string
+
+    WelcomeMessage  string // displayed when user logs in
+    ProtocolVersion string // checked against incoming requests
+    PageLength      int    // lines per page when printing (optional; default: 20)
+}
+</code></pre><h3 id=示例examples>示例Examples
+<a class=anchor href=#%e7%a4%ba%e4%be%8bexamples>#</a></h3><p>包应该清楚地记录它们的预期用途。 尝试提供一个<a href=http://blog.golang.org/examples>可运行的例子</a>； 示例出现在 Godoc 中。 可运行示例属于测试文件，而不是生产源文件。 请参阅此示例（<a href=https://pkg.go.dev/time#example-Duration>Godoc</a>，[source](<a href=https://cs.opensource.google/go/go/+/HEAD:src/time>https://cs.opensource.google/go/go/+/HEAD:src/time</a> /example_test.go））。</p><p>如果无法提供可运行的示例，可以在代码注释中提供示例代码。 与注释中的其他代码和命令行片段一样，它应该遵循标准格式约定。</p><h3 id=命名的结果参数named-result-parameters>命名的结果参数Named result parameters
+<a class=anchor href=#%e5%91%bd%e5%90%8d%e7%9a%84%e7%bb%93%e6%9e%9c%e5%8f%82%e6%95%b0named-result-parameters>#</a></h3><p>当有命名参数时，请考虑函数签名在 Godoc 中的显示方式。 函数本身的名称和结果参数的类型通常要足够清楚。</p><pre tabindex=0><code>// Good:
+func (n *Node) Parent1() *Node
+func (n *Node) Parent2() (*Node, error)
+</code></pre><p>如果一个函数返回两个或多个相同类型的参数，添加名称会很有用。</p><pre tabindex=0><code>// Good:
+func (n *Node) Children() (left, right *Node, err error)
+</code></pre><p>如果调用者必须对特定的结果参数采取行动，命名它们可以帮助暗示行动是什么：</p><pre tabindex=0><code>// Good:
+// WithTimeout returns a context that will be canceled no later than d duration
+// from now.
+//
+// The caller must arrange for the returned cancel function to be called when
+// the context is no longer needed to prevent a resource leak.
+func WithTimeout(parent Context, d time.Duration) (ctx Context, cancel func())
+</code></pre><p>In the code above, cancellation is a particular action a caller must take. However, were the result parameters written as <code>(Context, func())</code> alone, it would be unclear what is meant by “cancel function”.</p><p>Don’t use named result parameters when the names produce <a href=https://google.github.io/styleguide/go/decisions#repetitive-with-type>unnecessary repetition</a>.</p><pre tabindex=0><code>// Bad:
+func (n *Node) Parent1() (node *Node)
+func (n *Node) Parent2() (node *Node, err error)
+</code></pre><p>Don’t name result parameters in order to avoid declaring a variable inside the function. This practice results in unnecessary API verbosity at the cost of minor implementation brevity.</p><p><a href=https://tour.golang.org/basics/7>Naked returns</a> are acceptable only in a small function. Once it’s a medium-sized function, be explicit with your returned values. Similarly, do not name result parameters just because it enables you to use naked returns. <a href=https://google.github.io/styleguide/go/guide#clarity>Clarity</a> is always more important than saving a few lines in your function.</p><p>It is always acceptable to name a result parameter if its value must be changed in a deferred closure.</p><blockquote><p><strong>Tip:</strong> Types can often be clearer than names in function signatures. <a href=https://google.github.io/styleguide/go/index.html#gotip>GoTip #38: Functions as Named Types</a> demonstrates this.</p><p>In, <a href=https://pkg.go.dev/context#WithTimeout><code>WithTimeout</code></a> above, the real code uses a <a href=https://pkg.go.dev/context#CancelFunc><code>CancelFunc</code></a> instead of a raw <code>func()</code> in the result parameter list and requires little effort to document.</p></blockquote><h3 id=package-comments>Package comments
+<a class=anchor href=#package-comments>#</a></h3><p>Package comments must appear immediately above the package clause with no blank line between the comment and the package name. Example:</p><pre tabindex=0><code>// Good:
+// Package math provides basic constants and mathematical functions.
+//
+// This package does not guarantee bit-identical results across architectures.
+package math
+</code></pre><p>There must be a single package comment per package. If a package is composed of multiple files, exactly one of the files should have a package comment.</p><p>Comments for <code>main</code> packages have a slightly different form, where the name of the <code>go_binary</code> rule in the BUILD file takes the place of the package name.</p><pre tabindex=0><code>// Good:
+// The seed_generator command is a utility that generates a Finch seed file
+// from a set of JSON study configs.
+package main
+</code></pre><p>Other styles of comment are fine as long as the name of the binary is exactly as written in the BUILD file. When the binary name is the first word, capitalizing it is required even though it does not strictly match the spelling of the command-line invocation.</p><pre tabindex=0><code>// Good:
+// Binary seed_generator ...
+// Command seed_generator ...
+// Program seed_generator ...
+// The seed_generator command ...
+// The seed_generator program ...
+// Seed_generator ...
+</code></pre><p>Tips:</p><ul><li><p>Example command-line invocations and API usage can be useful documentation. For Godoc formatting, indent the comment lines containing code.</p></li><li><p>If there is no obvious primary file or if the package comment is extraordinarily long, it is acceptable to put the doc comment in a file named <code>doc.go</code> with only the comment and the package clause.</p></li><li><p>Multiline comments can be used instead of multiple single-line comments. This is primarily useful if the documentation contains sections which may be useful to copy and paste from the source file, as with sample command-lines (for binaries) and template examples.</p><pre tabindex=0><code>// Good:
+/*
+The seed_generator command is a utility that generates a Finch seed file
+from a set of JSON study configs.
+
+    seed_generator *.json | base64 &gt; finch-seed.base64
+*/
+package template
+</code></pre></li><li><p>Comments intended for maintainers and that apply to the whole file are typically placed after import declarations. These are not surfaced in Godoc and are not subject to the rules above on package comments.</p></li></ul><h2 id=imports>Imports
+<a class=anchor href=#imports>#</a></h2><h3 id=import-renaming>Import renaming
+<a class=anchor href=#import-renaming>#</a></h3><p>Imports should only be renamed to avoid a name collision with other imports. (A corollary of this is that <a href=https://google.github.io/styleguide/go/decisions#package-names>good package names</a> should not require renaming.) In the event of a name collision, prefer to rename the most local or project-specific import. Local names (aliases) for packages must follow <a href=https://google.github.io/styleguide/go/decisions#package-names>the guidance around package naming</a>, including the prohibition on the use of underscores and capital letters.</p><p>Generated protocol buffer packages must be renamed to remove underscores from their names, and their aliases must have a <code>pb</code> suffix. See <a href=https://google.github.io/styleguide/go/best-practices#import-protos>proto and stub best practices</a> for more information.</p><pre tabindex=0><code>// Good:
+import (
+    fspb &#34;path/to/package/foo_service_go_proto&#34;
+)
+</code></pre><p>Imports that have package names with no useful identifying information (e.g. <code>package v1</code>) should be renamed to include the previous path component. The rename must be consistent with other local files importing the same package and may include the version number.</p><p><strong>Note:</strong> It is preferred to rename the package to conform with <a href=https://google.github.io/styleguide/go/decisions#package-names>good package names</a>, but that is often not feasible for packages in vendored directories.</p><pre tabindex=0><code>// Good:
+import (
+    core &#34;github.com/kubernetes/api/core/v1&#34;
+    meta &#34;github.com/kubernetes/apimachinery/pkg/apis/meta/v1beta1&#34;
+)
+</code></pre><p>If you need to import a package whose name collides with a common local variable name that you want to use (e.g. <code>url</code>, <code>ssh</code>) and you wish to rename the package, the preferred way to do so is with the <code>pkg</code> suffix (e.g. <code>urlpkg</code>). Note that it is possible to shadow a package with a local variable; this rename is only necessary if the package still needs to be used when such a variable is in scope.</p><h3 id=import-grouping>Import grouping
+<a class=anchor href=#import-grouping>#</a></h3><p>Imports should be organized in two groups:</p><ul><li>Standard library packages</li><li>Other (project and vendored) packages</li></ul><pre tabindex=0><code>// Good:
+package main
+
+import (
+    &#34;fmt&#34;
+    &#34;hash/adler32&#34;
+    &#34;os&#34;
+
+    &#34;github.com/dsnet/compress/flate&#34;
+    &#34;golang.org/x/text/encoding&#34;
+    &#34;google.golang.org/protobuf/proto&#34;
+    foopb &#34;myproj/foo/proto/proto&#34;
+    _ &#34;myproj/rpc/protocols/dial&#34;
+    _ &#34;myproj/security/auth/authhooks&#34;
+)
+</code></pre><p>It is acceptable to split the project packages into multiple groups, for example if you want a separate group for renamed, imported-only-for-side-effects or another special group of imports.</p><pre tabindex=0><code>// Good:
+package main
+
+import (
+    &#34;fmt&#34;
+    &#34;hash/adler32&#34;
+    &#34;os&#34;
+
+    &#34;github.com/dsnet/compress/flate&#34;
+    &#34;golang.org/x/text/encoding&#34;
+    &#34;google.golang.org/protobuf/proto&#34;
+
+    foopb &#34;myproj/foo/proto/proto&#34;
+
+    _ &#34;myproj/rpc/protocols/dial&#34;
+    _ &#34;myproj/security/auth/authhooks&#34;
+)
+</code></pre><p><strong>Note:</strong> Maintaining optional groups - splitting beyond what is necessary for the mandatory separation between standard library and Google imports - is not supported by the <a href=https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports>goimports</a> tool. Additional import subgroups require attention on the part of both authors and reviewers to maintain in a conforming state.</p><p>Google programs that are also AppEngine apps should have a separate group for AppEngine imports.</p><p>Gofmt takes care of sorting each group by import path. However, it does not automatically separate imports into groups. The popular <a href=https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports>goimports</a> tool combines Gofmt and import management, separating imports into groups based on the decision above. It is permissible to let <a href=https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports>goimports</a> manage import arrangement entirely, but as a file is revised its import list must remain internally consistent.</p><h3 id=import-blank-import-_>Import “blank” (<code>import _</code>)
+<a class=anchor href=#import-blank-import-_>#</a></h3><p>Packages that are imported only for their side effects (using the syntax <code>import _ "package"</code>) may only be imported in a main package, or in tests that require them.</p><p>Some examples of such packages include:</p><ul><li><a href=https://pkg.go.dev/time/tzdata>time/tzdata</a></li><li><a href=https://pkg.go.dev/image/jpeg>image/jpeg</a> in image processing code</li></ul><p>Avoid blank imports in library packages, even if the library indirectly depends on them. Constraining side-effect imports to the main package helps control dependencies, and makes it possible to write tests that rely on a different import without conflict or wasted build costs.</p><p>The following are the only exceptions to this rule:</p><ul><li>You may use a blank import to bypass the check for disallowed imports in the <a href=https://github.com/bazelbuild/rules_go/blob/master/go/nogo.rst>nogo static checker</a>.</li><li>You may use a blank import of the <a href=https://pkg.go.dev/embed>embed</a> package in a source file which uses the <code>//go:embed</code> compiler directive.</li></ul><p><strong>Tip:</strong> If you create a library package that indirectly depends on a side-effect import in production, document the intended usage.</p><h3 id=import-dot-import->Import “dot” (<code>import .</code>)
+<a class=anchor href=#import-dot-import->#</a></h3><p>The <code>import .</code> form is a language feature that allows bringing identifiers exported from another package to the current package without qualification. See the <a href=https://go.dev/ref/spec#Import_declarations>language spec</a> for more.</p><p>Do <strong>not</strong> use this feature in the Google codebase; it makes it harder to tell where the functionality is coming from.</p><pre tabindex=0><code>// Bad:
+package foo_test
+
+import (
+    &#34;bar/testutil&#34; // also imports &#34;foo&#34;
+    . &#34;foo&#34;
+)
+
+var myThing = Bar() // Bar defined in package foo; no qualification needed.
+// Good:
+package foo_test
+
+import (
+    &#34;bar/testutil&#34; // also imports &#34;foo&#34;
+    &#34;foo&#34;
+)
+
+var myThing = foo.Bar()
+</code></pre><h2 id=errors>Errors
+<a class=anchor href=#errors>#</a></h2><h3 id=returning-errors>Returning errors
+<a class=anchor href=#returning-errors>#</a></h3><p>Use <code>error</code> to signal that a function can fail. By convention, <code>error</code> is the last result parameter.</p><pre tabindex=0><code>// Good:
+func Good() error { /* ... */ }
+</code></pre><p>Returning a <code>nil</code> error is the idiomatic way to signal a successful operation that could otherwise fail. If a function returns an error, callers must treat all non-error return values as unspecified unless explicitly documented otherwise. Commonly, the non-error return values are their zero values, but this cannot be assumed.</p><pre tabindex=0><code>// Good:
+func GoodLookup() (*Result, error) {
+    // ...
+    if err != nil {
+        return nil, err
+    }
+    return res, nil
+}
+</code></pre><p>Exported functions that return errors should return them using the <code>error</code> type. Concrete error types are susceptible to subtle bugs: a concrete <code>nil</code> pointer can get wrapped into an interface and thus become a non-nil value (see the <a href=https://golang.org/doc/faq#nil_error>Go FAQ entry on the topic</a>).</p><pre tabindex=0><code>// Bad:
+func Bad() *os.PathError { /*...*/ }
+</code></pre><p><strong>Tip</strong>: A function that takes a <code>context.Context</code> argument should usually return an <code>error</code> so that the caller can determine if the context was cancelled while the function was running.</p><h3 id=error-strings>Error strings
+<a class=anchor href=#error-strings>#</a></h3><p>Error strings should not be capitalized (unless beginning with an exported name, a proper noun or an acronym) and should not end with punctuation. This is because error strings usually appear within other context before being printed to the user.</p><pre tabindex=0><code>// Bad:
+err := fmt.Errorf(&#34;Something bad happened.&#34;)
+// Good:
+err := fmt.Errorf(&#34;something bad happened&#34;)
+</code></pre><p>On the other hand, the style for the full displayed message (logging, test failure, API response, or other UI) depends, but should typically be capitalized.</p><pre tabindex=0><code>// Good:
+log.Infof(&#34;Operation aborted: %v&#34;, err)
+log.Errorf(&#34;Operation aborted: %v&#34;, err)
+t.Errorf(&#34;Op(%q) failed unexpectedly; err=%v&#34;, args, err)
+</code></pre><h3 id=handle-errors>Handle errors
+<a class=anchor href=#handle-errors>#</a></h3><p>Code that encounters an error should make a deliberate choice about how to handle it. It is not usually appropriate to discard errors using <code>_</code> variables. If a function returns an error, do one of the following:</p><ul><li>Handle and address the error immediately.</li><li>Return the error to the caller.</li><li>In exceptional situations, call <a href=https://pkg.go.dev/github.com/golang/glog#Fatal><code>log.Fatal</code></a> or (if absolutely necessary) <code>panic</code>.</li></ul><p><strong>Note:</strong> <code>log.Fatalf</code> is not the standard library log. See [#logging].</p><p>In the rare circumstance where it is appropriate to ignore or discard an error (for example a call to <a href=https://pkg.go.dev/bytes#Buffer.Write><code>(*bytes.Buffer).Write</code></a> that is documented to never fail), an accompanying comment should explain why this is safe.</p><pre tabindex=0><code>// Good:
+var b *bytes.Buffer
+
+n, _ := b.Write(p) // never returns a non-nil error
+</code></pre><p>For more discussion and examples of error handling, see <a href=http://golang.org/doc/effective_go.html#errors>Effective Go</a> and <a href=https://google.github.io/styleguide/go/best-practices.html#error-handling>best practices</a>.</p><h3 id=in-band-errors>In-band errors
+<a class=anchor href=#in-band-errors>#</a></h3><p>In C and similar languages, it is common for functions to return values like -1, null, or the empty string to signal errors or missing results. This is known as in-band error handling.</p><pre tabindex=0><code>// Bad:
+// Lookup returns the value for key or -1 if there is no mapping for key.
+func Lookup(key string) int
+</code></pre><p>Failing to check for an in-band error value can lead to bugs and can attribute errors to the wrong function.</p><pre tabindex=0><code>// Bad:
+// The following line returns an error that Parse failed for the input value,
+// whereas the failure was that there is no mapping for missingKey.
+return Parse(Lookup(missingKey))
+</code></pre><p>Go’s support for multiple return values provides a better solution (see the <a href=http://golang.org/doc/effective_go.html#multiple-returns>Effective Go section on multiple returns</a>). Instead of requiring clients to check for an in-band error value, a function should return an additional value to indicate whether its other return values are valid. This return value may be an error or a boolean when no explanation is needed, and should be the final return value.</p><pre tabindex=0><code>// Good:
+// Lookup returns the value for key or ok=false if there is no mapping for key.
+func Lookup(key string) (value string, ok bool)
+</code></pre><p>This API prevents the caller from incorrectly writing <code>Parse(Lookup(key))</code> which causes a compile-time error, since <code>Lookup(key)</code> has 2 outputs.</p><p>Returning errors in this way encourages more robust and explicit error handling:</p><pre tabindex=0><code>// Good:
+value, ok := Lookup(key)
+if !ok {
+    return fmt.Errorf(&#34;no value for %q&#34;, key)
+}
+return Parse(value)
+</code></pre><p>Some standard library functions, like those in package <code>strings</code>, return in-band error values. This greatly simplifies string-manipulation code at the cost of requiring more diligence from the programmer. In general, Go code in the Google codebase should return additional values for errors.</p><h3 id=indent-error-flow>Indent error flow
+<a class=anchor href=#indent-error-flow>#</a></h3><p>Handle errors before proceeding with the rest of your code. This improves the readability of the code by enabling the reader to find the normal path quickly. This same logic applies to any block which tests a condition then ends in a terminal condition (e.g., <code>return</code>, <code>panic</code>, <code>log.Fatal</code>).</p><p>Code that runs if the terminal condition is not met should appear after the <code>if</code> block, and should not be indented in an <code>else</code> clause.</p><pre tabindex=0><code>// Good:
+if err != nil {
+    // error handling
+    return // or continue, etc.
+}
+// normal code
+// Bad:
+if err != nil {
+    // error handling
+} else {
+    // normal code that looks abnormal due to indentation
+}
+</code></pre><blockquote><p><strong>Tip:</strong> If you are using a variable for more than a few lines of code, it is generally not worth using the <code>if</code>-with-initializer style. In these cases, it is usually better to move the declaration out and use a standard <code>if</code> statement:</p><pre tabindex=0><code>// Good:
+x, err := f()
+if err != nil {
+  // error handling
+  return
+}
+// lots of code that uses x
+// across multiple lines
+// Bad:
+if x, err := f(); err != nil {
+  // error handling
+  return
+} else {
+  // lots of code that uses x
+  // across multiple lines
+}
+</code></pre></blockquote><p>See <a href=https://google.github.io/styleguide/go/index.html#gotip>Go Tip #1: Line of Sight</a> and <a href=https://testing.googleblog.com/2017/06/code-health-reduce-nesting-reduce.html>TotT: Reduce Code Complexity by Reducing Nesting</a> for more details.</p><h2 id=language>Language
+<a class=anchor href=#language>#</a></h2><h3 id=literal-formatting>Literal formatting
+<a class=anchor href=#literal-formatting>#</a></h3><p>Go has an exceptionally powerful <a href=https://golang.org/ref/spec#Composite_literals>composite literal syntax</a>, with which it is possible to express deeply-nested, complicated values in a single expression. Where possible, this literal syntax should be used instead of building values field-by-field. The <code>gofmt</code> formatting for literals is generally quite good, but there are some additional rules for keeping these literals readable and maintainable.</p><h4 id=field-names>Field names
+<a class=anchor href=#field-names>#</a></h4><p>Struct literals should usually specify <strong>field names</strong> for types defined outside the current package.</p><ul><li><p>Include field names for types from other packages.</p><pre tabindex=0><code>// Good:
+good := otherpkg.Type{A: 42}
+</code></pre><p>The position of fields in a struct and the full set of fields (both of which are necessary to get right when field names are omitted) are not usually considered to be part of a struct’s public API; specifying the field name is needed to avoid unnecessary coupling.</p><pre tabindex=0><code>// Bad:
+// https://pkg.go.dev/encoding/csv#Reader
+r := csv.Reader{&#39;,&#39;, &#39;#&#39;, 4, false, false, false, false}
+</code></pre><p>Field names may be omitted within small, simple structs whose composition and order are documented as being stable.</p><pre tabindex=0><code>// Good:
+okay := image.Point{42, 54}
+also := image.Point{X: 42, Y: 54}
+</code></pre></li><li><p>For package-local types, field names are optional.</p><pre tabindex=0><code>// Good:
+okay := Type{42}
+also := internalType{4, 2}
+</code></pre><p>Field names should still be used if it makes the code clearer, and it is very common to do so. For example, a struct with a large number of fields should almost always be initialized with field names.</p><pre tabindex=0><code>// Good:
+okay := StructWithLotsOfFields{
+  field1: 1,
+  field2: &#34;two&#34;,
+  field3: 3.14,
+  field4: true,
+}
+</code></pre></li></ul><h4 id=matching-braces>Matching braces
+<a class=anchor href=#matching-braces>#</a></h4><p>The closing half of a brace pair should always appear on a line with the same amount of indentation as the opening brace. One-line literals necessarily have this property. When the literal spans multiple lines, maintaining this property keeps the brace matching for literals the same as brace matching for common Go syntactic constructs like functions and <code>if</code> statements.</p><p>The most common mistake in this area is putting the closing brace on the same line as a value in a multi-line struct literal. In these cases, the line should end with a comma and the closing brace should appear on the next line.</p><pre tabindex=0><code>// Good:
+good := []*Type{{Key: &#34;value&#34;}}
+// Good:
+good := []*Type{
+    {Key: &#34;multi&#34;},
+    {Key: &#34;line&#34;},
+}
+// Bad:
+bad := []*Type{
+    {Key: &#34;multi&#34;},
+    {Key: &#34;line&#34;}}
+// Bad:
+bad := []*Type{
+    {
+        Key: &#34;value&#34;},
+}
+</code></pre><h4 id=cuddled-braces>Cuddled braces
+<a class=anchor href=#cuddled-braces>#</a></h4><p>Dropping whitespace between braces (aka “cuddling” them) for slice and array literals is only permitted when both of the following are true.</p><ul><li>The <a href=https://google.github.io/styleguide/go/decisions#literal-matching-braces>indentation matches</a></li><li>The inner values are also literals or proto builders (i.e. not a variable or other expression)</li></ul><pre tabindex=0><code>// Good:
+good := []*Type{
+    { // Not cuddled
+        Field: &#34;value&#34;,
+    },
+    {
+        Field: &#34;value&#34;,
+    },
+}
+// Good:
+good := []*Type{{ // Cuddled correctly
+    Field: &#34;value&#34;,
+}, {
+    Field: &#34;value&#34;,
+}}
+// Good:
+good := []*Type{
+    first, // Can&#39;t be cuddled
+    {Field: &#34;second&#34;},
+}
+// Good:
+okay := []*pb.Type{pb.Type_builder{
+    Field: &#34;first&#34;, // Proto Builders may be cuddled to save vertical space
+}.Build(), pb.Type_builder{
+    Field: &#34;second&#34;,
+}.Build()}
+// Bad:
+bad := []*Type{
+    first,
+    {
+        Field: &#34;second&#34;,
+    }}
+</code></pre><h4 id=repeated-type-names>Repeated type names
+<a class=anchor href=#repeated-type-names>#</a></h4><p>Repeated type names may be omitted from slice and map literals. This can be helpful in reducing clutter. A reasonable occasion for repeating the type names explicitly is when dealing with a complex type that is not common in your project, when the repetitive type names are on lines that are far apart and can remind the reader of the context.</p><pre tabindex=0><code>// Good:
+good := []*Type{
+    {A: 42},
+    {A: 43},
+}
+// Bad:
+repetitive := []*Type{
+    &amp;Type{A: 42},
+    &amp;Type{A: 43},
+}
+// Good:
+good := map[Type1]*Type2{
+    {A: 1}: {B: 2},
+    {A: 3}: {B: 4},
+}
+// Bad:
+repetitive := map[Type1]*Type2{
+    Type1{A: 1}: &amp;Type2{B: 2},
+    Type1{A: 3}: &amp;Type2{B: 4},
+}
+</code></pre><p><strong>Tip:</strong> If you want to remove repetitive type names in struct literals, you can run <code>gofmt -s</code>.</p><h4 id=zero-value-fields>Zero-value fields
+<a class=anchor href=#zero-value-fields>#</a></h4><p><a href=https://golang.org/ref/spec#The_zero_value>Zero-value</a> fields may be omitted from struct literals when clarity is not lost as a result.</p><p>Well-designed APIs often employ zero-value construction for enhanced readability. For example, omitting the three zero-value fields from the following struct draws attention to the only option that is being specified.</p><pre tabindex=0><code>// Bad:
+import (
+  &#34;github.com/golang/leveldb&#34;
+  &#34;github.com/golang/leveldb/db&#34;
+)
+
+ldb := leveldb.Open(&#34;/my/table&#34;, &amp;db.Options{
+    BlockSize int: 1&lt;&lt;16,
+    ErrorIfDBExists: true,
+
+    // These fields all have their zero values.
+    BlockRestartInterval: 0,
+    Comparer: nil,
+    Compression: nil,
+    FileSystem: nil,
+    FilterPolicy: nil,
+    MaxOpenFiles: 0,
+    WriteBufferSize: 0,
+    VerifyChecksums: false,
+})
+// Good:
+import (
+  &#34;github.com/golang/leveldb&#34;
+  &#34;github.com/golang/leveldb/db&#34;
+)
+
+ldb := leveldb.Open(&#34;/my/table&#34;, &amp;db.Options{
+    BlockSize int: 1&lt;&lt;16,
+    ErrorIfDBExists: true,
+})
+</code></pre><p>Structs within table-driven tests often benefit from <a href=https://google.github.io/styleguide/go/decisions#literal-field-names>explicit field names</a>, especially when the test struct is not trivial. This allows the author to omit the zero-valued fields entirely when the fields in question are not related to the test case. For example, successful test cases should omit any error-related or failure-related fields. In cases where the zero value is necessary to understand the test case, such as testing for zero or <code>nil</code> inputs, the field names should be specified.</p><p><strong>Concise</strong></p><pre tabindex=0><code>tests := []struct {
+    input      string
+    wantPieces []string
+    wantErr    error
+}{
+    {
+        input:      &#34;1.2.3.4&#34;,
+        wantPieces: []string{&#34;1&#34;, &#34;2&#34;, &#34;3&#34;, &#34;4&#34;},
+    },
+    {
+        input:   &#34;hostname&#34;,
+        wantErr: ErrBadHostname,
+    },
+}
+</code></pre><p><strong>Explicit</strong></p><pre tabindex=0><code>tests := []struct {
+    input    string
+    wantIPv4 bool
+    wantIPv6 bool
+    wantErr  bool
+}{
+    {
+        input:    &#34;1.2.3.4&#34;,
+        wantIPv4: true,
+        wantIPv6: false,
+    },
+    {
+        input:    &#34;1:2::3:4&#34;,
+        wantIPv4: false,
+        wantIPv6: true,
+    },
+    {
+        input:    &#34;hostname&#34;,
+        wantIPv4: false,
+        wantIPv6: false,
+        wantErr:  true,
+    },
+}
+</code></pre><h3 id=nil-slices>Nil slices
+<a class=anchor href=#nil-slices>#</a></h3><p>For most purposes, there is no functional difference between <code>nil</code> and the empty slice. Built-in functions like <code>len</code> and <code>cap</code> behave as expected on <code>nil</code> slices.</p><pre tabindex=0><code>// Good:
+import &#34;fmt&#34;
+
+var s []int         // nil
+
+fmt.Println(s)      // []
+fmt.Println(len(s)) // 0
+fmt.Println(cap(s)) // 0
+for range s {...}   // no-op
+
+s = append(s, 42)
+fmt.Println(s)      // [42]
+</code></pre><p>If you declare an empty slice as a local variable (especially if it can be the source of a return value), prefer the nil initialization to reduce the risk of bugs by callers.</p><pre tabindex=0><code>// Good:
+var t []string
+// Bad:
+t := []string{}
+</code></pre><p>Do not create APIs that force their clients to make distinctions between nil and the empty slice.</p><pre tabindex=0><code>// Good:
+// Ping pings its targets.
+// Returns hosts that successfully responded.
+func Ping(hosts []string) ([]string, error) { ... }
+// Bad:
+// Ping pings its targets and returns a list of hosts
+// that successfully responded. Can be empty if the input was empty.
+// nil signifies that a system error occurred.
+func Ping(hosts []string) []string { ... }
+</code></pre><p>When designing interfaces, avoid making a distinction between a <code>nil</code> slice and a non-<code>nil</code>, zero-length slice, as this can lead to subtle programming errors. This is typically accomplished by using <code>len</code> to check for emptiness, rather than <code>== nil</code>.</p><p>This implementation accepts both <code>nil</code> and zero-length slices as “empty”:</p><pre tabindex=0><code>// Good:
+// describeInts describes s with the given prefix, unless s is empty.
+func describeInts(prefix string, s []int) {
+    if len(s) == 0 {
+        return
+    }
+    fmt.Println(prefix, s)
+}
+</code></pre><p>Instead of relying on the distinction as a part of the API:</p><pre tabindex=0><code>// Bad:
+func maybeInts() []int { /* ... */ }
+
+// describeInts describes s with the given prefix; pass nil to skip completely.
+func describeInts(prefix string, s []int) {
+  // The behavior of this function unintentionally changes depending on what
+  // maybeInts() returns in &#39;empty&#39; cases (nil or []int{}).
+  if s == nil {
+    return
+  }
+  fmt.Println(prefix, s)
+}
+
+describeInts(&#34;Here are some ints:&#34;, maybeInts())
+</code></pre><p>See <a href=https://google.github.io/styleguide/go/decisions#in-band-errors>in-band errors</a> for further discussion.</p><h3 id=indentation-confusion>Indentation confusion
+<a class=anchor href=#indentation-confusion>#</a></h3><p>Avoid introducing a line break if it would align the rest of the line with an indented code block. If this is unavoidable, leave a space to separate the code in the block from the wrapped line.</p><pre tabindex=0><code>// Bad:
+if longCondition1 &amp;&amp; longCondition2 &amp;&amp;
+    // Conditions 3 and 4 have the same indentation as the code within the if.
+    longCondition3 &amp;&amp; longCondition4 {
+    log.Info(&#34;all conditions met&#34;)
+}
+</code></pre><p>See the following sections for specific guidelines and examples:</p><ul><li><a href=https://google.github.io/styleguide/go/decisions#func-formatting>Function formatting</a></li><li><a href=https://google.github.io/styleguide/go/decisions#conditional-formatting>Conditionals and loops</a></li><li><a href=https://google.github.io/styleguide/go/decisions#literal-formatting>Literal formatting</a></li></ul><h3 id=function-formatting>Function formatting
+<a class=anchor href=#function-formatting>#</a></h3><p>The signature of a function or method declaration should remain on a single line to avoid <a href=https://google.github.io/styleguide/go/decisions#indentation-confusion>indentation confusion</a>.</p><p>Function argument lists can make some of the longest lines in a Go source file. However, they precede a change in indentation, and therefore it is difficult to break the line in a way that does not make subsequent lines look like part of the function body in a confusing way:</p><pre tabindex=0><code>// Bad:
+func (r *SomeType) SomeLongFunctionName(foo1, foo2, foo3 string,
+    foo4, foo5, foo6 int) {
+    foo7 := bar(foo1)
+    // ...
+}
+</code></pre><p>See <a href=https://google.github.io/styleguide/go/best-practices#funcargs>best practices</a> for a few options for shortening the call sites of functions that would otherwise have many arguments.</p><pre tabindex=0><code>// Good:
+good := foo.Call(long, CallOptions{
+    Names:   list,
+    Of:      of,
+    The:     parameters,
+    Func:    all,
+    Args:    on,
+    Now:     separate,
+    Visible: lines,
+})
+// Bad:
+bad := foo.Call(
+    long,
+    list,
+    of,
+    parameters,
+    all,
+    on,
+    separate,
+    lines,
+)
+</code></pre><p>Lines can often be shortened by factoring out local variables.</p><pre tabindex=0><code>// Good:
+local := helper(some, parameters, here)
+good := foo.Call(list, of, parameters, local)
+</code></pre><p>Similarly, function and method calls should not be separated based solely on line length.</p><pre tabindex=0><code>// Good:
+good := foo.Call(long, list, of, parameters, all, on, one, line)
+// Bad:
+bad := foo.Call(long, list, of, parameters,
+    with, arbitrary, line, breaks)
+</code></pre><p>Do not add comments to specific function parameters. Instead, use an <a href=https://google.github.io/styleguide/go/best-practices#option-structure>option struct</a> or add more detail to the function documentation.</p><pre tabindex=0><code>// Good:
+good := server.New(ctx, server.Options{Port: 42})
+// Bad:
+bad := server.New(
+    ctx,
+    42, // Port
+)
+</code></pre><p>If call-sites are uncomfortably long, consider refactoring:</p><pre tabindex=0><code>// Good:
+// Sometimes variadic arguments can be factored out
+replacements := []string{
+    &#34;from&#34;, &#34;to&#34;, // related values can be formatted adjacent to one another
+    &#34;source&#34;, &#34;dest&#34;,
+    &#34;original&#34;, &#34;new&#34;,
+}
+
+// Use the replacement struct as inputs to NewReplacer.
+replacer := strings.NewReplacer(replacements...)
+</code></pre><p>If the API cannot be changed or if the local call is unusual (whether or not the call is too long), it is always permissible to add line breaks if it aids in understanding the call.</p><pre tabindex=0><code>// Good:
+canvas.RenderCube(cube,
+    x0, y0, z0,
+    x0, y0, z1,
+    x0, y1, z0,
+    x0, y1, z1,
+    x1, y0, z0,
+    x1, y0, z1,
+    x1, y1, z0,
+    x1, y1, z1,
+)
+</code></pre><p>Note that the lines in the above example are not wrapped at a specific column boundary but are grouped based on co-ordinate triples.</p><p>Long string literals within functions should not be broken for the sake of line length. For functions that include such strings, a line break can be added after the string format, and the arguments can be provided on the next or subsequent lines. The decision about where the line breaks should go is best made based on semantic groupings of inputs, rather than based purely on line length.</p><pre tabindex=0><code>// Good:
+log.Warningf(&#34;Database key (%q, %d, %q) incompatible in transaction started by (%q, %d, %q)&#34;,
+    currentCustomer, currentOffset, currentKey,
+    txCustomer, txOffset, txKey)
+// Bad:
+log.Warningf(&#34;Database key (%q, %d, %q) incompatible in&#34;+
+    &#34; transaction started by (%q, %d, %q)&#34;,
+    currentCustomer, currentOffset, currentKey, txCustomer,
+    txOffset, txKey)
+</code></pre><h3 id=conditionals-and-loops>Conditionals and loops
+<a class=anchor href=#conditionals-and-loops>#</a></h3><p>An <code>if</code> statement should not be line broken; multi-line <code>if</code> clauses can lead to <a href=https://google.github.io/styleguide/go/decisions#indentation-confusion>indentation confusion</a>.</p><pre tabindex=0><code>// Bad:
+// The second if statement is aligned with the code within the if block, causing
+// indentation confusion.
+if db.CurrentStatusIs(db.InTransaction) &amp;&amp;
+    db.ValuesEqual(db.TransactionKey(), row.Key()) {
+    return db.Errorf(db.TransactionError, &#34;query failed: row (%v): key does not match transaction key&#34;, row)
+}
+</code></pre><p>If the short-circuit behavior is not required, the boolean operands can be extracted directly:</p><pre tabindex=0><code>// Good:
+inTransaction := db.CurrentStatusIs(db.InTransaction)
+keysMatch := db.ValuesEqual(db.TransactionKey(), row.Key())
+if inTransaction &amp;&amp; keysMatch {
+    return db.Error(db.TransactionError, &#34;query failed: row (%v): key does not match transaction key&#34;, row)
+}
+</code></pre><p>There may also be other locals that can be extracted, especially if the conditional is already repetitive:</p><pre tabindex=0><code>// Good:
+uid := user.GetUniqueUserID()
+if db.UserIsAdmin(uid) || db.UserHasPermission(uid, perms.ViewServerConfig) || db.UserHasPermission(uid, perms.CreateGroup) {
+    // ...
+}
+// Bad:
+if db.UserIsAdmin(user.GetUniqueUserID()) || db.UserHasPermission(user.GetUniqueUserID(), perms.ViewServerConfig) || db.UserHasPermission(user.GetUniqueUserID(), perms.CreateGroup) {
+    // ...
+}
+</code></pre><p><code>if</code> statements that contain closures or multi-line struct literals should ensure that the <a href=https://google.github.io/styleguide/go/decisions#literal-matching-braces>braces match</a> to avoid <a href=https://google.github.io/styleguide/go/decisions#indentation-confusion>indentation confusion</a>.</p><pre tabindex=0><code>// Good:
+if err := db.RunInTransaction(func(tx *db.TX) error {
+    return tx.Execute(userUpdate, x, y, z)
+}); err != nil {
+    return fmt.Errorf(&#34;user update failed: %s&#34;, err)
+}
+// Good:
+if _, err := client.Update(ctx, &amp;upb.UserUpdateRequest{
+    ID:   userID,
+    User: user,
+}); err != nil {
+    return fmt.Errorf(&#34;user update failed: %s&#34;, err)
+}
+</code></pre><p>Similarly, don’t try inserting artificial linebreaks into <code>for</code> statements. You can always let the line simply be long if there is no elegant way to refactor it:</p><pre tabindex=0><code>// Good:
+for i, max := 0, collection.Size(); i &lt; max &amp;&amp; !collection.HasPendingWriters(); i++ {
+    // ...
+}
+</code></pre><p>Often, though, there is:</p><pre tabindex=0><code>// Good:
+for i, max := 0, collection.Size(); i &lt; max; i++ {
+    if collection.HasPendingWriters() {
+        break
+    }
+    // ...
+}
+</code></pre><p><code>switch</code> and <code>case</code> statements should also remain on a single line.</p><pre tabindex=0><code>// Good:
+switch good := db.TransactionStatus(); good {
+case db.TransactionStarting, db.TransactionActive, db.TransactionWaiting:
+    // ...
+case db.TransactionCommitted, db.NoTransaction:
+    // ...
+default:
+    // ...
+}
+// Bad:
+switch bad := db.TransactionStatus(); bad {
+case db.TransactionStarting,
+    db.TransactionActive,
+    db.TransactionWaiting:
+    // ...
+case db.TransactionCommitted,
+    db.NoTransaction:
+    // ...
+default:
+    // ...
+}
+</code></pre><p>If the line is excessively long, indent all cases and separate them with a blank line to avoid <a href=https://google.github.io/styleguide/go/decisions#indentation-confusion>indentation confusion</a>:</p><pre tabindex=0><code>// Good:
+switch db.TransactionStatus() {
+case
+    db.TransactionStarting,
+    db.TransactionActive,
+    db.TransactionWaiting,
+    db.TransactionCommitted:
+
+    // ...
+case db.NoTransaction:
+    // ...
+default:
+    // ...
+}
+</code></pre><p>In conditionals comparing a variable to a constant, place the variable value on the left hand side of the equality operator:</p><pre tabindex=0><code>// Good:
+if result == &#34;foo&#34; {
+  // ...
+}
+</code></pre><p>Instead of the less clear phrasing where the constant comes first (<a href=https://en.wikipedia.org/wiki/Yoda_conditions>“Yoda style conditionals”</a>):</p><pre tabindex=0><code>// Bad:
+if &#34;foo&#34; == result {
+  // ...
+}
+</code></pre><h3 id=copying>Copying
+<a class=anchor href=#copying>#</a></h3><p>To avoid unexpected aliasing and similar bugs, be careful when copying a struct from another package. For example, synchronization objects such as <code>sync.Mutex</code> must not be copied.</p><p>The <code>bytes.Buffer</code> type contains a <code>[]byte</code> slice and, as an optimization for small strings, a small byte array to which the slice may refer. If you copy a <code>Buffer</code>, the slice in the copy may alias the array in the original, causing subsequent method calls to have surprising effects.</p><p>In general, do not copy a value of type <code>T</code> if its methods are associated with the pointer type, <code>*T</code>.</p><pre tabindex=0><code>// Bad:
+b1 := bytes.Buffer{}
+b2 := b1
+</code></pre><p>Invoking a method that takes a value receiver can hide the copy. When you author an API, you should generally take and return pointer types if your structs contain fields that should not be copied.</p><p>These are acceptable:</p><pre tabindex=0><code>// Good:
+type Record struct {
+  buf bytes.Buffer
+  // other fields omitted
+}
+
+func New() *Record {...}
+
+func (r *Record) Process(...) {...}
+
+func Consumer(r *Record) {...}
+</code></pre><p>But these are usually wrong:</p><pre tabindex=0><code>// Bad:
+type Record struct {
+  buf bytes.Buffer
+  // other fields omitted
+}
+
+func (r Record) Process(...) {...} // Makes a copy of r.buf
+
+func Consumer(r Record) {...} // Makes a copy of r.buf
+</code></pre><p>This guidance also applies to copying <code>sync.Mutex</code>.</p><h3 id=dont-panic>Don’t panic
+<a class=anchor href=#dont-panic>#</a></h3><p>Do not use <code>panic</code> for normal error handling. Instead, use <code>error</code> and multiple return values. See the <a href=http://golang.org/doc/effective_go.html#errors>Effective Go section on errors</a>.</p><p>Within <code>package main</code> and initialization code, consider <a href=https://pkg.go.dev/github.com/golang/glog#Exit><code>log.Exit</code></a> for errors that should terminate the program (e.g., invalid configuration), as in many of these cases a stack trace will not help the reader. Please note that <a href=https://pkg.go.dev/github.com/golang/glog#Exit><code>log.Exit</code></a> calls <a href=https://pkg.go.dev/os#Exit><code>os.Exit</code></a> and any deferred functions will not be run.</p><p>For errors that indicate “impossible” conditions, namely bugs that should always be caught during code review and/or testing, a function may reasonably return an error or call <a href=https://pkg.go.dev/github.com/golang/glog#Fatal><code>log.Fatal</code></a>.</p><p><strong>Note:</strong> <code>log.Fatalf</code> is not the standard library log. See [#logging].</p><h3 id=must-functions>Must functions
+<a class=anchor href=#must-functions>#</a></h3><p>Setup helper functions that stop the program on failure follow the naming convention <code>MustXYZ</code> (or <code>mustXYZ</code>). In general, they should only be called early on program startup, not on things like user input where normal Go error handling is preferred.</p><p>This often comes up for functions called to initialize package-level variables exclusively at <a href=https://golang.org/ref/spec#Package_initialization>package initialization time</a> (e.g. <a href=https://golang.org/pkg/text/template/#Must>template.Must</a> and <a href=https://golang.org/pkg/regexp/#MustCompile>regexp.MustCompile</a>).</p><pre tabindex=0><code>// Good:
+func MustParse(version string) *Version {
+    v, err := Parse(version)
+    if err != nil {
+        log.Fatalf(&#34;MustParse(%q) = _, %v&#34;, version, err)
+    }
+    return v
+}
+
+// Package level &#34;constant&#34;. If we wanted to use `Parse`, we would have had to
+// set the value in `init`.
+var DefaultVersion = MustParse(&#34;1.2.3&#34;)
+</code></pre><p><strong>Note:</strong> <code>log.Fatalf</code> is not the standard library log. See [#logging].</p><p>The same convention may be used in test helpers that only stop the current test (using <code>t.Fatal</code>). Such helpers are often convenient in creating test values, for example in struct fields of <a href=https://google.github.io/styleguide/go/decisions#table-driven-tests>table driven tests</a>, as functions that return errors cannot be directly assigned to a struct field.</p><pre tabindex=0><code>// Good:
+func mustMarshalAny(t *testing.T, m proto.Message) *anypb.Any {
+  t.Helper()
+  any, err := anypb.New(m)
+  if err != nil {
+    t.Fatalf(&#34;MustMarshalAny(t, m) = %v; want %v&#34;, err, nil)
+  }
+  return any
+}
+
+func TestCreateObject(t *testing.T) {
+  tests := []struct{
+    desc string
+    data *anypb.Any
+  }{
+    {
+      desc: &#34;my test case&#34;,
+      // Creating values directly within table driven test cases.
+      data: mustMarshalAny(t, mypb.Object{}),
+    },
+    // ...
+  }
+  // ...
+}
+</code></pre><p>In both of these cases, the value of this pattern is that the helpers can be called in a “value” context. These helpers should not be called in places where it’s difficult to ensure an error would be caught or in a context where an error should be <a href=https://google.github.io/styleguide/go/decisions#handle-errors>checked</a> (e.g., in many request handlers). For constant inputs, this allows tests to easily ensure that the <code>Must</code> arguments are well-formed, and for non-constant inputs it permits tests to validate that errors are <a href=https://google.github.io/styleguide/go/best-practices#error-handling>properly handled or propagated</a>.</p><p>Where <code>Must</code> functions are used in a test, they should generally be <a href=https://google.github.io/styleguide/go/decisions#mark-test-helpers>marked as a test helper</a> and call <code>t.Fatal</code> on error (see <a href=https://google.github.io/styleguide/go/best-practices#test-helper-error-handling>error handling in test helpers</a> for more considerations of using that).</p><p>They should not be used when <a href=https://google.github.io/styleguide/go/best-practices#error-handling>ordinary error handling</a> is possible (including with some refactoring):</p><pre tabindex=0><code>// Bad:
+func Version(o *servicepb.Object) (*version.Version, error) {
+    // Return error instead of using Must functions.
+    v := version.MustParse(o.GetVersionString())
+    return dealiasVersion(v)
+}
+</code></pre><h3 id=goroutine-lifetimes>Goroutine lifetimes
+<a class=anchor href=#goroutine-lifetimes>#</a></h3><p>When you spawn goroutines, make it clear when or whether they exit.</p><p>Goroutines can leak by blocking on channel sends or receives. The garbage collector will not terminate a goroutine even if the channels it is blocked on are unreachable.</p><p>Even when goroutines do not leak, leaving them in-flight when they are no longer needed can cause other subtle and hard-to-diagnose problems. Sending on a channel that has been closed causes a panic.</p><pre tabindex=0><code>// Bad:
+ch := make(chan int)
+ch &lt;- 42
+close(ch)
+ch &lt;- 13 // panic
+</code></pre><p>Modifying still-in-use inputs “after the result isn’t needed” can lead to data races. Leaving goroutines in-flight for arbitrarily long can lead to unpredictable memory usage.</p><p>Concurrent code should be written such that the goroutine lifetimes are obvious. Typically this will mean keeping synchronization-related code constrained within the scope of a function and factoring out the logic into <a href=https://google.github.io/styleguide/go/decisions#synchronous-functions>synchronous functions</a>. If the concurrency is still not obvious, it is important to document when and why the goroutines exit.</p><p>Code that follows best practices around context usage often helps make this clear. It is conventionally managed with a <code>context.Context</code>:</p><pre tabindex=0><code>// Good:
+func (w *Worker) Run(ctx context.Context) error {
+    // ...
+    for item := range w.q {
+        // process returns at latest when the context is cancelled.
+        go process(ctx, item)
+    }
+    // ...
+}
+</code></pre><p>There are other variants of the above that use raw signal channels like <code>chan struct{}</code>, synchronized variables, <a href=https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view>condition variables</a>, and more. The important part is that the goroutine’s end is evident for subsequent maintainers.</p><p>In contrast, the following code is careless about when its spawned goroutines finish:</p><pre tabindex=0><code>// Bad:
+func (w *Worker) Run() {
+    // ...
+    for item := range w.q {
+        // process returns when it finishes, if ever, possibly not cleanly
+        // handling a state transition or termination of the Go program itself.
+        go process(item)
+    }
+    // ...
+}
+</code></pre><p>This code may look OK, but there are several underlying problems:</p><ul><li>The code probably has undefined behavior in production, and the program may not terminate cleanly, even if the operating system releases the resources.</li><li>The code is difficult to test meaningfully due to the code’s indeterminate lifecycle.</li><li>The code may leak resources as described above.</li></ul><p>See also:</p><ul><li><a href=https://dave.cheney.net/2016/12/22/never-start-a-goroutine-without-knowing-how-it-will-stop>Never start a goroutine without knowing how it will stop</a></li><li>Rethinking Classical Concurrency Patterns: <a href=https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view>slides</a>, <a href="https://www.youtube.com/watch?v=5zXAHh5tJqQ">video</a></li><li><a href=https://changelog.com/gotime/165>When Go programs end</a></li></ul><h3 id=interfaces>Interfaces
+<a class=anchor href=#interfaces>#</a></h3><p>Go interfaces generally belong in the package that <em>consumes</em> values of the interface type, not a package that <em>implements</em> the interface type. The implementing package should return concrete (usually pointer or struct) types. That way, new methods can be added to implementations without requiring extensive refactoring. See <a href=https://google.github.io/styleguide/go/index.html#gotip>GoTip #49: Accept Interfaces, Return Concrete Types</a> for more details.</p><p>Do not export a <a href=https://abseil.io/resources/swe-book/html/ch13.html#techniques_for_using_test_doubles>test double</a> implementation of an interface from an API that consumes it. Instead, design the API so that it can be tested using the <a href=https://abseil.io/resources/swe-book/html/ch12.html#test_via_public_apis>public API</a> of the <a href=https://google.github.io/styleguide/go/best-practices#use-real-transports>real implementation</a>. See <a href=https://google.github.io/styleguide/go/index.html#gotip>GoTip #42: Authoring a Stub for Testing</a> for more details. Even when it is not feasible to use the real implementation, it may not be necessary to introduce an interface fully covering all methods in the real type; the consumer can create an interface containing only the methods it needs, as demonstrated in <a href=https://google.github.io/styleguide/go/index.html#gotip>GoTip #78: Minimal Viable Interfaces</a>.</p><p>To test packages that use Stubby RPC clients, use a real client connection. If a real server cannot be run in the test, Google’s internal practice is to obtain a real client connection to a local [test double] using the internal rpctest package (coming soon!).</p><p>Do not define interfaces before they are used (see <a href=https://testing.googleblog.com/2017/08/code-health-eliminate-yagni-smells.html>TotT: Code Health: Eliminate YAGNI Smells</a> ). Without a realistic example of usage, it is too difficult to see whether an interface is even necessary, let alone what methods it should contain.</p><p>Do not use interface-typed parameters if the users of the package do not need to pass different types for them.</p><p>Do not export interfaces that the users of the package do not need.</p><p><strong>TODO:</strong> Write a more in-depth doc on interfaces and link to it here.</p><pre tabindex=0><code>// Good:
+package consumer // consumer.go
+
+type Thinger interface { Thing() bool }
+
+func Foo(t Thinger) string { ... }
+// Good:
+package consumer // consumer_test.go
+
+type fakeThinger struct{ ... }
+func (t fakeThinger) Thing() bool { ... }
+...
+if Foo(fakeThinger{...}) == &#34;x&#34; { ... }
+// Bad:
+package producer
+
+type Thinger interface { Thing() bool }
+
+type defaultThinger struct{ ... }
+func (t defaultThinger) Thing() bool { ... }
+
+func NewThinger() Thinger { return defaultThinger{ ... } }
+// Good:
+package producer
+
+type Thinger struct{ ... }
+func (t Thinger) Thing() bool { ... }
+
+func NewThinger() Thinger { return Thinger{ ... } }
+</code></pre><h3 id=generics>Generics
+<a class=anchor href=#generics>#</a></h3><p>Generics (formally called “<a href=https://go.dev/design/43651-type-parameters>Type Parameters</a>”) are allowed where they fulfill your business requirements. In many applications, a conventional approach using existing language features (slices, maps, interfaces, and so on) works just as well without the added complexity, so be wary of premature use. See the discussion on <a href=https://google.github.io/styleguide/go/guide#least-mechanism>least mechanism</a>.</p><p>When introducing an exported API that uses generics, make sure it is suitably documented. It’s highly encouraged to include motivating runnable <a href=https://google.github.io/styleguide/go/decisions#examples>examples</a>.</p><p>Do not use generics just because you are implementing an algorithm or data structure that does not care about the type of its member elements. If there is only one type being instantiated in practice, start by making your code work on that type without using generics at all. Adding polymorphism later will be straightforward compared to removing abstraction that is found to be unnecessary.</p><p>Do not use generics to invent domain-specific languages (DSLs). In particular, refrain from introducing error-handling frameworks that might put a significant burden on readers. Instead prefer established <a href=https://google.github.io/styleguide/go/decisions#errors>error handling</a> practices. For testing, be especially wary of introducing <a href=https://google.github.io/styleguide/go/decisions#assert>assertion libraries</a> or frameworks that result in less useful <a href=https://google.github.io/styleguide/go/decisions#useful-test-failures>test failures</a>.</p><p>In general:</p><ul><li><a href="https://www.youtube.com/watch?v=Pa_e9EeCdy8&t=1250s">Write code, don’t design types</a>. From a GopherCon talk by Robert Griesemer and Ian Lance Taylor.</li><li>If you have several types that share a useful unifying interface, consider modeling the solution using that interface. Generics may not be needed.</li><li>Otherwise, instead of relying on the <code>any</code> type and excessive <a href=https://tour.golang.org/methods/16>type switching</a>, consider generics.</li></ul><p>See also:</p><ul><li><a href="https://www.youtube.com/watch?v=nr8EpUO9jhw">Using Generics in Go</a>, talk by Ian Lance Taylor</li><li><a href=https://go.dev/doc/tutorial/generics>Generics tutorial</a> on Go’s webpage</li></ul><h3 id=pass-values>Pass values
+<a class=anchor href=#pass-values>#</a></h3><p>Do not pass pointers as function arguments just to save a few bytes. If a function reads its argument <code>x</code> only as <code>*x</code> throughout, then the argument shouldn’t be a pointer. Common instances of this include passing a pointer to a string (<code>*string</code>) or a pointer to an interface value (<code>*io.Reader</code>). In both cases, the value itself is a fixed size and can be passed directly.</p><p>This advice does not apply to large structs, or even small structs that may increase in size. In particular, protocol buffer messages should generally be handled by pointer rather than by value. The pointer type satisfies the <code>proto.Message</code> interface (accepted by <code>proto.Marshal</code>, <code>protocmp.Transform</code>, etc.), and protocol buffer messages can be quite large and often grow larger over time.</p><h3 id=receiver-type>Receiver type
+<a class=anchor href=#receiver-type>#</a></h3><p>A <a href=https://golang.org/ref/spec#Method_declarations>method receiver</a> can be passed either as a value or a pointer, just as if it were a regular function parameter. The choice of which to choose should be based on which <a href=https://golang.org/ref/spec#Method_sets>method set(s)</a> the method should be a part of.</p><p><strong>Correctness wins over speed or simplicity.</strong> There are cases where you must use a pointer value. In other cases, pick pointers for large types or as future-proofing if you don’t have a good sense of how the code will grow, and use values for simple <a href=https://en.wikipedia.org/wiki/Passive_data_structure>plain old data</a>.</p><p>The list below spells out each case in further detail:</p><ul><li><p>If the receiver is a slice and the method doesn’t reslice or reallocate the slice, use a value rather than a pointer.</p><pre tabindex=0><code>// Good:
+type Buffer []byte
+
+func (b Buffer) Len() int { return len(b) }
+</code></pre></li><li><p>If the method needs to mutate the receiver, the receiver must be a pointer.</p><pre tabindex=0><code>// Good:
+type Counter int
+
+func (c *Counter) Inc() { *c++ }
+
+// See https://pkg.go.dev/container/heap.
+type Queue []Item
+
+func (q *Queue) Push(x Item) { *q = append([]Item{x}, *q...) }
+</code></pre></li><li><p>If the receiver is a struct containing fields that <a href=https://google.github.io/styleguide/go/decisions#copying>cannot safely be copied</a>, use a pointer receiver. Common examples are <a href=https://pkg.go.dev/sync#Mutex><code>sync.Mutex</code></a> and other synchronization types.</p><pre tabindex=0><code>// Good:
+type Counter struct {
+    mu    sync.Mutex
+    total int
+}
+
+func (c *Counter) Inc() {
+    c.mu.Lock()
+    defer c.mu.Unlock()
+    c.total++
+}
+</code></pre><p><strong>Tip:</strong> Check the type’s <a href=https://pkg.go.dev/time#example-Duration>Godoc</a> for information about whether it is safe or unsafe to copy.</p></li><li><p>If the receiver is a “large” struct or array, a pointer receiver may be more efficient. Passing a struct is equivalent to passing all of its fields or elements as arguments to the method. If that seems too large to <a href=https://google.github.io/styleguide/go/decisions#pass-values>pass by value</a>, a pointer is a good choice.</p></li><li><p>For methods that will call or run concurrently with other functions that modify the receiver, use a value if those modifications should not be visible to your method; otherwise use a pointer.</p></li><li><p>If the receiver is a struct or array, any of whose elements is a pointer to something that may be mutated, prefer a pointer receiver to make the intention of mutability clear to the reader.</p><pre tabindex=0><code>// Good:
+type Counter struct {
+    m *Metric
+}
+
+func (c *Counter) Inc() {
+    c.m.Add(1)
+}
+</code></pre></li><li><p>If the receiver is a <a href=https://pkg.go.dev/builtin>built-in type</a>, such as an integer or a string, that does not need to be modified, use a value.</p><pre tabindex=0><code>// Good:
+type User string
+
+func (u User) String() { return string(u) }
+</code></pre></li><li><p>If the receiver is a map, function, or channel, use a value rather than a pointer.</p><pre tabindex=0><code>// Good:
+// See https://pkg.go.dev/net/http#Header.
+type Header map[string][]string
+
+func (h Header) Add(key, value string) { /* omitted */ }
+</code></pre></li><li><p>If the receiver is a “small” array or struct that is naturally a value type with no mutable fields and no pointers, a value receiver is usually the right choice.</p><pre tabindex=0><code>// Good:
+// See https://pkg.go.dev/time#Time.
+type Time struct { /* omitted */ }
+
+func (t Time) Add(d Duration) Time { /* omitted */ }
+</code></pre></li><li><p>When in doubt, use a pointer receiver.</p></li></ul><p>As a general guideline, prefer to make the methods for a type either all pointer methods or all value methods.</p><p><strong>Note:</strong> There is a lot of misinformation about whether passing a value or a pointer to a function can affect performance. The compiler can choose to pass pointers to values on the stack as well as copying values on the stack, but these considerations should not outweigh the readability and correctness of the code in most circumstances. When the performance does matter, it is important to profile both approaches with a realistic benchmark before deciding that one approach outperforms the other.</p><h3 id=switch-and-break><code>switch</code> and <code>break</code>
+<a class=anchor href=#switch-and-break>#</a></h3><p>Do not use <code>break</code> statements without target labels at the ends of <code>switch</code> clauses; they are redundant. Unlike in C and Java, <code>switch</code> clauses in Go automatically break, and a <code>fallthrough</code> statement is needed to achieve the C-style behavior. Use a comment rather than <code>break</code> if you want to clarify the purpose of an empty clause.</p><pre tabindex=0><code>// Good:
+switch x {
+case &#34;A&#34;, &#34;B&#34;:
+    buf.WriteString(x)
+case &#34;C&#34;:
+    // handled outside of the switch statement
+default:
+    return fmt.Errorf(&#34;unknown value: %q&#34;, x)
+}
+// Bad:
+switch x {
+case &#34;A&#34;, &#34;B&#34;:
+    buf.WriteString(x)
+    break // this break is redundant
+case &#34;C&#34;:
+    break // this break is redundant
+default:
+    return fmt.Errorf(&#34;unknown value: %q&#34;, x)
+}
+</code></pre><blockquote><p><strong>Note:</strong> If a <code>switch</code> clause is within a <code>for</code> loop, using <code>break</code> within <code>switch</code> does not exit the enclosing <code>for</code> loop.</p><pre tabindex=0><code>for {
+  switch x {
+  case &#34;A&#34;:
+     break // exits the switch, not the loop
+  }
+}
+</code></pre><p>To escape the enclosing loop, use a label on the <code>for</code> statement:</p><pre tabindex=0><code>loop:
+  for {
+    switch x {
+    case &#34;A&#34;:
+       break loop // exits the loop
+    }
+  }
+</code></pre></blockquote><h3 id=synchronous-functions>Synchronous functions
+<a class=anchor href=#synchronous-functions>#</a></h3><p>Synchronous functions return their results directly and finish any callbacks or channel operations before returning. Prefer synchronous functions over asynchronous functions.</p><p>Synchronous functions keep goroutines localized within a call. This helps to reason about their lifetimes, and avoid leaks and data races. Synchronous functions are also easier to test, since the caller can pass an input and check the output without the need for polling or synchronization.</p><p>If necessary, the caller can add concurrency by calling the function in a separate goroutine. However, it is quite difficult (sometimes impossible) to remove unnecessary concurrency at the caller side.</p><p>See also:</p><ul><li>“Rethinking Classical Concurrency Patterns”, talk by Bryan Mills: <a href=https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view>slides</a>, <a href="https://www.youtube.com/watch?v=5zXAHh5tJqQ">video</a></li></ul><h3 id=type-aliases>Type aliases
+<a class=anchor href=#type-aliases>#</a></h3><p>Use a <em>type definition</em>, <code>type T1 T2</code>, to define a new type. Use a <a href=http://golang.org/ref/spec#Type_declarations><em>type alias</em></a>, <code>type T1 = T2</code>, to refer to an existing type without defining a new type. Type aliases are rare; their primary use is to aid migrating packages to new source code locations. Don’t use type aliasing when it is not needed.</p><h3 id=use-q>Use %q
+<a class=anchor href=#use-q>#</a></h3><p>Go’s format functions (<code>fmt.Printf</code> etc.) have a <code>%q</code> verb which prints strings inside double-quotation marks.</p><pre tabindex=0><code>// Good:
+fmt.Printf(&#34;value %q looks like English text&#34;, someText)
+</code></pre><p>Prefer using <code>%q</code> over doing the equivalent manually, using <code>%s</code>:</p><pre tabindex=0><code>// Bad:
+fmt.Printf(&#34;value \&#34;%s\&#34; looks like English text&#34;, someText)
+// Avoid manually wrapping strings with single-quotes too:
+fmt.Printf(&#34;value &#39;%s&#39; looks like English text&#34;, someText)
+</code></pre><p>Using <code>%q</code> is recommended in output intended for humans where the input value could possibly be empty or contain control characters. It can be very hard to notice a silent empty string, but <code>""</code> stands out clearly as such.</p><h3 id=use-any>Use any
+<a class=anchor href=#use-any>#</a></h3><p>Go 1.18 introduces an <code>any</code> type as an <a href=https://go.googlesource.com/proposal/+/master/design/18130-type-alias.md>alias</a> to <code>interface{}</code>. Because it is an alias, <code>any</code> is equivalent to <code>interface{}</code> in many situations and in others it is easily interchangeable via an explicit conversion. Prefer to use <code>any</code> in new code.</p><h2 id=common-libraries>Common libraries
+<a class=anchor href=#common-libraries>#</a></h2><h3 id=flags>Flags
+<a class=anchor href=#flags>#</a></h3><p>Go programs in the Google codebase use an internal variant of the <a href=https://golang.org/pkg/flag/>standard <code>flag</code> package</a>. It has a similar interface but interoperates well with internal Google systems. Flag names in Go binaries should prefer to use underscores to separate words, though the variables that hold a flag’s value should follow the standard Go name style (<a href=https://google.github.io/styleguide/go/guide#mixed-caps>mixed caps</a>). Specifically, the flag name should be in snake case, and the variable name should be the equivalent name in camel case.</p><pre tabindex=0><code>// Good:
+var (
+    pollInterval = flag.Duration(&#34;poll_interval&#34;, time.Minute, &#34;Interval to use for polling.&#34;)
+)
+// Bad:
+var (
+    poll_interval = flag.Int(&#34;pollIntervalSeconds&#34;, 60, &#34;Interval to use for polling in seconds.&#34;)
+)
+</code></pre><p>Flags must only be defined in <code>package main</code> or equivalent.</p><p>General-purpose packages should be configured using Go APIs, not by punching through to the command-line interface; don’t let importing a library export new flags as a side effect. That is, prefer explicit function arguments or struct field assignment or much less frequently and under the strictest of scrutiny exported global variables. In the extremely rare case that it is necessary to break this rule, the flag name must clearly indicate the package that it configures.</p><p>If your flags are global variables, place them in their own <code>var</code> group, following the imports section.</p><p>There is additional discussion around best practices for creating <a href=https://google.github.io/styleguide/go/best-practices#complex-clis>complex CLIs</a> with subcommands.</p><p>See also:</p><ul><li><a href=https://abseil.io/tips/45>Tip of the Week #45: Avoid Flags, Especially in Library Code</a></li><li><a href=https://google.github.io/styleguide/go/index.html#gotip>Go Tip #10: Configuration Structs and Flags</a></li><li><a href=https://google.github.io/styleguide/go/index.html#gotip>Go Tip #80: Dependency Injection Principles</a></li></ul><h3 id=logging>Logging
+<a class=anchor href=#logging>#</a></h3><p>Go programs in the Google codebase use a variant of the <a href=https://pkg.go.dev/log>standard <code>log</code> package</a>. It has a similar but more powerful interface and interoperates well with internal Google systems. An open source version of this library is available as <a href=https://pkg.go.dev/github.com/golang/glog>package <code>glog</code></a>, and open source Google projects may use that, but this guide refers to it as <code>log</code> throughout.</p><p><strong>Note:</strong> For abnormal program exits, this library uses <code>log.Fatal</code> to abort with a stacktrace, and <code>log.Exit</code> to stop without one. There is no <code>log.Panic</code> function as in the standard library.</p><p><strong>Tip:</strong> <code>log.Info(v)</code> is equivalent <code>log.Infof("%v", v)</code>, and the same goes for other logging levels. Prefer the non-formatting version when you have no formatting to do.</p><p>See also:</p><ul><li>Best practices on <a href=https://google.github.io/styleguide/go/best-practices#error-logging>logging errors</a> and <a href=https://google.github.io/styleguide/go/best-practices#vlog>custom verbosily levels</a></li><li>When and how to use the log package to <a href=https://google.github.io/styleguide/go/best-practices#checks-and-panics>stop the program</a></li></ul><h3 id=contexts>Contexts
+<a class=anchor href=#contexts>#</a></h3><p>Values of the <a href=https://pkg.go.dev/context><code>context.Context</code></a> type carry security credentials, tracing information, deadlines, and cancellation signals across API and process boundaries. Unlike C++ and Java, which in the Google codebase use thread-local storage, Go programs pass contexts explicitly along the entire function call chain from incoming RPCs and HTTP requests to outgoing requests.</p><p>When passed to a function or method, <code>context.Context</code> is always the first parameter.</p><pre tabindex=0><code>func F(ctx context.Context /* other arguments */) {}
+</code></pre><p>Exceptions are:</p><ul><li><p>In an HTTP handler, where the context comes from <a href=https://pkg.go.dev/net/http#Request.Context><code>req.Context()</code></a>.</p></li><li><p>In streaming RPC methods, where the context comes from the stream.</p><p>Code using gRPC streaming accesses a context from a <code>Context()</code> method in the generated server type, which implements <code>grpc.ServerStream</code>. See <a href=https://grpc.io/docs/languages/go/generated-code/>https://grpc.io/docs/languages/go/generated-code/</a>.</p></li><li><p>In entrypoint functions (see below for examples of such functions), use <a href=https://pkg.go.dev/context/#Background><code>context.Background()</code></a>.</p><ul><li>In binary targets: <code>main</code></li><li>In general purpose code and libraries: <code>init</code></li><li>In tests: <code>TestXXX</code>, <code>BenchmarkXXX</code>, <code>FuzzXXX</code></li></ul></li></ul><blockquote><p><strong>Note</strong>: It is very rare for code in the middle of a callchain to require creating a base context of its own using <code>context.Background()</code>. Always prefer taking a context from your caller, unless it’s the wrong context.</p><p>You may come across server libraries (the implementation of Stubby, gRPC, or HTTP in Google’s server framework for Go) that construct a fresh context object per request. These contexts are immediately filled with information from the incoming request, so that when passed to the request handler, the context’s attached values have been propagated to it across the network boundary from the client caller. Moreover, these contexts’ lifetimes are scoped to that of the request: when the request is finished, the context is cancelled.</p><p>Unless you are implementing a server framework, you shouldn’t create contexts with <code>context.Background()</code> in library code. Instead, prefer using context detachment, which is mentioned below, if there is an existing context available. If you think you do need <code>context.Background()</code> outside of entrypoint functions, discuss it with the Google Go style mailing list before committing to an implementation.</p></blockquote><p>The convention that <code>context.Context</code> comes first in functions also applies to test helpers.</p><pre tabindex=0><code>// Good:
+func readTestFile(ctx context.Context, t *testing.T, path string) string {}
+</code></pre><p>Do not add a context member to a struct type. Instead, add a context parameter to each method on the type that needs to pass it along. The one exception is for methods whose signature must match an interface in the standard library or in a third party library outside Google’s control. Such cases are very rare, and should be discussed with the Google Go style mailing list before implementation and readability review.</p><p>Code in the Google codebase that must spawn background operations which can run after the parent context has been cancelled can use an internal package for detachment. Follow <a href=https://github.com/golang/go/issues/40221>https://github.com/golang/go/issues/40221</a> for discussions on an open source alternative.</p><p>Since contexts are immutable, it is fine to pass the same context to multiple calls that share the same deadline, cancellation signal, credentials, parent trace, and so on.</p><p>See also:</p><ul><li><a href=https://go.dev/blog/context-and-structs>Contexts and structs</a></li></ul><h4 id=custom-contexts>Custom contexts
+<a class=anchor href=#custom-contexts>#</a></h4><p>Do not create custom context types or use interfaces other than context in function signatures. There are no exceptions to this rule.</p><p>Imagine if every team had a custom context. Every function call from package P to package Q would have to determine how to convert a <code>PContext</code> to a <code>QContext</code>, for all pairs of packages P and Q. This is impractical and error-prone for humans, and it makes automated refactorings that add context parameters nearly impossible.</p><p>If you have application data to pass around, put it in a parameter, in the receiver, in globals, or in a Context value if it truly belongs there. Creating your own Context type is not acceptable since it undermines the ability of the Go team to make Go programs work properly in production.</p><h3 id=cryptorand>crypto/rand
+<a class=anchor href=#cryptorand>#</a></h3><p>Do not use package <code>math/rand</code> to generate keys, even throwaway ones. If unseeded, the generator is completely predictable. Seeded with <code>time.Nanoseconds()</code>, there are just a few bits of entropy. Instead, use <code>crypto/rand</code>’s Reader, and if you need text, print to hexadecimal or base64.</p><pre tabindex=0><code>// Good:
+import (
+    &#34;crypto/rand&#34;
+    // &#34;encoding/base64&#34;
+    // &#34;encoding/hex&#34;
+    &#34;fmt&#34;
+
+    // ...
+)
+
+func Key() string {
+    buf := make([]byte, 16)
+    if _, err := rand.Read(buf); err != nil {
+        log.Fatalf(&#34;Out of randomness, should never happen: %v&#34;, err)
+    }
+    return fmt.Sprintf(&#34;%x&#34;, buf)
+    // or hex.EncodeToString(buf)
+    // or base64.StdEncoding.EncodeToString(buf)
+}
+</code></pre><p><strong>Note:</strong> <code>log.Fatalf</code> is not the standard library log. See [#logging].</p><h2 id=useful-test-failures>Useful test failures
+<a class=anchor href=#useful-test-failures>#</a></h2><p>It should be possible to diagnose a test’s failure without reading the test’s source. Tests should fail with helpful messages detailing:</p><ul><li>What caused the failure</li><li>What inputs resulted in an error</li><li>The actual result</li><li>What was expected</li></ul><p>Specific conventions for achieving this goal are outlined below.</p><h3 id=assertion-libraries>Assertion libraries
+<a class=anchor href=#assertion-libraries>#</a></h3><p>Do not create “assertion libraries” as helpers for testing.</p><p>Assertion libraries are libraries that attempt to combine the validation and production of failure messages within a test (though the same pitfalls can apply to other test helpers as well). For more on the distinction between test helpers and assertion libraries, see <a href=https://google.github.io/styleguide/go/best-practices#test-functions>best practices</a>.</p><pre tabindex=0><code>// Bad:
+var obj BlogPost
+
+assert.IsNotNil(t, &#34;obj&#34;, obj)
+assert.StringEq(t, &#34;obj.Type&#34;, obj.Type, &#34;blogPost&#34;)
+assert.IntEq(t, &#34;obj.Comments&#34;, obj.Comments, 2)
+assert.StringNotEq(t, &#34;obj.Body&#34;, obj.Body, &#34;&#34;)
+</code></pre><p>Assertion libraries tend to either stop the test early (if <code>assert</code> calls <code>t.Fatalf</code> or <code>panic</code>) or omit relevant information about what the test got right:</p><pre tabindex=0><code>// Bad:
+package assert
+
+func IsNotNil(t *testing.T, name string, val interface{}) {
+    if val == nil {
+        t.Fatalf(&#34;data %s = nil, want not nil&#34;, name)
+    }
+}
+
+func StringEq(t *testing.T, name, got, want string) {
+    if got != want {
+        t.Fatalf(&#34;data %s = %q, want %q&#34;, name, got, want)
+    }
+}
+</code></pre><p>Complex assertion functions often do not provide <a href=https://google.github.io/styleguide/go/decisions#useful-test-failures>useful failure messages</a> and context that exists within the test function. Too many assertion functions and libraries lead to a fragmented developer experience: which assertion library should I use, what style of output format should it emit, etc.? Fragmentation produces unnecessary confusion, especially for library maintainers and authors of large-scale changes, who are responsible for fixing potential downstream breakages. Instead of creating a domain-specific language for testing, use Go itself.</p><p>Assertion libraries often factor out comparisons and equality checks. Prefer using standard libraries such as <a href=https://pkg.go.dev/github.com/google/go-cmp/cmp><code>cmp</code></a> and <a href=https://golang.org/pkg/fmt/><code>fmt</code></a> instead:</p><pre tabindex=0><code>// Good:
+var got BlogPost
+
+want := BlogPost{
+    Comments: 2,
+    Body:     &#34;Hello, world!&#34;,
+}
+
+if !cmp.Equal(got, want) {
+    t.Errorf(&#34;blog post = %v, want = %v&#34;, got, want)
+}
+</code></pre><p>For more domain-specific comparison helpers, prefer returning a value or an error that can be used in the test’s failure message instead of passing <code>*testing.T</code> and calling its error reporting methods:</p><pre tabindex=0><code>// Good:
+func postLength(p BlogPost) int { return len(p.Body) }
+
+func TestBlogPost_VeritableRant(t *testing.T) {
+    post := BlogPost{Body: &#34;I am Gunnery Sergeant Hartman, your senior drill instructor.&#34;}
+
+    if got, want := postLength(post), 60; got != want {
+        t.Errorf(&#34;length of post = %v, want %v&#34;, got, want)
+    }
+}
+</code></pre><p><strong>Best Practice:</strong> Were <code>postLength</code> non-trivial, it would make sense to test it directly, independently of any tests that use it.</p><p>See also:</p><ul><li><a href=https://google.github.io/styleguide/go/decisions#types-of-equality>Equality comparison and diffs</a></li><li><a href=https://google.github.io/styleguide/go/decisions#print-diffs>Print diffs</a></li><li>For more on the distinction between test helpers and assertion helpers, see <a href=https://google.github.io/styleguide/go/best-practices#test-functions>best practices</a></li></ul><h3 id=identify-the-function>Identify the function
+<a class=anchor href=#identify-the-function>#</a></h3><p>In most tests, failure messages should include the name of the function that failed, even though it seems obvious from the name of the test function. Specifically, your failure message should be <code>YourFunc(%v) = %v, want %v</code> instead of just <code>got %v, want %v</code>.</p><h3 id=identify-the-input>Identify the input
+<a class=anchor href=#identify-the-input>#</a></h3><p>In most tests, failure messages should include the function inputs if they are short. If the relevant properties of the inputs are not obvious (for example, because the inputs are large or opaque), you should name your test cases with a description of what’s being tested and print the description as part of your error message.</p><h3 id=got-before-want>Got before want
+<a class=anchor href=#got-before-want>#</a></h3><p>Test outputs should include the actual value that the function returned before printing the value that was expected. A standard format for printing test outputs is <code>YourFunc(%v) = %v, want %v</code>. Where you would write “actual” and “expected”, prefer using the words “got” and “want”, respectively.</p><p>For diffs, directionality is less apparent, and as such it is important to include a key to aid in interpreting the failure. See the <a href=https://google.github.io/styleguide/go/decisions#print-diffs>section on printing diffs</a>. Whichever diff order you use in your failure messages, you should explicitly indicate it as a part of the failure message, because existing code is inconsistent about the ordering.</p><h3 id=full-structure-comparisons>Full structure comparisons
+<a class=anchor href=#full-structure-comparisons>#</a></h3><p>If your function returns a struct (or any data type with multiple fields such as slices, arrays, and maps), avoid writing test code that performs a hand-coded field-by-field comparison of the struct. Instead, construct the data that you’re expecting your function to return, and compare directly using a <a href=https://google.github.io/styleguide/go/decisions#types-of-equality>deep comparison</a>.</p><p><strong>Note:</strong> This does not apply if your data contains irrelevant fields that obscure the intention of the test.</p><p>If your struct needs to be compared for approximate (or equivalent kind of semantic) equality or it contains fields that cannot be compared for equality (e.g., if one of the fields is an <code>io.Reader</code>), tweaking a <a href=https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff><code>cmp.Diff</code></a> or <a href=https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Equal><code>cmp.Equal</code></a> comparison with <a href=https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts><code>cmpopts</code></a> options such as <a href=https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#IgnoreInterfaces><code>cmpopts.IgnoreInterfaces</code></a> may meet your needs (<a href=https://play.golang.org/p/vrCUNVfxsvF>example</a>).</p><p>If your function returns multiple return values, you don’t need to wrap those in a struct before comparing them. Just compare the return values individually and print them.</p><pre tabindex=0><code>// Good:
+val, multi, tail, err := strconv.UnquoteChar(`\&#34;Fran &amp; Freddie&#39;s Diner\&#34;`, &#39;&#34;&#39;)
+if err != nil {
+  t.Fatalf(...)
+}
+if val != `&#34;` {
+  t.Errorf(...)
+}
+if multi {
+  t.Errorf(...)
+}
+if tail != `Fran &amp; Freddie&#39;s Diner&#34;` {
+  t.Errorf(...)
+}
+</code></pre><h3 id=compare-stable-results>Compare stable results
+<a class=anchor href=#compare-stable-results>#</a></h3><p>Avoid comparing results that may depend on output stability of a package that you do not own. Instead, the test should compare on semantically relevant information that is stable and resistant to changes in dependencies. For functionality that returns a formatted string or serialized bytes, it is generally not safe to assume that the output is stable.</p><p>For example, <a href=https://golang.org/pkg/encoding/json/#Marshal><code>json.Marshal</code></a> can change (and has changed in the past) the specific bytes that it emits. Tests that perform string equality on the JSON string may break if the <code>json</code> package changes how it serializes the bytes. Instead, a more robust test would parse the contents of the JSON string and ensure that it is semantically equivalent to some expected data structure.</p><h3 id=keep-going>Keep going
+<a class=anchor href=#keep-going>#</a></h3><p>Tests should keep going for as long as possible, even after a failure, in order to print out all of the failed checks in a single run. This way, a developer who is fixing the failing test doesn’t have to re-run the test after fixing each bug to find the next bug.</p><p>Prefer calling <code>t.Error</code> over <code>t.Fatal</code> for reporting a mismatch. When comparing several different properties of a function’s output, use <code>t.Error</code> for each of those comparisons.</p><p>Calling <code>t.Fatal</code> is primarily useful for reporting an unexpected error condition, when subsequent comparison failures are not going to be meaningful.</p><p>For table-driven test, consider using subtests and use <code>t.Fatal</code> rather than <code>t.Error</code> and <code>continue</code>. See also <a href=https://google.github.io/styleguide/go/index.html#gotip>GoTip #25: Subtests: Making Your Tests Lean</a>.</p><p><strong>Best practice:</strong> For more discussion about when <code>t.Fatal</code> should be used, see <a href=https://google.github.io/styleguide/go/best-practices#t-fatal>best practices</a>.</p><h3 id=equality-comparison-and-diffs>Equality comparison and diffs
+<a class=anchor href=#equality-comparison-and-diffs>#</a></h3><p>The <code>==</code> operator evaluates equality using <a href=http://golang.org/ref/spec#Comparison_operators>language-defined comparisons</a>. Scalar values (numbers, booleans, etc) are compared based on their values, but only some structs and interfaces can be compared in this way. Pointers are compared based on whether they point to the same variable, rather than based on the equality of the values to which they point.</p><p>The <a href=https://pkg.go.dev/github.com/google/go-cmp/cmp><code>cmp</code></a> package can compare more complex data structures not appropriately handled by <code>==</code>, such as slices. Use <a href=https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Equal><code>cmp.Equal</code></a> for equality comparison and <a href=https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff><code>cmp.Diff</code></a> to obtain a human-readable diff between objects.</p><pre tabindex=0><code>// Good:
+want := &amp;Doc{
+    Type:     &#34;blogPost&#34;,
+    Comments: 2,
+    Body:     &#34;This is the post body.&#34;,
+    Authors:  []string{&#34;isaac&#34;, &#34;albert&#34;, &#34;emmy&#34;},
+}
+if !cmp.Equal(got, want) {
+    t.Errorf(&#34;AddPost() = %+v, want %+v&#34;, got, want)
+}
+</code></pre><p>As a general-purpose comparison library, <code>cmp</code> may not know how to compare certain types. For example, it can only compare protocol buffer messages if passed the <a href=https://pkg.go.dev/google.golang.org/protobuf/testing/protocmp#Transform><code>protocmp.Transform</code></a> option.</p><pre tabindex=0><code>// Good:
+if diff := cmp.Diff(want, got, protocmp.Transform()); diff != &#34;&#34; {
+    t.Errorf(&#34;Foo() returned unexpected difference in protobuf messages (-want +got):\n%s&#34;, diff)
+}
+</code></pre><p>Although the <code>cmp</code> package is not part of the Go standard library, it is maintained by the Go team and should produce stable equality results over time. It is user-configurable and should serve most comparison needs.</p><p>Existing code may make use of the following older libraries, and may continue using them for consistency:</p><ul><li><a href=https://pkg.go.dev/github.com/kylelemons/godebug/pretty><code>pretty</code></a> produces aesthetically pleasing difference reports. However, it quite deliberately considers values that have the same visual representation as equal. In particular, <code>pretty</code> does not catch differences between nil slices and empty ones, is not sensitive to different interface implementations with identical fields, and it is possible to use a nested map as the basis for comparison with a struct value. It also serializes the entire value into a string before producing a diff, and as such is not a good choice for comparing large values. By default, it compares unexported fields, which makes it sensitive to changes in implementation details in your dependencies. For this reason, it is not appropriate to use <code>pretty</code> on protobuf messages.</li></ul><p>Prefer using <code>cmp</code> for new code, and it is worth considering updating older code to use <code>cmp</code> where and when it is practical to do so.</p><p>Older code may use the standard library <code>reflect.DeepEqual</code> function to compare complex structures. <code>reflect.DeepEqual</code> should not be used for checking equality, as it is sensitive to changes in unexported fields and other implementation details. Code that is using <code>reflect.DeepEqual</code> should be updated to one of the above libraries.</p><p><strong>Note:</strong> The <code>cmp</code> package is designed for testing, rather than production use. As such, it may panic when it suspects that a comparison is performed incorrectly to provide instruction to users on how to improve the test to be less brittle. Given cmp’s propensity towards panicking, it makes it unsuitable for code that is used in production as a spurious panic may be fatal.</p><h3 id=level-of-detail>Level of detail
+<a class=anchor href=#level-of-detail>#</a></h3><p>The conventional failure message, which is suitable for most Go tests, is <code>YourFunc(%v) = %v, want %v</code>. However, there are cases that may call for more or less detail:</p><ul><li>Tests performing complex interactions should describe the interactions too. For example, if the same <code>YourFunc</code> is called several times, identify which call failed the test. If it’s important to know any extra state of the system, include that in the failure output (or at least in the logs).</li><li>If the data is a complex struct with significant boilerplate, it is acceptable to describe only the important parts in the message, but do not overly obscure the data.</li><li>Setup failures do not require the same level of detail. If a test helper populates a Spanner table but Spanner was down, you probably don’t need to include which test input you were going to store in the database. <code>t.Fatalf("Setup: Failed to set up test database: %s", err)</code> is usually helpful enough to resolve the issue.</li></ul><p><strong>Tip:</strong> Make your failure mode trigger during development. Review what the failure message looks like and whether a maintainer can effectively deal with the failure.</p><p>There are some techniques for reproducing test inputs and outputs clearly:</p><ul><li>When printing string data, <a href=https://google.github.io/styleguide/go/decisions#use-percent-q><code>%q</code> is often useful</a> to emphasize that the value is important and to more easily spot bad values.</li><li>When printing (small) structs, <code>%+v</code> can be more useful than <code>%v</code>.</li><li>When validation of larger values fails, <a href=https://google.github.io/styleguide/go/decisions#print-diffs>printing a diff</a> can make it easier to understand the failure.</li></ul><h3 id=print-diffs>Print diffs
+<a class=anchor href=#print-diffs>#</a></h3><p>If your function returns large output then it can be hard for someone reading the failure message to find the differences when your test fails. Instead of printing both the returned value and the wanted value, make a diff.</p><p>To compute diffs for such values, <code>cmp.Diff</code> is preferred, particularly for new tests and new code, but other tools may be used. See <a href=https://google.github.io/styleguide/go/decisions#types-of-equality>types of equality</a> for guidance regarding the strengths and weaknesses of each function.</p><ul><li><a href=https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff><code>cmp.Diff</code></a></li><li><a href=https://pkg.go.dev/github.com/kylelemons/godebug/pretty#Compare><code>pretty.Compare</code></a></li></ul><p>You can use the <a href=https://pkg.go.dev/github.com/kylelemons/godebug/diff><code>diff</code></a> package to compare multi-line strings or lists of strings. You can use this as a building block for other kinds of diffs.</p><p>Add some text to your failure message explaining the direction of the diff.</p><ul><li>Something like <code>diff (-want +got)</code> is good when you’re using the <code>cmp</code>, <code>pretty</code>, and <code>diff</code> packages (if you pass <code>(want, got)</code> to the function), because the <code>-</code> and <code>+</code> that you add to your format string will match the <code>-</code> and <code>+</code> that actually appear at the beginning of the diff lines. If you pass <code>(got, want)</code> to your function, the correct key would be <code>(-got +want)</code> instead.</li><li>The <code>messagediff</code> package uses a different output format, so the message <code>diff (want -> got)</code> is appropriate when you’re using it (if you pass <code>(want, got)</code> to the function), because the direction of the arrow will match the direction of the arrow in the “modified” lines.</li></ul><p>The diff will span multiple lines, so you should print a newline before you print the diff.</p><h3 id=test-error-semantics>Test error semantics
+<a class=anchor href=#test-error-semantics>#</a></h3><p>When a unit test performs string comparisons or uses a vanilla <code>cmp</code> to check that particular kinds of errors are returned for particular inputs, you may find that your tests are brittle if any of those error messages are reworded in the future. Since this has the potential to turn your unit test into a change detector (see <a href=https://testing.googleblog.com/2015/01/testing-on-toilet-change-detector-tests.html>TotT: Change-Detector Tests Considered Harmful</a> ), don’t use string comparison to check what type of error your function returns. However, it is permissible to use string comparisons to check that error messages coming from the package under test satisfy certain properties, for example, that it includes the parameter name.</p><p>Error values in Go typically have a component intended for human eyes and a component intended for semantic control flow. Tests should seek to only test semantic information that can be reliably observed, rather than display information that is intended for human debugging, as this is often subject to future changes. For guidance on constructing errors with semantic meaning see <a href=https://google.github.io/styleguide/go/best-practices#error-handling>best-practices regarding errors</a>. If an error with insufficient semantic information is coming from a dependency outside your control, consider filing a bug against the owner to help improve the API, rather than relying on parsing the error message.</p><p>Within unit tests, it is common to only care whether an error occurred or not. If so, then it is sufficient to only test whether the error was non-nil when you expected an error. If you would like to test that the error semantically matches some other error, then consider using <code>cmp</code> with <a href=https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#EquateErrors><code>cmpopts.EquateErrors</code></a>.</p><blockquote><p><strong>Note:</strong> If a test uses <a href=https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#EquateErrors><code>cmpopts.EquateErrors</code></a> but all of its <code>wantErr</code> values are either <code>nil</code> or <code>cmpopts.AnyError</code>, then using <code>cmp</code> is <a href=https://google.github.io/styleguide/go/guide#least-mechanism>unnecessary mechanism</a>. Simplify the code by making the want field a <code>bool</code>. You can then use a simple comparison with <code>!=</code>.</p><pre tabindex=0><code>// Good:
+gotErr := f(test.input) != nil
+if gotErr != test.wantErr {
+    t.Errorf(&#34;f(%q) returned err = %v, want error presence = %v&#34;, test.input, gotErr, test.wantErr)
+}
+</code></pre></blockquote><p>See also <a href=https://google.github.io/styleguide/go/index.html#gotip>GoTip #13: Designing Errors for Checking</a>.</p><h2 id=test-structure>Test structure
+<a class=anchor href=#test-structure>#</a></h2><h3 id=subtests>Subtests
+<a class=anchor href=#subtests>#</a></h3><p>The standard Go testing library offers a facility to <a href=https://pkg.go.dev/testing#hdr-Subtests_and_Sub_benchmarks>define subtests</a>. This allows flexibility in setup and cleanup, controlling parallelism, and test filtering. Subtests can be useful (particularly for table-driven tests), but using them is not mandatory. See also <a href=https://blog.golang.org/subtests>https://blog.golang.org/subtests</a>.</p><p>Subtests should not depend on the execution of other cases for success or initial state, because subtests are expected to be able to be run individually with using <code>go test -run</code> flags or with Bazel <a href=https://bazel.build/docs/user-manual#test-filter>test filter</a> expressions.</p><h4 id=subtest-names>Subtest names
+<a class=anchor href=#subtest-names>#</a></h4><p>Name your subtest such that it is readable in test output and useful on the command line for users of test filtering. When you use <code>t.Run</code> to create a subtest, the first argument is used as a descriptive name for the test. To ensure that test results are legible to humans reading the logs, choose subtest names that will remain useful and readable after escaping. Think of subtest names more like a function identifier than a prose description. The test runner replaces spaces with underscores, and escapes non-printing characters. If your test data benefits from a longer description, consider putting the description in a separate field (perhaps to be printed using <code>t.Log</code> or alongside failure messages).</p><p>Subtests may be run individually using flags to the <a href=https://golang.org/cmd/go/#hdr-Testing_flags>Go test runner</a> or Bazel <a href=https://bazel.build/docs/user-manual#test-filter>test filter</a>, so choose descriptive names that are also easy to type.</p><blockquote><p><strong>Warning:</strong> Slash characters are particularly unfriendly in subtest names, since they have [special meaning for test filters](<a href="https://blog.golang.org/subtests#:~:text=Perhaps">https://blog.golang.org/subtests#:~:text=Perhaps</a> a bit,match any tests).</p><blockquote><pre tabindex=0><code># Bad:
+# Assuming TestTime and t.Run(&#34;America/New_York&#34;, ...)
+bazel test :mytest --test_filter=&#34;Time/New_York&#34;    # Runs nothing!
+bazel test :mytest --test_filter=&#34;Time//New_York&#34;   # Correct, but awkward.
+</code></pre></blockquote></blockquote><p>To <a href=https://google.github.io/styleguide/go/decisions#identify-the-input>identify the inputs</a> of the function, include them in the test’s failure messages, where they won’t be escaped by the test runner.</p><pre tabindex=0><code>// Good:
+func TestTranslate(t *testing.T) {
+    data := []struct {
+        name, desc, srcLang, dstLang, srcText, wantDstText string
+    }{
+        {
+            name:        &#34;hu=en_bug-1234&#34;,
+            desc:        &#34;regression test following bug 1234. contact: cleese&#34;,
+            srcLang:     &#34;hu&#34;,
+            srcText:     &#34;cigarettát és egy öngyújtót kérek&#34;,
+            dstLang:     &#34;en&#34;,
+            wantDstText: &#34;cigarettes and a lighter please&#34;,
+        }, // ...
+    }
+    for _, d := range data {
+        t.Run(d.name, func(t *testing.T) {
+            got := Translate(d.srcLang, d.dstLang, d.srcText)
+            if got != d.wantDstText {
+                t.Errorf(&#34;%s\nTranslate(%q, %q, %q) = %q, want %q&#34;,
+                    d.desc, d.srcLang, d.dstLang, d.srcText, got, d.wantDstText)
+            }
+        })
+    }
+}
+</code></pre><p>Here are a few examples of things to avoid:</p><pre tabindex=0><code>// Bad:
+// Too wordy.
+t.Run(&#34;check that there is no mention of scratched records or hovercrafts&#34;, ...)
+// Slashes cause problems on the command line.
+t.Run(&#34;AM/PM confusion&#34;, ...)
+</code></pre><h3 id=table-driven-tests>Table-driven tests
+<a class=anchor href=#table-driven-tests>#</a></h3><p>Use table-driven tests when many different test cases can be tested using similar testing logic.</p><ul><li>When testing whether the actual output of a function is equal to the expected output. For example, the many <a href=https://cs.opensource.google/go/go/+/master:src/fmt/fmt_test.go>tests of <code>fmt.Sprintf</code></a> or the minimal snippet below.</li><li>When testing whether the outputs of a function always conform to the same set of invariants. For example, <a href="https://cs.opensource.google/go/go/+/master:src/net/dial_test.go;l=318;drc=5b606a9d2b7649532fe25794fa6b99bd24e7697c">tests for <code>net.Dial</code></a>.</li></ul><p>Here is the minimal structure of a table-driven test, copied from the standard <code>strings</code> library. If needed, you may use different names, move the test slice into the test function, or add extra facilities such as subtests or setup and cleanup functions. Always keep <a href=https://google.github.io/styleguide/go/decisions#useful-test-failures>useful test failures</a> in mind.</p><pre tabindex=0><code>// Good:
+var compareTests = []struct {
+    a, b string
+    i    int
+}{
+    {&#34;&#34;, &#34;&#34;, 0},
+    {&#34;a&#34;, &#34;&#34;, 1},
+    {&#34;&#34;, &#34;a&#34;, -1},
+    {&#34;abc&#34;, &#34;abc&#34;, 0},
+    {&#34;ab&#34;, &#34;abc&#34;, -1},
+    {&#34;abc&#34;, &#34;ab&#34;, 1},
+    {&#34;x&#34;, &#34;ab&#34;, 1},
+    {&#34;ab&#34;, &#34;x&#34;, -1},
+    {&#34;x&#34;, &#34;a&#34;, 1},
+    {&#34;b&#34;, &#34;x&#34;, -1},
+    // test runtime·memeq&#39;s chunked implementation
+    {&#34;abcdefgh&#34;, &#34;abcdefgh&#34;, 0},
+    {&#34;abcdefghi&#34;, &#34;abcdefghi&#34;, 0},
+    {&#34;abcdefghi&#34;, &#34;abcdefghj&#34;, -1},
+}
+
+func TestCompare(t *testing.T) {
+    for _, tt := range compareTests {
+        cmp := Compare(tt.a, tt.b)
+        if cmp != tt.i {
+            t.Errorf(`Compare(%q, %q) = %v`, tt.a, tt.b, cmp)
+        }
+    }
+}
+</code></pre><p><strong>Note</strong>: The failure messages in this example above fulfill the guidance to <a href=https://google.github.io/styleguide/go/decisions#identify-the-function>identify the function</a> and <a href=https://google.github.io/styleguide/go/decisions#identify-the-input>identify the input</a>. There’s no need to <a href=https://google.github.io/styleguide/go/decisions#table-tests-identifying-the-row>identify the row numerically</a>.</p><p>When some test cases need to be checked using different logic from other test cases, it is more appropriate to write multiple test functions, as explained in <a href=https://google.github.io/styleguide/go/index.html#gotip>GoTip #50: Disjoint Table Tests</a>. The logic of your test code can get difficult to understand when each entry in a table has its own different conditional logic to check each output for its inputs. If test cases have different logic but identical setup, a sequence of <a href=https://google.github.io/styleguide/go/decisions#subtests>subtests</a> within a single test function might make sense.</p><p>You can combine table-driven tests with multiple test functions. For example, when testing that a function’s output exactly matches the expected output and that the function returns a non-nil error for an invalid input, then writing two separate table-driven test functions is the best approach: one for normal non-error outputs, and one for error outputs.</p><h4 id=data-driven-test-cases>Data-driven test cases
+<a class=anchor href=#data-driven-test-cases>#</a></h4><p>Table test rows can sometimes become complicated, with the row values dictating conditional behavior inside the test case. The extra clarity from the duplication between the test cases is necessary for readability.</p><pre tabindex=0><code>// Good:
+type decodeCase struct {
+    name   string
+    input  string
+    output string
+    err    error
+}
+
+func TestDecode(t *testing.T) {
+    // setupCodex is slow as it creates a real Codex for the test.
+    codex := setupCodex(t)
+
+    var tests []decodeCase // rows omitted for brevity
+
+    for _, test := range tests {
+        t.Run(test.name, func(t *testing.T) {
+            output, err := Decode(test.input, codex)
+            if got, want := output, test.output; got != want {
+                t.Errorf(&#34;Decode(%q) = %v, want %v&#34;, test.input, got, want)
+            }
+            if got, want := err, test.err; !cmp.Equal(got, want) {
+                t.Errorf(&#34;Decode(%q) err %q, want %q&#34;, test.input, got, want)
+            }
+        })
+    }
+}
+
+func TestDecodeWithFake(t *testing.T) {
+    // A fakeCodex is a fast approximation of a real Codex.
+    codex := newFakeCodex()
+
+    var tests []decodeCase // rows omitted for brevity
+
+    for _, test := range tests {
+        t.Run(test.name, func(t *testing.T) {
+            output, err := Decode(test.input, codex)
+            if got, want := output, test.output; got != want {
+                t.Errorf(&#34;Decode(%q) = %v, want %v&#34;, test.input, got, want)
+            }
+            if got, want := err, test.err; !cmp.Equal(got, want) {
+                t.Errorf(&#34;Decode(%q) err %q, want %q&#34;, test.input, got, want)
+            }
+        })
+    }
+}
+</code></pre><p>In the counterexample below, note how hard it is to distinguish between which type of <code>Codex</code> is used per test case in the case setup. (The highlighted parts run afoul of the advice from <a href=https://testing.googleblog.com/2008/09/tott-data-driven-traps.html>TotT: Data Driven Traps!</a> .)</p><pre tabindex=0><code>// Bad:
+type decodeCase struct {
+  name   string
+  input  string
+  codex  testCodex
+  output string
+  err    error
+}
+
+type testCodex int
+
+const (
+  fake testCodex = iota
+  prod
+)
+
+func TestDecode(t *testing.T) {
+  var tests []decodeCase // rows omitted for brevity
+
+  for _, test := tests {
+    t.Run(test.name, func(t *testing.T) {
+      var codex Codex
+      switch test.codex {
+      case fake:
+        codex = newFakeCodex()
+      case prod:
+        codex = setupCodex(t)
+      default:
+        t.Fatalf(&#34;unknown codex type: %v&#34;, codex)
+      }
+      output, err := Decode(test.input, codex)
+      if got, want := output, test.output; got != want {
+        t.Errorf(&#34;Decode(%q) = %q, want %q&#34;, test.input, got, want)
+      }
+      if got, want := err, test.err; !cmp.Equal(got, want) {
+        t.Errorf(&#34;Decode(%q) err %q, want %q&#34;, test.input, got, want)
+      }
+    })
+  }
+}
+</code></pre><h4 id=identifying-the-row>Identifying the row
+<a class=anchor href=#identifying-the-row>#</a></h4><p>Do not use the index of the test in the test table as a substitute for naming your tests or printing the inputs. Nobody wants to go through your test table and count the entries in order to figure out which test case is failing.</p><pre tabindex=0><code>// Bad:
+tests := []struct {
+    input, want string
+}{
+    {&#34;hello&#34;, &#34;HELLO&#34;},
+    {&#34;wORld&#34;, &#34;WORLD&#34;},
+}
+for i, d := range tests {
+    if strings.ToUpper(d.input) != d.want {
+        t.Errorf(&#34;failed on case #%d&#34;, i)
+    }
+}
+</code></pre><p>Add a test description to your test struct and print it along failure messages. When using subtests, your subtest name should be effective in identifying the row.</p><p><strong>Important:</strong> Even though <code>t.Run</code> scopes the output and execution, you must always <a href=https://google.github.io/styleguide/go/decisions#identify-the-input>identify the input</a>. The table test row names must follow the <a href=https://google.github.io/styleguide/go/decisions#subtest-names>subtest naming</a> guidance.</p><h3 id=test-helpers>Test helpers
+<a class=anchor href=#test-helpers>#</a></h3><p>A test helper is a function that performs a setup or cleanup task. All failures that occur in test helpers are expected to be failures of the environment (not from the code under test) — for example when a test database cannot be started because there are no more free ports on this machine.</p><p>If you pass a <code>*testing.T</code>, call <a href=https://pkg.go.dev/testing#T.Helper><code>t.Helper</code></a> to attribute failures in the test helper to the line where the helper is called. This parameter should come after a <a href=https://google.github.io/styleguide/go/decisions#contexts>context</a> parameter, if present, and before any remaining parameters.</p><pre tabindex=0><code>// Good:
+func TestSomeFunction(t *testing.T) {
+    golden := readFile(t, &#34;testdata/golden-result.txt&#34;)
+    // ... tests against golden ...
+}
+
+// readFile returns the contents of a data file.
+// It must only be called from the same goroutine as started the test.
+func readFile(t *testing.T, filename string) string {
+    t.Helper()
+    contents, err := runfiles.ReadFile(filename)
+    if err != nil {
+        t.Fatal(err)
+    }
+    return string(contents)
+}
+</code></pre><p>Do not use this pattern when it obscures the connection between a test failure and the conditions that led to it. Specifically, the guidance about <a href=https://google.github.io/styleguide/go/decisions#assert>assert libraries</a> still applies, and <a href=https://pkg.go.dev/testing#T.Helper><code>t.Helper</code></a> should not be used to implement such libraries.</p><p><strong>Tip:</strong> For more on the distinction between test helpers and assertion helpers, see <a href=https://google.github.io/styleguide/go/best-practices#test-functions>best practices</a>.</p><p>Although the above refers to <code>*testing.T</code>, much of the advice stays the same for benchmark and fuzz helpers.</p><h3 id=test-package>Test package
+<a class=anchor href=#test-package>#</a></h3><h4 id=tests-in-the-same-package>Tests in the same package
+<a class=anchor href=#tests-in-the-same-package>#</a></h4><p>Tests may be defined in the same package as the code being tested.</p><p>To write a test in the same package:</p><ul><li>Place the tests in a <code>foo_test.go</code> file</li><li>Use <code>package foo</code> for the test file</li><li>Do not explicitly import the package to be tested</li></ul><pre tabindex=0><code class=language-build data-lang=build># Good:
+go_library(
+    name = &#34;foo&#34;,
+    srcs = [&#34;foo.go&#34;],
+    deps = [
+        ...
+    ],
+)
+
+go_test(
+    name = &#34;foo_test&#34;,
+    size = &#34;small&#34;,
+    srcs = [&#34;foo_test.go&#34;],
+    library = &#34;:foo&#34;,
+    deps = [
+        ...
+    ],
+)
+</code></pre><p>A test in the same package can access unexported identifiers in the package. This may enable better test coverage and more concise tests. Be aware that any <a href=https://google.github.io/styleguide/go/decisions#examples>examples</a> declared in the test will not have the package names that a user will need in their code.</p><h4 id=tests-in-a-different-package>Tests in a different package
+<a class=anchor href=#tests-in-a-different-package>#</a></h4><p>It is not always appropriate or even possible to define a test in the same package as the code being tested. In these cases, use a package name with the <code>_test</code> suffix. This is an exception to the “no underscores” rule to <a href=https://google.github.io/styleguide/go/decisions#package-names>package names</a>. For example:</p><ul><li><p>If an integration test does not have an obvious library that it belongs to</p><pre tabindex=0><code>// Good:
+package gmailintegration_test
+
+import &#34;testing&#34;
+</code></pre></li><li><p>If defining the tests in the same package results in circular dependencies</p><pre tabindex=0><code>// Good:
+package fireworks_test
+
+import (
+  &#34;fireworks&#34;
+  &#34;fireworkstestutil&#34; // fireworkstestutil also imports fireworks
+)
+</code></pre></li></ul><h3 id=use-package-testing>Use package <code>testing</code>
+<a class=anchor href=#use-package-testing>#</a></h3><p>The Go standard library provides the <a href=https://pkg.go.dev/testing><code>testing</code> package</a>. This is the only testing framework permitted for Go code in the Google codebase. In particular, <a href=https://google.github.io/styleguide/go/decisions#assert>assertion libraries</a> and third-party testing frameworks are not allowed.</p><p>The <code>testing</code> package provides a minimal but complete set of functionality for writing good tests:</p><ul><li>Top-level tests</li><li>Benchmarks</li><li><a href=https://blog.golang.org/examples>Runnable examples</a></li><li>Subtests</li><li>Logging</li><li>Failures and fatal failures</li></ul><p>These are designed to work cohesively with core language features like <a href=https://go.dev/ref/spec#Composite_literals>composite literal</a> and <a href=https://go.dev/ref/spec#If_statements>if-with-initializer</a> syntax to enable test authors to write [clear, readable, and maintainable tests].</p><h2 id=non-decisions>Non-decisions
+<a class=anchor href=#non-decisions>#</a></h2><p>A style guide cannot enumerate positive prescriptions for all matters, nor can it enumerate all matters about which it does not offer an opinion. That said, here are a few things where the readability community has previously debated and has not achieved consensus about.</p><ul><li><strong>Local variable initialization with zero value</strong>. <code>var i int</code> and <code>i := 0</code> are equivalent. See also <a href=https://google.github.io/styleguide/go/best-practices#vardeclinitialization>initialization best practices</a>.</li><li><strong>Empty composite literal vs. <code>new</code> or <code>make</code></strong>. <code>&File{}</code> and <code>new(File)</code> are equivalent. So are <code>map[string]bool{}</code> and <code>make(map[string]bool)</code>. See also <a href=https://google.github.io/styleguide/go/best-practices#vardeclcomposite>composite declaration best practices</a>.</li><li><strong>got, want argument ordering in cmp.Diff calls</strong>. Be locally consistent, and <a href=https://google.github.io/styleguide/go/decisions#print-diffs>include a legend</a> in your failure message.</li><li><strong><code>errors.New</code> vs <code>fmt.Errorf</code> on non-formatted strings</strong>. <code>errors.New("foo")</code> and <code>fmt.Errorf("foo")</code> may be used interchangeably.</li></ul><p>If there are special circumstances where they come up again, the readability mentor might make an optional comment, but in general the author is free to pick the style they prefer in the given situation.</p><p>Naturally, if anything not covered by the style guide does need more discussion, authors are welcome to ask – either in the specific review, or on internal message boards.</p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#关于>关于</a></li><li><a href=#命名naming>命名Naming</a><ul><li><a href=#下划线underscores>下划线Underscores</a></li><li><a href=#包名称package-names>包名称Package names</a></li><li><a href=#接收者命名receiver-names>接收者命名Receiver names</a></li><li><a href=#常量命名constant-names>常量命名Constant names</a></li><li><a href=#缩写词initialisms>缩写词Initialisms</a></li><li><a href=#get方法getters>Get方法Getters</a></li><li><a href=#变量名variable-names>变量名Variable names</a></li><li><a href=#重复repetition>重复Repetition</a></li></ul></li><li><a href=#评论commentary>评论Commentary</a><ul><li><a href=#注释行长度comment-line-length>注释行长度Comment line length</a></li><li><a href=#文档注释doc-comments>文档注释Doc comments</a></li><li><a href=#注释语句comment-sentences>注释语句Comment sentences</a></li><li><a href=#示例examples>示例Examples</a></li><li><a href=#命名的结果参数named-result-parameters>命名的结果参数Named result parameters</a></li><li><a href=#package-comments>Package comments</a></li></ul></li><li><a href=#imports>Imports</a><ul><li><a href=#import-renaming>Import renaming</a></li><li><a href=#import-grouping>Import grouping</a></li><li><a href=#import-blank-import-_>Import “blank” (<code>import _</code>)</a></li><li><a href=#import-dot-import->Import “dot” (<code>import .</code>)</a></li></ul></li><li><a href=#errors>Errors</a><ul><li><a href=#returning-errors>Returning errors</a></li><li><a href=#error-strings>Error strings</a></li><li><a href=#handle-errors>Handle errors</a></li><li><a href=#in-band-errors>In-band errors</a></li><li><a href=#indent-error-flow>Indent error flow</a></li></ul></li><li><a href=#language>Language</a><ul><li><a href=#literal-formatting>Literal formatting</a></li><li><a href=#nil-slices>Nil slices</a></li><li><a href=#indentation-confusion>Indentation confusion</a></li><li><a href=#function-formatting>Function formatting</a></li><li><a href=#conditionals-and-loops>Conditionals and loops</a></li><li><a href=#copying>Copying</a></li><li><a href=#dont-panic>Don’t panic</a></li><li><a href=#must-functions>Must functions</a></li><li><a href=#goroutine-lifetimes>Goroutine lifetimes</a></li><li><a href=#interfaces>Interfaces</a></li><li><a href=#generics>Generics</a></li><li><a href=#pass-values>Pass values</a></li><li><a href=#receiver-type>Receiver type</a></li><li><a href=#switch-and-break><code>switch</code> and <code>break</code></a></li><li><a href=#synchronous-functions>Synchronous functions</a></li><li><a href=#type-aliases>Type aliases</a></li><li><a href=#use-q>Use %q</a></li><li><a href=#use-any>Use any</a></li></ul></li><li><a href=#common-libraries>Common libraries</a><ul><li><a href=#flags>Flags</a></li><li><a href=#logging>Logging</a></li><li><a href=#contexts>Contexts</a></li><li><a href=#cryptorand>crypto/rand</a></li></ul></li><li><a href=#useful-test-failures>Useful test failures</a><ul><li><a href=#assertion-libraries>Assertion libraries</a></li><li><a href=#identify-the-function>Identify the function</a></li><li><a href=#identify-the-input>Identify the input</a></li><li><a href=#got-before-want>Got before want</a></li><li><a href=#full-structure-comparisons>Full structure comparisons</a></li><li><a href=#compare-stable-results>Compare stable results</a></li><li><a href=#keep-going>Keep going</a></li><li><a href=#equality-comparison-and-diffs>Equality comparison and diffs</a></li><li><a href=#level-of-detail>Level of detail</a></li><li><a href=#print-diffs>Print diffs</a></li><li><a href=#test-error-semantics>Test error semantics</a></li></ul></li><li><a href=#test-structure>Test structure</a><ul><li><a href=#subtests>Subtests</a></li><li><a href=#table-driven-tests>Table-driven tests</a></li><li><a href=#test-helpers>Test helpers</a></li><li><a href=#test-package>Test package</a></li><li><a href=#use-package-testing>Use package <code>testing</code></a></li></ul></li><li><a href=#non-decisions>Non-decisions</a></li></ul></nav></div></aside></main></body></html>
