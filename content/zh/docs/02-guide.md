@@ -4,11 +4,11 @@
 
 以下几条总体原则总结了如何编写可读的 Go 代码。以下为具有可读性的代码特征，按重要性排序：
 
-1. [清晰](https://google.github.io/styleguide/go/guide#clarity)：代码的目的和理由对读者来说是清楚的。
-2. [简单](https://google.github.io/styleguide/go/guide#simplicity)：代码以最简洁的方式完成了它的目的。
-3. [简约](https://google.github.io/styleguide/go/guide#concision)：代码具有很高的信噪比。
-4. [可维护](https://google.github.io/styleguide/go/guide#maintainability)：代码可以很容易地维护。
-5. [一致](https://google.github.io/styleguide/go/guide#consistency)：代码与更广泛的谷歌代码库一致。
+1. [清晰](https://google.github.io/styleguide/go/guide#clarity)：代码的目的和设计原理对读者来说是清楚的。
+2. [简约](https://google.github.io/styleguide/go/guide#simplicity)：代码以最简单的方式来完成它的目的。
+3. [简洁](https://google.github.io/styleguide/go/guide#concision)：代码具有很高的信噪比，即写出来的代码是有意义的，非可有可无的。
+4. [可维护](https://google.github.io/styleguide/go/guide#maintainability)：代码可以很容易地被维护。
+5. [一致](https://google.github.io/styleguide/go/guide#consistency)：代码与更广泛的 Google 代码库一致。
 
 ### 清晰
 
