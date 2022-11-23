@@ -49,6 +49,13 @@ The articles in 《Google Go 编程规范》 are licensed under a [Creative Comm
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/zxmfke">
+            <img src="https://avatars.githubusercontent.com/u/19350643?v=4" width="100;" alt="zxmfke"/>
+            <br />
+            <sub><b>Xiaomin Zheng</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/pseudoyu">
             <img src="https://avatars.githubusercontent.com/u/69753389?v=4" width="100;" alt="pseudoyu"/>
             <br />
