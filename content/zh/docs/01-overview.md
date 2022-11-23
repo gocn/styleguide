@@ -86,7 +86,7 @@
 - [Go 谚语](https://go-proverbs.github.io/)
 - Go 技巧 - 敬请期待
 
-**相关的 马桶测试(Testing-on-the-Toilet) 文档**
+**马桶测试(Testing-on-the-Toilet) 相关文档**
 
 > 厕所里的测试（又称 TotT）是测试小组最明显的成就。从2006年开始，TotT 从一个会议上的玩笑开始，已经成为一个真正的谷歌机构，并且是在公司内部传播想法、产生讨论和推动新的内部工具采用的最有效的方式之一。[TotT](https://mike-bland.com/2011/10/25/testing-on-the-toilet.html#:~:text=Testing%20on%20the%20Toilet%20%28aka%20TotT%29%20is%20the,drive%20new%20internal%20tool%20adoption%20within%20the%20company)
 
