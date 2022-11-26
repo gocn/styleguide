@@ -416,9 +416,9 @@ func (n *Node) Children() (left, right *Node, err error)
 func WithTimeout(parent Context, d time.Duration) (ctx Context, cancel func())
 ```
 
-In the code above, cancellation is a particular action a caller must take. However, were the result parameters written as `(Context, func())` alone, it would be unclear what is meant by “cancel function”.
+在上面的代码中，取消是调用者必须执行的特定操作。但是，如果将结果参数单独写为`(Context, func())`，“取消函数”的含义就不清楚了。
 
-Don’t use named result parameters when the names produce [unnecessary repetition](https://google.github.io/styleguide/go/decisions#repetitive-with-type).
+当名称产生 [不必要的重复](https://google.github.io/styleguide/go/decisions#repetitive-with-type) 时，不要使用命名结果参数。
 
 ```
 // Bad:
@@ -426,19 +426,19 @@ func (n *Node) Parent1() (node *Node)
 func (n *Node) Parent2() (node *Node, err error)
 ```
 
-Don’t name result parameters in order to avoid declaring a variable inside the function. This practice results in unnecessary API verbosity at the cost of minor implementation brevity.
+不要为了避免在函数内声明变量而使用命名结果参数。这种做法会导致不必要的 冗长API，但收益只是很小的简洁性。
 
-[Naked returns](https://tour.golang.org/basics/7) are acceptable only in a small function. Once it’s a medium-sized function, be explicit with your returned values. Similarly, do not name result parameters just because it enables you to use naked returns. [Clarity](https://google.github.io/styleguide/go/guide#clarity) is always more important than saving a few lines in your function.
+[裸返回](https://tour.golang.org/basics/7) 仅在小函数中是可接受的。 一旦它是一个中等大小的函数，就需要明确你的返回值。 同样，不要仅仅因为可以裸返回就使用命名结果参数。 [清晰度](https://google.github.io/styleguide/go/guide#clarity) 总是比在你的函数中节省几行更重要。
 
-It is always acceptable to name a result parameter if its value must be changed in a deferred closure.
+如果必须在延迟闭包中更改结果参数的值，则命名结果参数始终是可以接受的。
 
-> **Tip:** Types can often be clearer than names in function signatures. [GoTip #38: Functions as Named Types](https://google.github.io/styleguide/go/index.html#gotip) demonstrates this.
+> **提示：** 类型通常比函数签名中的名称更清晰。 [GoTip #38：作为命名类型的函数](https://google.github.io/styleguide/go/index.html#gotip) 演示了这一点。
 >
-> In, [`WithTimeout`](https://pkg.go.dev/context#WithTimeout) above, the real code uses a [`CancelFunc`](https://pkg.go.dev/context#CancelFunc) instead of a raw `func()` in the result parameter list and requires little effort to document.
+> 在上面的 [`WithTimeout`](https://pkg.go.dev/context#WithTimeout) 中，代码使用了一个 [`CancelFunc`](https://pkg.go.dev/context#CancelFunc) 而不是结果参数列表中的原始`func()`，并且几乎不需要做任何记录工作。
 
-### Package comments
+### 包注释
 
-Package comments must appear immediately above the package clause with no blank line between the comment and the package name. Example:
+包注释必须出现在包内语句的上方，注释和包名称之间没有空行。 例子：
 
 ```
 // Good:
@@ -448,9 +448,9 @@ Package comments must appear immediately above the package clause with no blank 
 package math
 ```
 
-There must be a single package comment per package. If a package is composed of multiple files, exactly one of the files should have a package comment.
+每个包必须有一个包注释。 如果一个包由多个文件组成，那么其中一个文件应该有包注释。
 
-Comments for `main` packages have a slightly different form, where the name of the `go_binary` rule in the BUILD file takes the place of the package name.
+`main` 包的注释形式略有不同，其中 BUILD 文件中的 `go_binary` 规则的名称代替了包名。
 
 ```
 // Good:
@@ -459,7 +459,7 @@ Comments for `main` packages have a slightly different form, where the name of t
 package main
 ```
 
-Other styles of comment are fine as long as the name of the binary is exactly as written in the BUILD file. When the binary name is the first word, capitalizing it is required even though it does not strictly match the spelling of the command-line invocation.
+只要二进制文件的名称与 BUILD 文件中所写的完全一致，其他风格的注释也是可以了。 当二进制名称是第一个单词时，即使它与命令行调用的拼写不严格匹配，也需要将其大写。
 
 ```
 // Good:
@@ -471,13 +471,13 @@ Other styles of comment are fine as long as the name of the binary is exactly as
 // Seed_generator ...
 ```
 
-Tips:
+提示:
 
-- Example command-line invocations and API usage can be useful documentation. For Godoc formatting, indent the comment lines containing code.
+- 命令行调用示例和 API 用法可以是有用的文档。 对于 Godoc 格式，缩进包含代码的注释行。
 
-- If there is no obvious primary file or if the package comment is extraordinarily long, it is acceptable to put the doc comment in a file named `doc.go` with only the comment and the package clause.
+- 如果没有明显的主文件或者包注释特别长，可以将文档注释放在名为 doc.go 的文件中，只有注释和包子句。
 
-- Multiline comments can be used instead of multiple single-line comments. This is primarily useful if the documentation contains sections which may be useful to copy and paste from the source file, as with sample command-lines (for binaries) and template examples.
+- 可以使用多行注释代替多个单行注释。 如果文档包含可能对从源文件复制和粘贴有用的部分，如示例命令行（用于二进制文件）和模板示例，这将非常有用。
 
   ```
   // Good:
@@ -490,15 +490,15 @@ Tips:
   package template
   ```
 
-- Comments intended for maintainers and that apply to the whole file are typically placed after import declarations. These are not surfaced in Godoc and are not subject to the rules above on package comments.
+- 供维护者使用且适用于整个文件的注释通常放在导入声明之后。 这些不会出现在 Godoc 中，也不受上述包注释规则的约束。
 
-## Imports
+## 导入
 
-### Import renaming
+### 导入重命名
 
-Imports should only be renamed to avoid a name collision with other imports. (A corollary of this is that [good package names](https://google.github.io/styleguide/go/decisions#package-names) should not require renaming.) In the event of a name collision, prefer to rename the most local or project-specific import. Local names (aliases) for packages must follow [the guidance around package naming](https://google.github.io/styleguide/go/decisions#package-names), including the prohibition on the use of underscores and capital letters.
+只有在为了避免与其他导入的名称冲突时，才使用重命名导入。 （由此推论，[好的包名称](https://google.github.io/styleguide/go/decisions#package-names) 不需要重命名。）如果发生名称冲突，最好重命名 最本地或特定于项目的导入。 包的本地别名必须遵循[包命名指南](https://google.github.io/styleguide/go/decisions#package-names)，包括禁止使用下划线和大写字母。
 
-Generated protocol buffer packages must be renamed to remove underscores from their names, and their aliases must have a `pb` suffix. See [proto and stub best practices](https://google.github.io/styleguide/go/best-practices#import-protos) for more information.
+生成的 protocol buffer 包必须重命名以从其名称中删除下划线，并且它们的别名必须具有 `pb` 后缀。 有关详细信息，请参阅[proto和stub最佳实践](https://google.github.io/styleguide/go/best-practices#import-protos)。
 
 ```
 // Good:
@@ -507,9 +507,10 @@ import (
 )
 ```
 
-Imports that have package names with no useful identifying information (e.g. `package v1`) should be renamed to include the previous path component. The rename must be consistent with other local files importing the same package and may include the version number.
+导入的包名称没有有用的识别信息时（例如 `package v1`），应该重命名以包括以前的路径组件。 重命名必须与导入相同包的其他本地文件一致，并且可以包括版本号。
 
-**Note:** It is preferred to rename the package to conform with [good package names](https://google.github.io/styleguide/go/decisions#package-names), but that is often not feasible for packages in vendored directories.
+**注意：** 最好重命名包以符合 [好的包命名规则](https://google.github.io/styleguide/go/decisions#package-names)，但在vendor目录下的包通常是不可行的。
+
 
 ```
 // Good:
@@ -519,14 +520,14 @@ import (
 )
 ```
 
-If you need to import a package whose name collides with a common local variable name that you want to use (e.g. `url`, `ssh`) and you wish to rename the package, the preferred way to do so is with the `pkg` suffix (e.g. `urlpkg`). Note that it is possible to shadow a package with a local variable; this rename is only necessary if the package still needs to be used when such a variable is in scope.
+如果您需要导入一个名称与您要使用的公共局部变量名称（例如 `url`、`ssh`）冲突的包，并且您希望重命名该包，首选方法是使用 `pkg ` 后缀（例如 `urlpkg`）。 请注意，可以使用局部变量隐藏包； 仅当此类变量在范围内时仍需要使用此包时，才需要重命名。
 
-### Import grouping
+### 导入分组
 
-Imports should be organized in two groups:
+导入应分为两组：
 
-- Standard library packages
-- Other (project and vendored) packages
+- 标准库包
+- 其他（项目和vendor）包
 
 ```
 // Good:
@@ -546,7 +547,7 @@ import (
 )
 ```
 
-It is acceptable to split the project packages into multiple groups, for example if you want a separate group for renamed, imported-only-for-side-effects or another special group of imports.
+将导入项分成多个组是可以接受的，例如，如果您想要一个单独的组来重命名、导入仅为了特殊效果 或另一个特殊的导入组。
 
 ```
 // Good:
@@ -568,35 +569,35 @@ import (
 )
 ```
 
-**Note:** Maintaining optional groups - splitting beyond what is necessary for the mandatory separation between standard library and Google imports - is not supported by the [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) tool. Additional import subgroups require attention on the part of both authors and reviewers to maintain in a conforming state.
+**注意：** [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) 不支持维护可选组 - 超出标准库和 Google 导入之间强制分离所需的拆分。为了保持符合状态，额外的导入子组需要作者和审阅人的注意。
 
-Google programs that are also AppEngine apps should have a separate group for AppEngine imports.
+Google 程序有时也是 AppEngine 应用程序，应该有一个单独的组用于 AppEngine 导入。
 
-Gofmt takes care of sorting each group by import path. However, it does not automatically separate imports into groups. The popular [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) tool combines Gofmt and import management, separating imports into groups based on the decision above. It is permissible to let [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) manage import arrangement entirely, but as a file is revised its import list must remain internally consistent.
+Gofmt 负责按导入路径对每个组进行排序。但是，它不会自动将导入分成组。流行的 [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) 工具结合了 Gofmt 和导入管理，根据上述规则将导入进行分组。通过 [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) 来管理导入安排是可行的，但随着文件的修改，其导入列表必须保持内部一致。
 
-### Import “blank” (`import _`)
+### 导入"空" (`import _`)
 
-Packages that are imported only for their side effects (using the syntax `import _ "package"`) may only be imported in a main package, or in tests that require them.
+使用语法 `import _ "package"`导入的包，称为副作用导入，只能在主包或需要它们的测试中导入。
 
-Some examples of such packages include:
+此类软件包的一些示例包括：
 
 - [time/tzdata](https://pkg.go.dev/time/tzdata)
-- [image/jpeg](https://pkg.go.dev/image/jpeg) in image processing code
+- [image/jpeg](https://pkg.go.dev/image/jpeg) 在图像处理中的代码
 
-Avoid blank imports in library packages, even if the library indirectly depends on them. Constraining side-effect imports to the main package helps control dependencies, and makes it possible to write tests that rely on a different import without conflict or wasted build costs.
+避免在工具包中导入空白，即使工具包间接依赖于它们。 将副作用导入限制到主包有助于控制依赖性，并使得编写依赖于不同导入的测试成为可能，而不会发生冲突或浪费构建成本。
 
-The following are the only exceptions to this rule:
+以下是此规则的唯一例外情况：
 
-- You may use a blank import to bypass the check for disallowed imports in the [nogo static checker](https://github.com/bazelbuild/rules_go/blob/master/go/nogo.rst).
-- You may use a blank import of the [embed](https://pkg.go.dev/embed) package in a source file which uses the `//go:embed` compiler directive.
+- 您可以使用空白导入来绕过 [nogo 静态检查器](https://github.com/bazelbuild/rules_go/blob/master/go/nogo.rst) 中对不允许导入的检查。
+- 您可以在使用 `//go:embed` 编译器指令的源文件中使用 [embed](https://pkg.go.dev/embed) 包的空白导入。
 
-**Tip:** If you create a library package that indirectly depends on a side-effect import in production, document the intended usage.
+**提示：**如果生产环境中您创建的工具包间接依赖于副作用导入，请记录这里的预期用途。
 
-### Import “dot” (`import .`)
+### 导入 “.” (`import .`)
 
-The `import .` form is a language feature that allows bringing identifiers exported from another package to the current package without qualification. See the [language spec](https://go.dev/ref/spec#Import_declarations) for more.
+`import .` 形式是一种语言特性，它允许将从另一个包导出的标识符无条件地带到当前包中。 有关更多信息，请参阅[语言规范](https://go.dev/ref/spec#Import_declarations)。
 
-Do **not** use this feature in the Google codebase; it makes it harder to tell where the functionality is coming from.
+**不要**在 Google 代码库中使用此功能； 这使得更难判断功能来自何处。
 
 ```
 // Bad:
@@ -619,18 +620,18 @@ import (
 var myThing = foo.Bar()
 ```
 
-## Errors
+## 错误
 
-### Returning errors
+### 返回错误
 
-Use `error` to signal that a function can fail. By convention, `error` is the last result parameter.
+使用 `error` 表示函数可能会失败。 按照惯例，`error` 是最后一个结果参数。
 
 ```
 // Good:
 func Good() error { /* ... */ }
 ```
 
-Returning a `nil` error is the idiomatic way to signal a successful operation that could otherwise fail. If a function returns an error, callers must treat all non-error return values as unspecified unless explicitly documented otherwise. Commonly, the non-error return values are their zero values, but this cannot be assumed.
+返回 `nil` 错误是表示操作成功的惯用方式，否则表示可能会失败。 如果函数返回错误，除非另有明确说明，否则调用者必须将所有非错误返回值视为未确定。 通常来说，非错误返回值是它们的零值，但也不能直接这么假设。
 
 ```
 // Good:
@@ -643,18 +644,18 @@ func GoodLookup() (*Result, error) {
 }
 ```
 
-Exported functions that return errors should return them using the `error` type. Concrete error types are susceptible to subtle bugs: a concrete `nil` pointer can get wrapped into an interface and thus become a non-nil value (see the [Go FAQ entry on the topic](https://golang.org/doc/faq#nil_error)).
+返回错误的导出函数应使用`error`类型返回它们。 具体的错误类型容易受到细微错误的影响：一个 `nil` 指针可以包装到接口中，从而就变成非 nil 值（参见 [关于该主题的 Go FAQ 条目](https://golang.org/doc/faq#nil_error)）。
 
 ```
 // Bad:
 func Bad() *os.PathError { /*...*/ }
 ```
 
-**Tip**: A function that takes a `context.Context` argument should usually return an `error` so that the caller can determine if the context was cancelled while the function was running.
+**提示**：采用 `context.Context` 参数的函数通常应返回 `error`，以便调用者可以确定上下文是否在函数运行时被取消。
 
-### Error strings
+### 错误字符串
 
-Error strings should not be capitalized (unless beginning with an exported name, a proper noun or an acronym) and should not end with punctuation. This is because error strings usually appear within other context before being printed to the user.
+错误字符串不应大写（除非以导出名称、专有名词或首字母缩写词开头）并且不应以标点符号结尾。 这是因为错误字符串通常在打印给用户之前出现在其他上下文中。
 
 ```
 // Bad:
@@ -663,7 +664,7 @@ err := fmt.Errorf("Something bad happened.")
 err := fmt.Errorf("something bad happened")
 ```
 
-On the other hand, the style for the full displayed message (logging, test failure, API response, or other UI) depends, but should typically be capitalized.
+另一方面，完整显示消息（日志记录、测试失败、API 响应或其他 UI）的样式视情况而定，但通常应大写首字母。
 
 ```
 // Good:
@@ -672,17 +673,17 @@ log.Errorf("Operation aborted: %v", err)
 t.Errorf("Op(%q) failed unexpectedly; err=%v", args, err)
 ```
 
-### Handle errors
+### 错误处理
 
-Code that encounters an error should make a deliberate choice about how to handle it. It is not usually appropriate to discard errors using `_` variables. If a function returns an error, do one of the following:
+遇到错误的代码应该慎重选择如何处理它。 使用 _ 变量丢弃错误通常是不合适的。 如果函数返回错误，请执行以下操作之一：
 
-- Handle and address the error immediately.
-- Return the error to the caller.
-- In exceptional situations, call [`log.Fatal`](https://pkg.go.dev/github.com/golang/glog#Fatal) or (if absolutely necessary) `panic`.
+- 立即处理并解决错误
+- 将错误返回给调用者
+- 在特殊情况下，调用 [`log.Fatal`](https://pkg.go.dev/github.com/golang/glog#Fatal) 或（如绝对有必要）则调用 `panic`
 
-**Note:** `log.Fatalf` is not the standard library log. See [#logging].
+**注意：** `log.Fatalf` 不是标准库日志。 参见 [#logging]。
 
-In the rare circumstance where it is appropriate to ignore or discard an error (for example a call to [`(*bytes.Buffer).Write`](https://pkg.go.dev/bytes#Buffer.Write) that is documented to never fail), an accompanying comment should explain why this is safe.
+在极少数情况下适合忽略或丢弃错误（例如调用 [`(*bytes.Buffer).Write`](https://pkg.go.dev/bytes#Buffer.Write) 被记录为永远不会失败），随附的注释应该解释为什么这是安全的。
 
 ```
 // Good:
@@ -691,11 +692,11 @@ var b *bytes.Buffer
 n, _ := b.Write(p) // never returns a non-nil error
 ```
 
-For more discussion and examples of error handling, see [Effective Go](http://golang.org/doc/effective_go.html#errors) and [best practices](https://google.github.io/styleguide/go/best-practices.html#error-handling).
+关于错误处理的更多讨论和例子，请参见[Effective Go](http://golang.org/doc/effective_go.html#errors)和[最佳实践](https://google.github.io/styleguide/go/best-practices.html#error-handling)。
 
-### In-band errors
+### In-band 错误
 
-In C and similar languages, it is common for functions to return values like -1, null, or the empty string to signal errors or missing results. This is known as in-band error handling.
+在C和类似语言中，函数通常会返回-1、null或空字符串等值，以示错误或丢失结果。这就是所谓的带内`In-band`处理。
 
 ```
 // Bad:
@@ -703,7 +704,7 @@ In C and similar languages, it is common for functions to return values like -1,
 func Lookup(key string) int
 ```
 
-Failing to check for an in-band error value can lead to bugs and can attribute errors to the wrong function.
+未能检查`In-band`错误值会导致错误，并可能将error归于错误的功能。
 
 ```
 // Bad:
@@ -712,7 +713,7 @@ Failing to check for an in-band error value can lead to bugs and can attribute e
 return Parse(Lookup(missingKey))
 ```
 
-Go’s support for multiple return values provides a better solution (see the [Effective Go section on multiple returns](http://golang.org/doc/effective_go.html#multiple-returns)). Instead of requiring clients to check for an in-band error value, a function should return an additional value to indicate whether its other return values are valid. This return value may be an error or a boolean when no explanation is needed, and should be the final return value.
+Go对多重返回值的支持提供了一个更好的解决方案（见[Effective Go关于多重返回的部分](http://golang.org/doc/effective_go.html#multiple-returns)）。与其要求调用方检查`In-band`的错误值，函数更应该返回一个额外的值来表明返回值是否有效。这个返回值可以是一个错误，或者在不需要解释时是一个布尔值，并且应该是最终的返回值。
 
 ```
 // Good:
@@ -720,9 +721,9 @@ Go’s support for multiple return values provides a better solution (see the [E
 func Lookup(key string) (value string, ok bool)
 ```
 
-This API prevents the caller from incorrectly writing `Parse(Lookup(key))` which causes a compile-time error, since `Lookup(key)` has 2 outputs.
+这个API可以防止调用者错误地编写`Parse(Lookup(key))`，从而导致编译时错误，因为`Lookup(key)`有两个返回值。
 
-Returning errors in this way encourages more robust and explicit error handling:
+以这种方式返回错误，可以鼓励更强大和明确的错误处理。
 
 ```
 // Good:
@@ -733,13 +734,13 @@ if !ok {
 return Parse(value)
 ```
 
-Some standard library functions, like those in package `strings`, return in-band error values. This greatly simplifies string-manipulation code at the cost of requiring more diligence from the programmer. In general, Go code in the Google codebase should return additional values for errors.
+一些标准库函数，如包`strings`中的函数，返回`In-band`错误值。这大大简化了字符串处理的代码，但代价是要求程序员更加勤奋。一般来说，Google代码库中的Go代码应该为错误返回额外的值。
 
-### Indent error flow
+### 缩进错误流程
 
-Handle errors before proceeding with the rest of your code. This improves the readability of the code by enabling the reader to find the normal path quickly. This same logic applies to any block which tests a condition then ends in a terminal condition (e.g., `return`, `panic`, `log.Fatal`).
+在继续代码的其余部分之前处理错误。这提高了代码的可读性，使读者能够快速找到正常路径。这个逻辑同样适用于任何测试条件并以终端条件结束的代码块（例如，`return`、`panic`、`log.Fatal`）。
 
-Code that runs if the terminal condition is not met should appear after the `if` block, and should not be indented in an `else` clause.
+如果终止条件没有得到满足，运行的代码应该出现在`if`块之后，而不应该缩进到`else`子句中。
 
 ```
 // Good:
@@ -756,7 +757,7 @@ if err != nil {
 }
 ```
 
-> **Tip:** If you are using a variable for more than a few lines of code, it is generally not worth using the `if`-with-initializer style. In these cases, it is usually better to move the declaration out and use a standard `if` statement:
+> **提示：**如果你使用一个变量超过几行代码，通常不值得使用`带有初始化的if`风格。在这种情况下，通常最好将声明移出，使用标准的`if`语句。
 >
 > ```
 > // Good:
@@ -777,26 +778,26 @@ if err != nil {
 > }
 > ```
 
-See [Go Tip #1: Line of Sight](https://google.github.io/styleguide/go/index.html#gotip) and [TotT: Reduce Code Complexity by Reducing Nesting](https://testing.googleblog.com/2017/06/code-health-reduce-nesting-reduce.html) for more details.
+更多细节见[Go Tip #1：视线](https://google.github.io/styleguide/go/index.html#gotip)和[TotT：通过减少嵌套降低代码的复杂性](https://testing.googleblog.com/2017/06/code-health-reduce-nesting-reduce.html)。
 
-## Language
+## 语言
 
-### Literal formatting
+### 字面格式化
 
-Go has an exceptionally powerful [composite literal syntax](https://golang.org/ref/spec#Composite_literals), with which it is possible to express deeply-nested, complicated values in a single expression. Where possible, this literal syntax should be used instead of building values field-by-field. The `gofmt` formatting for literals is generally quite good, but there are some additional rules for keeping these literals readable and maintainable.
+Go有一个非常强大的[复合字面语法](https://golang.org/ref/spec#Composite_literals)，用它可以在一个表达式中表达深度嵌套的复杂值。在可能的情况下，应该使用这种字面语法，而不是逐字段建值。字面意义的 `gofmt`格式一般都很好，但有一些额外的规则可以使这些字面意义保持可读和可维护。
 
-#### Field names
+#### 字段名称
 
-Struct literals should usually specify **field names** for types defined outside the current package.
+对于在当前包之外定义的类型，结构体字面量通常应该指定**字段名**。
 
-- Include field names for types from other packages.
+- 包括来自其他包的类型的字段名。
 
   ```
   // Good:
   good := otherpkg.Type{A: 42}
   ```
 
-  The position of fields in a struct and the full set of fields (both of which are necessary to get right when field names are omitted) are not usually considered to be part of a struct’s public API; specifying the field name is needed to avoid unnecessary coupling.
+  结构中字段的位置和字段的完整集合（当字段名被省略时，这两者都是有必要搞清楚的）通常不被认为是结构的公共API的一部分；需要指定字段名以避免不必要的耦合。
 
   ```
   // Bad:
@@ -804,7 +805,7 @@ Struct literals should usually specify **field names** for types defined outside
   r := csv.Reader{',', '#', 4, false, false, false, false}
   ```
 
-  Field names may be omitted within small, simple structs whose composition and order are documented as being stable.
+  在小型、简单的结构中可以省略字段名，这些结构的组成和顺序都有文档证明是稳定的。
 
   ```
   // Good:
@@ -812,15 +813,14 @@ Struct literals should usually specify **field names** for types defined outside
   also := image.Point{X: 42, Y: 54}
   ```
 
-- For package-local types, field names are optional.
+- 对于包内类型，字段名是可选的。
 
   ```
   // Good:
   okay := Type{42}
   also := internalType{4, 2}
   ```
-
-  Field names should still be used if it makes the code clearer, and it is very common to do so. For example, a struct with a large number of fields should almost always be initialized with field names.
+  如果能使代码更清晰，还是应该使用字段名，而且这样做是很常见的。例如，一个有大量字段的结构几乎都应该用字段名来初始化。
 
   ```
   // Good:
@@ -832,11 +832,11 @@ Struct literals should usually specify **field names** for types defined outside
   }
   ```
 
-#### Matching braces
+#### 匹配的大括号
 
-The closing half of a brace pair should always appear on a line with the same amount of indentation as the opening brace. One-line literals necessarily have this property. When the literal spans multiple lines, maintaining this property keeps the brace matching for literals the same as brace matching for common Go syntactic constructs like functions and `if` statements.
+一对大括号的最后一半应该总是出现在一行中，其缩进量与开头的大括号相同。单行字词必然具有这个属性。当字面意义跨越多行时，保持这一属性可以使字面意义的括号匹配与函数和`if`语句等常见Go语法结构的括号匹配相同。
 
-The most common mistake in this area is putting the closing brace on the same line as a value in a multi-line struct literal. In these cases, the line should end with a comma and the closing brace should appear on the next line.
+这方面最常见的错误是在多行结构字中把收尾括号与值放在同一行。在这种情况下，该行应以逗号结束，收尾括号应出现在下一行。
 
 ```
 // Good:
@@ -857,12 +857,12 @@ bad := []*Type{
 }
 ```
 
-#### Cuddled braces
+#### Cuddled 大括号
 
-Dropping whitespace between braces (aka “cuddling” them) for slice and array literals is only permitted when both of the following are true.
+只有在以下两种情况下，才允许在大括号之间为切片和数组丢弃空格（又称 "“cuddling”）。
 
-- The [indentation matches](https://google.github.io/styleguide/go/decisions#literal-matching-braces)
-- The inner values are also literals or proto builders (i.e. not a variable or other expression)
+- [缩进匹配](https://google.github.io/styleguide/go/decisions#literal-matching-braces)
+- 内部值也是字面意义或原语构建者（即不是变量或其他表达式）
 
 ```
 // Good:
@@ -899,9 +899,9 @@ bad := []*Type{
     }}
 ```
 
-#### Repeated type names
+#### 重复的类型名称
 
-Repeated type names may be omitted from slice and map literals. This can be helpful in reducing clutter. A reasonable occasion for repeating the type names explicitly is when dealing with a complex type that is not common in your project, when the repetitive type names are on lines that are far apart and can remind the reader of the context.
+重复的类型名称可以从slice和map字面上省略，这对减少杂乱是有帮助的。明确重复类型名称的一个合理场合，当在你的项目中处理一个不常见的复杂类型时，当重复的类型名称在相隔很远的行上时，可以提醒读者的上下文。
 
 ```
 // Good:
@@ -926,13 +926,13 @@ repetitive := map[Type1]*Type2{
 }
 ```
 
-**Tip:** If you want to remove repetitive type names in struct literals, you can run `gofmt -s`.
+**提示：**如果你想删除结构字中重复的类型名称，可以运行`gofmt -s`。
 
-#### Zero-value fields
+#### 零值字段
 
-[Zero-value](https://golang.org/ref/spec#The_zero_value) fields may be omitted from struct literals when clarity is not lost as a result.
+[零值](https://golang.org/ref/spec#The_zero_value)字段可以从结构字段中省略，但不能因此而失去清晰度。
 
-Well-designed APIs often employ zero-value construction for enhanced readability. For example, omitting the three zero-value fields from the following struct draws attention to the only option that is being specified.
+设计良好的API经常采用零值结构来提高可读性。例如，从下面的结构中省略三个零值字段，可以使人们注意到正在指定的唯一选项。
 
 ```
 // Bad:
@@ -967,9 +967,9 @@ ldb := leveldb.Open("/my/table", &db.Options{
 })
 ```
 
-Structs within table-driven tests often benefit from [explicit field names](https://google.github.io/styleguide/go/decisions#literal-field-names), especially when the test struct is not trivial. This allows the author to omit the zero-valued fields entirely when the fields in question are not related to the test case. For example, successful test cases should omit any error-related or failure-related fields. In cases where the zero value is necessary to understand the test case, such as testing for zero or `nil` inputs, the field names should be specified.
+表驱动的测试中的结构经常受益于[显式字段名](https://google.github.io/styleguide/go/decisions#literal-field-names)，特别是当测试结构不是琐碎的时候。这允许作者在有关字段与测试用例无关时完全省略零值字段。例如，成功的测试案例应该省略任何与错误或失败相关的字段。在零值对于理解测试用例是必要的情况下，例如测试零或 `nil` 输入，应该指定字段名。
 
-**Concise**
+**简明**
 
 ```
 tests := []struct {
@@ -988,7 +988,7 @@ tests := []struct {
 }
 ```
 
-**Explicit**
+**明确**
 
 ```
 tests := []struct {
@@ -1016,9 +1016,9 @@ tests := []struct {
 }
 ```
 
-### Nil slices
+### Nil 切片
 
-For most purposes, there is no functional difference between `nil` and the empty slice. Built-in functions like `len` and `cap` behave as expected on `nil` slices.
+在大多数情况下，`nil`和空切片之间没有功能上的区别。像`len`和`cap`这样的内置函数在`nil`片上的表现与预期相同。
 
 ```
 // Good:
@@ -1035,7 +1035,7 @@ s = append(s, 42)
 fmt.Println(s)      // [42]
 ```
 
-If you declare an empty slice as a local variable (especially if it can be the source of a return value), prefer the nil initialization to reduce the risk of bugs by callers.
+如果你声明一个空片作为局部变量（特别是如果它可以成为返回值的来源），最好选择nil初始化，以减少调用者的错误风险。
 
 ```
 // Good:
@@ -1044,7 +1044,7 @@ var t []string
 t := []string{}
 ```
 
-Do not create APIs that force their clients to make distinctions between nil and the empty slice.
+不要创建强迫调用者区分nil和空片的API。
 
 ```
 // Good:
@@ -1058,9 +1058,9 @@ func Ping(hosts []string) ([]string, error) { ... }
 func Ping(hosts []string) []string { ... }
 ```
 
-When designing interfaces, avoid making a distinction between a `nil` slice and a non-`nil`, zero-length slice, as this can lead to subtle programming errors. This is typically accomplished by using `len` to check for emptiness, rather than `== nil`.
+在设计接口时，避免区分 `nil` 切片和非 `nil` 的零长度分片，因为这可能导致微妙的编程错误。这通常是通过使用`len`来检查是否为空，而不是`==nil`来实现的。
 
-This implementation accepts both `nil` and zero-length slices as “empty”:
+这个实现同时接受`nil`和零长度的片子为 "空"。
 
 ```
 // Good:
@@ -1073,8 +1073,7 @@ func describeInts(prefix string, s []int) {
 }
 ```
 
-Instead of relying on the distinction as a part of the API:
-
+而不是依靠二者的区别作为API的一部分：
 ```
 // Bad:
 func maybeInts() []int { /* ... */ }
@@ -1092,11 +1091,11 @@ func describeInts(prefix string, s []int) {
 describeInts("Here are some ints:", maybeInts())
 ```
 
-See [in-band errors](https://google.github.io/styleguide/go/decisions#in-band-errors) for further discussion.
+详见 [in-band 错误](https://google.github.io/styleguide/go/decisions#in-band-errors).
 
-### Indentation confusion
+### 缩进的混乱
 
-Avoid introducing a line break if it would align the rest of the line with an indented code block. If this is unavoidable, leave a space to separate the code in the block from the wrapped line.
+如果断行会使其余的行与缩进的代码块对齐，则应避免引入断行。如果这是不可避免的，请留下一个空间，将代码块中的代码与包线分开。
 
 ```
 // Bad:
@@ -1107,17 +1106,17 @@ if longCondition1 && longCondition2 &&
 }
 ```
 
-See the following sections for specific guidelines and examples:
+具体准则和例子见以下章节：
 
 - [Function formatting](https://google.github.io/styleguide/go/decisions#func-formatting)
 - [Conditionals and loops](https://google.github.io/styleguide/go/decisions#conditional-formatting)
 - [Literal formatting](https://google.github.io/styleguide/go/decisions#literal-formatting)
 
-### Function formatting
+### 函数格式化
 
-The signature of a function or method declaration should remain on a single line to avoid [indentation confusion](https://google.github.io/styleguide/go/decisions#indentation-confusion).
+函数或方法声明的签名应该保持在一行，以避免[缩进的混乱](https://google.github.io/styleguide/go/decisions#indentation-confusion)。
 
-Function argument lists can make some of the longest lines in a Go source file. However, they precede a change in indentation, and therefore it is difficult to break the line in a way that does not make subsequent lines look like part of the function body in a confusing way:
+函数参数列表可以成为Go源文件中最长的几行。然而，它们在缩进的变化之前，因此很难以不使后续行看起来像函数体的一部分的方式来断行，从而造成混乱。
 
 ```
 // Bad:
@@ -1128,7 +1127,7 @@ func (r *SomeType) SomeLongFunctionName(foo1, foo2, foo3 string,
 }
 ```
 
-See [best practices](https://google.github.io/styleguide/go/best-practices#funcargs) for a few options for shortening the call sites of functions that would otherwise have many arguments.
+参见[最佳实践](https://google.github.io/styleguide/go/best-practices#funcargs)，了解一些缩短函数调用的选择，否则这些函数会有很多参数。
 
 ```
 // Good:
@@ -1154,7 +1153,7 @@ bad := foo.Call(
 )
 ```
 
-Lines can often be shortened by factoring out local variables.
+通过分解局部变量，通常可以缩短行数。
 
 ```
 // Good:
