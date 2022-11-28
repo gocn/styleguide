@@ -1161,7 +1161,7 @@ local := helper(some, parameters, here)
 good := foo.Call(list, of, parameters, local)
 ```
 
-Similarly, function and method calls should not be separated based solely on line length.
+类似地，函数和方法调用不应该仅仅由于行的长度而进行换行。
 
 ```
 // Good:
@@ -1171,7 +1171,7 @@ bad := foo.Call(long, list, of, parameters,
     with, arbitrary, line, breaks)
 ```
 
-Do not add comments to specific function parameters. Instead, use an [option struct](https://google.github.io/styleguide/go/best-practices#option-structure) or add more detail to the function documentation.
+不要为特定的函数参数添加注释。 相反，使用 [option struct](https://google.github.io/styleguide/go/best-practices#option-structure) 或在函数文档中添加更多细节。
 
 ```
 // Good:
@@ -1183,7 +1183,7 @@ bad := server.New(
 )
 ```
 
-If call-sites are uncomfortably long, consider refactoring:
+如果调用参数确实长得令人很难受，那么就应该考虑重构：
 
 ```
 // Good:
@@ -1198,7 +1198,7 @@ replacements := []string{
 replacer := strings.NewReplacer(replacements...)
 ```
 
-If the API cannot be changed or if the local call is unusual (whether or not the call is too long), it is always permissible to add line breaks if it aids in understanding the call.
+当 API 无法更改或本地调用是不寻常的（无论调用是否太长），如果有助于理解本次调用，始终允许添加换行符。
 
 ```
 // Good:
@@ -1214,9 +1214,9 @@ canvas.RenderCube(cube,
 )
 ```
 
-Note that the lines in the above example are not wrapped at a specific column boundary but are grouped based on co-ordinate triples.
+请注意，上面示例中的行没有在特定的列边界处换行，而是根据坐标三元组进行分组。
 
-Long string literals within functions should not be broken for the sake of line length. For functions that include such strings, a line break can be added after the string format, and the arguments can be provided on the next or subsequent lines. The decision about where the line breaks should go is best made based on semantic groupings of inputs, rather than based purely on line length.
+函数中的长字符串不应该因为行的长度而被破坏。 对于包含此类字符串的函数，可以在字符串格式之后添加换行符，并且可以在下一行或后续行中提供参数。 最好根据输入的语义分组来决定换行符应该放在哪里，而不是单纯基于行长。
 
 ```
 // Good:
@@ -1230,9 +1230,9 @@ log.Warningf("Database key (%q, %d, %q) incompatible in"+
     txOffset, txKey)
 ```
 
-### Conditionals and loops
+### 条件和循环
 
-An `if` statement should not be line broken; multi-line `if` clauses can lead to [indentation confusion](https://google.github.io/styleguide/go/decisions#indentation-confusion).
+`if` 语句不应换行； 多行 `if` 子句的形式会出现 [缩进混乱带来的困扰](https://google.github.io/styleguide/go/decisions#indentation-confusion)。
 
 ```
 // Bad:
@@ -1244,7 +1244,7 @@ if db.CurrentStatusIs(db.InTransaction) &&
 }
 ```
 
-If the short-circuit behavior is not required, the boolean operands can be extracted directly:
+如果不需要短路(short-circuit)行为，可以直接提取布尔操作数：
 
 ```
 // Good:
@@ -1255,7 +1255,7 @@ if inTransaction && keysMatch {
 }
 ```
 
-There may also be other locals that can be extracted, especially if the conditional is already repetitive:
+尤其注意，在条件已经重复的情况下，很可能还是有可以提取的局部变量：
 
 ```
 // Good:
@@ -1269,7 +1269,7 @@ if db.UserIsAdmin(user.GetUniqueUserID()) || db.UserHasPermission(user.GetUnique
 }
 ```
 
-`if` statements that contain closures or multi-line struct literals should ensure that the [braces match](https://google.github.io/styleguide/go/decisions#literal-matching-braces) to avoid [indentation confusion](https://google.github.io/styleguide/go/decisions#indentation-confusion).
+包含闭包或多行结构文字的 `if` 语句应确保 [大括号匹配](https://google.github.io/styleguide/go/decisions#literal-matching-braces) 以避免 [缩进混淆] （https://google.github.io/styleguide/go/decisions#indentation-confusion）。
 
 ```
 // Good:
@@ -1287,7 +1287,7 @@ if _, err := client.Update(ctx, &upb.UserUpdateRequest{
 }
 ```
 
-Similarly, don’t try inserting artificial linebreaks into `for` statements. You can always let the line simply be long if there is no elegant way to refactor it:
+同样，不要尝试在 `for` 语句中人为的插入换行符。 如果没有优雅的重构方式，是可以允许单纯的较长的行：
 
 ```
 // Good:
@@ -1296,7 +1296,7 @@ for i, max := 0, collection.Size(); i < max && !collection.HasPendingWriters(); 
 }
 ```
 
-Often, though, there is:
+但是，通常可以优化为：
 
 ```
 // Good:
@@ -1308,7 +1308,7 @@ for i, max := 0, collection.Size(); i < max; i++ {
 }
 ```
 
-`switch` and `case` statements should also remain on a single line.
+`switch` 和 `case` 语句都应始终保持在一行：
 
 ```
 // Good:
@@ -1334,7 +1334,7 @@ default:
 }
 ```
 
-If the line is excessively long, indent all cases and separate them with a blank line to avoid [indentation confusion](https://google.github.io/styleguide/go/decisions#indentation-confusion):
+如果行太长，将所有大小写缩进并用空行分隔以避免[缩进混淆]（https://google.github.io/styleguide/go/decisions#indentation-confusion）：
 
 ```
 // Good:
@@ -1353,7 +1353,7 @@ default:
 }
 ```
 
-In conditionals comparing a variable to a constant, place the variable value on the left hand side of the equality operator:
+在将变量比较的条件中，变量值放在等号运算符的左侧：
 
 ```
 // Good:
@@ -1362,7 +1362,7 @@ if result == "foo" {
 }
 ```
 
-Instead of the less clear phrasing where the constant comes first ([“Yoda style conditionals”](https://en.wikipedia.org/wiki/Yoda_conditions)):
+不要采用常量在前的表达含糊的条件写法([尤达条件式](https://en.wikipedia.org/wiki/Yoda_conditions))
 
 ```
 // Bad:
@@ -1371,13 +1371,14 @@ if "foo" == result {
 }
 ```
 
-### Copying
+### 复制
 
-To avoid unexpected aliasing and similar bugs, be careful when copying a struct from another package. For example, synchronization objects such as `sync.Mutex` must not be copied.
+为了避免意外的别名和类似的错误，从另一个包复制结构时要小心。 例如 `sync.Mutex` 是不能复制的同步对象，
 
-The `bytes.Buffer` type contains a `[]byte` slice and, as an optimization for small strings, a small byte array to which the slice may refer. If you copy a `Buffer`, the slice in the copy may alias the array in the original, causing subsequent method calls to have surprising effects.
+`bytes.Buffer` 类型包含一个 `[]byte` 切片和切片可以引用的小数组，这是为了对小字符串的优化。 如果你复制一个 `Buffer`，复制的切片会指向原始切片中的数组，从而在后续方法调用产生意外的效果。
 
-In general, do not copy a value of type `T` if its methods are associated with the pointer type, `*T`.
+一般来说，如果类型的方法与指针类型`*T`相关联，不要复制类型为`T`的值。
+
 
 ```
 // Bad:
@@ -1385,9 +1386,9 @@ b1 := bytes.Buffer{}
 b2 := b1
 ```
 
-Invoking a method that takes a value receiver can hide the copy. When you author an API, you should generally take and return pointer types if your structs contain fields that should not be copied.
+调用值接收者的方法可以隐藏副本。 当您编写 API 时，如果您的结构包含不应复制的字段，您通常应该采用并返回指针类型。
 
-These are acceptable:
+如此是可接受的:
 
 ```
 // Good:
@@ -1403,7 +1404,7 @@ func (r *Record) Process(...) {...}
 func Consumer(r *Record) {...}
 ```
 
-But these are usually wrong:
+但下面这种通常是错误的:
 
 ```
 // Bad:
@@ -1417,23 +1418,23 @@ func (r Record) Process(...) {...} // Makes a copy of r.buf
 func Consumer(r Record) {...} // Makes a copy of r.buf
 ```
 
-This guidance also applies to copying `sync.Mutex`.
+这一指南同样也适用于 `sync.Mutex` 复制的情况。
 
-### Don’t panic
+### 不要 panic
 
-Do not use `panic` for normal error handling. Instead, use `error` and multiple return values. See the [Effective Go section on errors](http://golang.org/doc/effective_go.html#errors).
+不要使用 `panic` 进行正常的错误处理。 相反，使用 `error` 和多个返回值。 请参阅 [关于错误的有效 Go 部分](http://golang.org/doc/effective_go.html#errors)。
 
-Within `package main` and initialization code, consider [`log.Exit`](https://pkg.go.dev/github.com/golang/glog#Exit) for errors that should terminate the program (e.g., invalid configuration), as in many of these cases a stack trace will not help the reader. Please note that [`log.Exit`](https://pkg.go.dev/github.com/golang/glog#Exit) calls [`os.Exit`](https://pkg.go.dev/os#Exit) and any deferred functions will not be run.
+在 `package main` 和初始化代码中，考虑 [`log.Exit`](https://pkg.go.dev/github.com/golang/glog#Exit) 中应该终止程序的错误（例如，无效配置 )，因为在许多这些情况下，堆栈跟踪对阅读者没有帮助。 请注意 [`log.Exit`](https://pkg.go.dev/github.com/golang/glog#Exit) 中调用了 [`os.Exit`](https://pkg.go.dev/os#Exit) ，此时所有`defer`函数都将不会运行。
 
-For errors that indicate “impossible” conditions, namely bugs that should always be caught during code review and/or testing, a function may reasonably return an error or call [`log.Fatal`](https://pkg.go.dev/github.com/golang/glog#Fatal).
+对于那些表示“不可能”出现的条件错误、命名错误，应该在代码评审、测试期间发现，函数应合理地返回错误或调用 [`log.Fatal`](https://pkg.go.dev /github.com/golang/glog#Fatal）。
 
-**Note:** `log.Fatalf` is not the standard library log. See [#logging].
+**注意：** `log.Fatalf` 不是标准库日志。 请参阅 [#logging]。
 
-### Must functions
+### Must类函数
 
-Setup helper functions that stop the program on failure follow the naming convention `MustXYZ` (or `mustXYZ`). In general, they should only be called early on program startup, not on things like user input where normal Go error handling is preferred.
+用于在失败时停止程序的辅助函数应遵循命名约定“MustXYZ”（或“mustXYZ”）。 一般来说，它们应该只在程序启动的早期被调用，而不是在像用户输入时，此时更应该首选 `error` 处理。
 
-This often comes up for functions called to initialize package-level variables exclusively at [package initialization time](https://golang.org/ref/spec#Package_initialization) (e.g. [template.Must](https://golang.org/pkg/text/template/#Must) and [regexp.MustCompile](https://golang.org/pkg/regexp/#MustCompile)).
+这类方式，通常只在[包初始化时]（https://golang.org/ref/spec#Package_initialization）进行包级变量初始化的函数常见（例如[template.Must](https://golang.org/pkg/text/template/#Must) 和 [regexp.MustCompile](https://golang.org/pkg/regexp/#MustCompile))。
 
 ```
 // Good:
@@ -1450,9 +1451,7 @@ func MustParse(version string) *Version {
 var DefaultVersion = MustParse("1.2.3")
 ```
 
-**Note:** `log.Fatalf` is not the standard library log. See [#logging].
-
-The same convention may be used in test helpers that only stop the current test (using `t.Fatal`). Such helpers are often convenient in creating test values, for example in struct fields of [table driven tests](https://google.github.io/styleguide/go/decisions#table-driven-tests), as functions that return errors cannot be directly assigned to a struct field.
+相同的约定也可用于仅停止当前测试的情况（使用 `t.Fatal`）。 这样在创建测试时通常很方便，例如在 [表驱动测试](https://google.github.io/styleguide/go/decisions#table-driven-tests) 的结构字段中，作为返回错误的函数是不能直接复制给结构字段的。
 
 ```
 // Good:
@@ -1481,11 +1480,11 @@ func TestCreateObject(t *testing.T) {
 }
 ```
 
-In both of these cases, the value of this pattern is that the helpers can be called in a “value” context. These helpers should not be called in places where it’s difficult to ensure an error would be caught or in a context where an error should be [checked](https://google.github.io/styleguide/go/decisions#handle-errors) (e.g., in many request handlers). For constant inputs, this allows tests to easily ensure that the `Must` arguments are well-formed, and for non-constant inputs it permits tests to validate that errors are [properly handled or propagated](https://google.github.io/styleguide/go/best-practices#error-handling).
+在这两种情况下，这种模式的价值在于可以在“值”上下文中调用。不应在难以确保捕获错误的地方或应[检查](https://google.github.io/styleguide/go/decisions#handle-errors)错误的上下文中调用这些程序（如，在许多请求处理程序中）。对于常量输入，这允许测试确保“必须”的参数格式正确，对于非常量的输入，它允许测试验证错误是否[正确处理或传播](https://google.github.io/styleguide/go/best-practices#error-handling)。
 
-Where `Must` functions are used in a test, they should generally be [marked as a test helper](https://google.github.io/styleguide/go/decisions#mark-test-helpers) and call `t.Fatal` on error (see [error handling in test helpers](https://google.github.io/styleguide/go/best-practices#test-helper-error-handling) for more considerations of using that).
+在测试中使用 `Must` 函数的地方，通常应该 [标记为测试助手](https://google.github.io/styleguide/go/decisions#mark-test-helpers) 并调用 `t.Fatal`（请参阅[测试助手中的错误处理](https://google.github.io/styleguide/go/best-practices#test-helper-error-handling)来了解使用它的更多注意事项）。
 
-They should not be used when [ordinary error handling](https://google.github.io/styleguide/go/best-practices#error-handling) is possible (including with some refactoring):
+当有可能通过 [普通错误处理](https://google.github.io/styleguide/go/best-practices#error-handling) 处理时，就不应该使用`Must`类函数：
 
 ```
 // Bad:
@@ -1496,13 +1495,14 @@ func Version(o *servicepb.Object) (*version.Version, error) {
 }
 ```
 
-### Goroutine lifetimes
+### Goroutine 生命周期
 
-When you spawn goroutines, make it clear when or whether they exit.
+当你生成 goroutines 时，要明确它们何时或是否退出。
 
-Goroutines can leak by blocking on channel sends or receives. The garbage collector will not terminate a goroutine even if the channels it is blocked on are unreachable.
+Goroutines 可以在阻塞通道发送或接收出现泄漏。 垃圾收集器不会终止一个 goroutine，即使它被阻塞的通道已经不可用。
 
-Even when goroutines do not leak, leaving them in-flight when they are no longer needed can cause other subtle and hard-to-diagnose problems. Sending on a channel that has been closed causes a panic.
+即使 goroutine 没有泄漏，在不再需要时仍处于运行状态也会导致其他微妙且难以诊断的问题。 向已关闭的通道上发送会导致panic。
+
 
 ```
 // Bad:
@@ -1512,27 +1512,27 @@ close(ch)
 ch <- 13 // panic
 ```
 
-Modifying still-in-use inputs “after the result isn’t needed” can lead to data races. Leaving goroutines in-flight for arbitrarily long can lead to unpredictable memory usage.
+“在结果已经不需要之后”修改仍在使用的入参可能会导致数据竞争。 运行任意长时间的 goroutine 会导致不可预测的内存占用。
 
-Concurrent code should be written such that the goroutine lifetimes are obvious. Typically this will mean keeping synchronization-related code constrained within the scope of a function and factoring out the logic into [synchronous functions](https://google.github.io/styleguide/go/decisions#synchronous-functions). If the concurrency is still not obvious, it is important to document when and why the goroutines exit.
+并发代码的编写应该让 goroutine 生命周期非常明显。 通常，这意味着在与同步相关的代码限制的函数范围内，将逻辑分解为 [同步函数](https://google.github.io/styleguide/go/decisions#synchronous-functions)。 如果并发性仍然不明显，那么文档说明 goroutine 在何时、为何退出就很重要。
 
-Code that follows best practices around context usage often helps make this clear. It is conventionally managed with a `context.Context`:
+遵循上下文使用最佳实践的代码通常有助于明确这一点，其通常使用 `context.Context` 进行管理：
 
 ```
 // Good:
 func (w *Worker) Run(ctx context.Context) error {
     // ...
     for item := range w.q {
-        // process returns at latest when the context is cancelled.
+        // process 至少在ctx取消时会返回
         go process(ctx, item)
     }
     // ...
 }
 ```
 
-There are other variants of the above that use raw signal channels like `chan struct{}`, synchronized variables, [condition variables](https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view), and more. The important part is that the goroutine’s end is evident for subsequent maintainers.
+上面还有其他使用通道的情况，例如 `chan struct{}`、同步变量、[条件变量](https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view) 等等。 重要的部分是 goroutine 的终结对于后续维护者来说是显而易见的。
 
-In contrast, the following code is careless about when its spawned goroutines finish:
+相比之下，以下代码不关心其衍生的 goroutine 何时完成：
 
 ```
 // Bad:
@@ -1547,33 +1547,33 @@ func (w *Worker) Run() {
 }
 ```
 
-This code may look OK, but there are several underlying problems:
+这段代码看起来还行，但有几个潜在的问题：
 
-- The code probably has undefined behavior in production, and the program may not terminate cleanly, even if the operating system releases the resources.
-- The code is difficult to test meaningfully due to the code’s indeterminate lifecycle.
-- The code may leak resources as described above.
+- 代码在可能会有未知的行为，即使操作系统已经释放资源，程序也可能没有完全干净地结束
+- 由于代码的不确定生命周期，代码难以进行有效的测试
+- 代码可能会出现资源泄漏，如上所述
 
-See also:
+更多可阅读：
 
-- [Never start a goroutine without knowing how it will stop](https://dave.cheney.net/2016/12/22/never-start-a-goroutine-without-knowing-how-it-will-stop)
-- Rethinking Classical Concurrency Patterns: [slides](https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view), [video](https://www.youtube.com/watch?v=5zXAHh5tJqQ)
-- [When Go programs end](https://changelog.com/gotime/165)
+- [永远不要在不知道它将如何停止的情况下启动 goroutine](https://dave.cheney.net/2016/12/22/never-start-a-goroutine-without-knowing-how-it-will-stop)
+- 重新思考经典并发模式：[幻灯片](https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view)，[视频](https://www.youtube.com/watch?v=5zXAHh5tJqQ)
+- [Go 程序何时结束](https://changelog.com/gotime/165)
 
-### Interfaces
+### 接口
 
-Go interfaces generally belong in the package that *consumes* values of the interface type, not a package that *implements* the interface type. The implementing package should return concrete (usually pointer or struct) types. That way, new methods can be added to implementations without requiring extensive refactoring. See [GoTip #49: Accept Interfaces, Return Concrete Types](https://google.github.io/styleguide/go/index.html#gotip) for more details.
+Go 接口通常属于*使用*接口类型值的包，而不是*实现*接口类型的包。实现包应该返回具体的（通常是指针或结构）类型。这样就可以将新方法添加到实现中，而无需进行大量重构。有关详细信息，请参阅 [GoTip #49：接受接口、返回具体类型](https://google.github.io/styleguide/go/index.html#gotip)。
 
-Do not export a [test double](https://abseil.io/resources/swe-book/html/ch13.html#techniques_for_using_test_doubles) implementation of an interface from an API that consumes it. Instead, design the API so that it can be tested using the [public API](https://abseil.io/resources/swe-book/html/ch12.html#test_via_public_apis) of the [real implementation](https://google.github.io/styleguide/go/best-practices#use-real-transports). See [GoTip #42: Authoring a Stub for Testing](https://google.github.io/styleguide/go/index.html#gotip) for more details. Even when it is not feasible to use the real implementation, it may not be necessary to introduce an interface fully covering all methods in the real type; the consumer can create an interface containing only the methods it needs, as demonstrated in [GoTip #78: Minimal Viable Interfaces](https://google.github.io/styleguide/go/index.html#gotip).
+不要从使用 API 导出接口的 [test double](https://abseil.io/resources/swe-book/html/ch13.html#techniques_for_using_test_doubles) 实现。相反，应设计可以使用 [实际实现](https://abseil.io/resources/swe-book/html/ch12.html#test_via_public_apis) 的[公共API]((https://abseil.io/resources/swe-book/html/ch12.html#test_via_public_apis))进行测试。有关详细信息，请参阅 [GoTip #42：为测试编写存根](https://google.github.io/styleguide/go/index.html#gotip)。即使在使用实现不可行的情况下，也没有必要引入一个完全覆盖类型所有方法的接口；消费者可以创建一个只包含它需要的方法的接口，如 [GoTip #78: Minimal Viable Interfaces](https://google.github.io/styleguide/go/index.html#gotip) 中所示。
 
-To test packages that use Stubby RPC clients, use a real client connection. If a real server cannot be run in the test, Google’s internal practice is to obtain a real client connection to a local [test double] using the internal rpctest package (coming soon!).
+要测试使用 Stubby RPC 客户端的包，请使用真实的客户端连接。如果无法在测试中运行真实服务器，Google 的内部做法是使用内部 rpctest 包（即将推出！）获得与本地 [test double] 的真实客户端连接。
 
-Do not define interfaces before they are used (see [TotT: Code Health: Eliminate YAGNI Smells](https://testing.googleblog.com/2017/08/code-health-eliminate-yagni-smells.html) ). Without a realistic example of usage, it is too difficult to see whether an interface is even necessary, let alone what methods it should contain.
+在使用之前不要定义接口（参见 [TotT: Code Health: Eliminate YAGNI Smells](https://testing.googleblog.com/2017/08/code-health-eliminate-yagni-smells.html)）。如果没有实际的使用示例，就很难判断一个接口是否必要，更不用说它应该包含哪些方法了。
 
-Do not use interface-typed parameters if the users of the package do not need to pass different types for them.
+如果不需要传递不同的类型，则不要使用接口类型作为参数。
 
-Do not export interfaces that the users of the package do not need.
+不要导出不需要开放的接口。
 
-**TODO:** Write a more in-depth doc on interfaces and link to it here.
+**TODO:** 写一个关于接口的更深入的文档并在这里链接到它。
 
 ```
 // Good:
@@ -1607,42 +1607,42 @@ func (t Thinger) Thing() bool { ... }
 func NewThinger() Thinger { return Thinger{ ... } }
 ```
 
-### Generics
+### 泛型
 
-Generics (formally called “[Type Parameters](https://go.dev/design/43651-type-parameters)”) are allowed where they fulfill your business requirements. In many applications, a conventional approach using existing language features (slices, maps, interfaces, and so on) works just as well without the added complexity, so be wary of premature use. See the discussion on [least mechanism](https://google.github.io/styleguide/go/guide#least-mechanism).
+泛型（正式名称为“[类型参数](https://go.dev/design/43651-type-parameters)”）在满足业务需求时被允许使用。在许多应用程序中，使用现有传统的（切片、映射、接口等）方式也可以正常工作，而不会增加复杂性，因此请注意不要过早使用。请参阅关于 [最小机制](https://google.github.io/styleguide/go/guide#least-mechanism) 的讨论。
 
-When introducing an exported API that uses generics, make sure it is suitably documented. It’s highly encouraged to include motivating runnable [examples](https://google.github.io/styleguide/go/decisions#examples).
+在使用泛型的导出时，请确保对其进行适当的记录。强烈鼓励包含可运行的 [examples](https://google.github.io/styleguide/go/decisions#examples)。
 
-Do not use generics just because you are implementing an algorithm or data structure that does not care about the type of its member elements. If there is only one type being instantiated in practice, start by making your code work on that type without using generics at all. Adding polymorphism later will be straightforward compared to removing abstraction that is found to be unnecessary.
+不要仅仅因为你正在实现一个不关心其成员元素类型的算法或数据结构而使用泛型。如果在实践中只有一种类型被实例化，那么首先让您的代码在该类型上工作，而不使用泛型。与删除发现不必要的抽象相比，稍后添加多态性将更简单。
 
-Do not use generics to invent domain-specific languages (DSLs). In particular, refrain from introducing error-handling frameworks that might put a significant burden on readers. Instead prefer established [error handling](https://google.github.io/styleguide/go/decisions#errors) practices. For testing, be especially wary of introducing [assertion libraries](https://google.github.io/styleguide/go/decisions#assert) or frameworks that result in less useful [test failures](https://google.github.io/styleguide/go/decisions#useful-test-failures).
+不要使用泛型来发明领域特定语言 (DSL)。特别是，不要引入可能会给阅读者带来沉重负担的错误处理框架。相反，更应该使用 [错误处理](https://google.github.io/styleguide/go/decisions#errors) 做法。对于测试，要特别小心引入 [断言库](https://google.github.io/styleguide/go/decisions#assert) 或框架，尤其是很少发现[失败case](https://google.github.io/styleguide/go/decisions#useful-test-failures)的。
 
-In general:
+一般来说：
 
-- [Write code, don’t design types](https://www.youtube.com/watch?v=Pa_e9EeCdy8&t=1250s). From a GopherCon talk by Robert Griesemer and Ian Lance Taylor.
-- If you have several types that share a useful unifying interface, consider modeling the solution using that interface. Generics may not be needed.
-- Otherwise, instead of relying on the `any` type and excessive [type switching](https://tour.golang.org/methods/16), consider generics.
+- [写代码，不要去设计类型](https://www.youtube.com/watch?v=Pa_e9EeCdy8&t=1250s)。来自 Robert Griesemer 和 Ian Lance Taylor 的 GopherCon 演讲。
+- 如果您有几种类型共享一个有用的统一界面，请考虑使用该界面对解决方案进行建模。可能不需要泛型。
+- 否则，不要依赖 `any` 类型和过多的 [类型断言](https://tour.golang.org/methods/16)，这时应考虑泛型。
 
-See also:
+更多也可以参考：
 
-- [Using Generics in Go](https://www.youtube.com/watch?v=nr8EpUO9jhw), talk by Ian Lance Taylor
-- [Generics tutorial](https://go.dev/doc/tutorial/generics) on Go’s webpage
+- [在 Go 中使用泛型](https://www.youtube.com/watch?v=nr8EpUO9jhw)，Ian Lance Taylor 的演讲
+- Go 网页上的[泛型教程](https://go.dev/doc/tutorial/generics)
 
-### Pass values
+### 参数值传递
 
-Do not pass pointers as function arguments just to save a few bytes. If a function reads its argument `x` only as `*x` throughout, then the argument shouldn’t be a pointer. Common instances of this include passing a pointer to a string (`*string`) or a pointer to an interface value (`*io.Reader`). In both cases, the value itself is a fixed size and can be passed directly.
+不要为了节省几个字节而将指针作为函数参数传递。 如果一个函数在整个过程中只将参数`x`处理为`*x`，那么不应该采用指针。 常见的例子包括传递一个指向字符串的指针（`*string`）或一个指向接口值的指针（`*io.Reader`）。 在这两种情况下，值本身都是固定大小的，可以直接传递。
 
-This advice does not apply to large structs, or even small structs that may increase in size. In particular, protocol buffer messages should generally be handled by pointer rather than by value. The pointer type satisfies the `proto.Message` interface (accepted by `proto.Marshal`, `protocmp.Transform`, etc.), and protocol buffer messages can be quite large and often grow larger over time.
+此建议不适用于大型结构体，甚至可能会增加大小的小型结构。 特别是，`pb`消息通常应该通过指针而不是值来处理。 指针类型满足 `proto.Message` 接口（被 `proto.Marshal`、`protocmp.Transform` 等接受），并且协议缓冲区消息可能非常大，并且随着时间的推移通常会变得更大。
 
-### Receiver type
+### 接收者类型
 
-A [method receiver](https://golang.org/ref/spec#Method_declarations) can be passed either as a value or a pointer, just as if it were a regular function parameter. The choice of which to choose should be based on which [method set(s)](https://golang.org/ref/spec#Method_sets) the method should be a part of.
+[方法接收者](https://golang.org/ref/spec#Method_declarations) 和常规函数参数一样，也可以使用值或指针传递。 选择哪个应该基于该方法应该属于哪个[方法集]（https://golang.org/ref/spec#Method_sets）。
 
-**Correctness wins over speed or simplicity.** There are cases where you must use a pointer value. In other cases, pick pointers for large types or as future-proofing if you don’t have a good sense of how the code will grow, and use values for simple [plain old data](https://en.wikipedia.org/wiki/Passive_data_structure).
+**正确性胜过速度或简单性。** 在某些情况下是必须使用指针的。 在其他情况下，如果您对代码的增长方式没有很好的了解，请为大类型选择指针或作为面向未来的指针，并为[简单的的数据]((https://en.wikipedia.org/wiki/Passive_data_structure))使用值。
 
-The list below spells out each case in further detail:
+下面的列表更详细地说明了每个案例：
 
-- If the receiver is a slice and the method doesn’t reslice or reallocate the slice, use a value rather than a pointer.
+- 如果接收者是一个切片并且该方法没有重新切片或重新分配切片，应使用值而不是指针。
 
   ```
   // Good:
@@ -1651,7 +1651,7 @@ The list below spells out each case in further detail:
   func (b Buffer) Len() int { return len(b) }
   ```
 
-- If the method needs to mutate the receiver, the receiver must be a pointer.
+- 如果方法需要修改接收者，应使用指针。
 
   ```
   // Good:
@@ -1665,7 +1665,7 @@ The list below spells out each case in further detail:
   func (q *Queue) Push(x Item) { *q = append([]Item{x}, *q...) }
   ```
 
-- If the receiver is a struct containing fields that [cannot safely be copied](https://google.github.io/styleguide/go/decisions#copying), use a pointer receiver. Common examples are [`sync.Mutex`](https://pkg.go.dev/sync#Mutex) and other synchronization types.
+- 如果接收者包含 [不能被安全复制的](https://google.github.io/styleguide/go/decisions#copying) 字段, 应使用指针接收者。常见的例子是 [`sync.Mutex`](https://pkg.go.dev/sync#Mutex) 和其他同步类型。
 
   ```
   // Good:
@@ -1681,13 +1681,13 @@ The list below spells out each case in further detail:
   }
   ```
 
-  **Tip:** Check the type’s [Godoc](https://pkg.go.dev/time#example-Duration) for information about whether it is safe or unsafe to copy.
+  **提示：** 检查类型的 [Godoc](https://pkg.go.dev/time#example-Duration) 以获取有关复制是否安全的信息。
 
-- If the receiver is a “large” struct or array, a pointer receiver may be more efficient. Passing a struct is equivalent to passing all of its fields or elements as arguments to the method. If that seems too large to [pass by value](https://google.github.io/styleguide/go/decisions#pass-values), a pointer is a good choice.
+- 如果接收者是“大”结构或数组，则指针接收者可能更有效。 传递结构相当于将其所有字段或元素作为参数传递给方法。 如果这看起来太大而无法[按值传递](https://google.github.io/styleguide/go/decisions#pass-values)，那么指针是一个不错的选择。
 
-- For methods that will call or run concurrently with other functions that modify the receiver, use a value if those modifications should not be visible to your method; otherwise use a pointer.
+- 对于将调用修改接收者的其他函数，而这些修改对此方法不可见，请使用值类型； 否则使用指针。
 
-- If the receiver is a struct or array, any of whose elements is a pointer to something that may be mutated, prefer a pointer receiver to make the intention of mutability clear to the reader.
+- 如果接收者是一个结构或数组，其元素中的任何一个都是指向可能发生变异的东西的指针，那么更应该指针接收者以使阅读者清楚地了解可变性的意图。
 
   ```
   // Good:
@@ -1700,7 +1700,7 @@ The list below spells out each case in further detail:
   }
   ```
 
-- If the receiver is a [built-in type](https://pkg.go.dev/builtin), such as an integer or a string, that does not need to be modified, use a value.
+- 如果接收者是[内置类型](https://pkg.go.dev/builtin)，例如整数或字符串，不需要修改，使用值。
 
   ```
   // Good:
@@ -1709,7 +1709,7 @@ The list below spells out each case in further detail:
   func (u User) String() { return string(u) }
   ```
 
-- If the receiver is a map, function, or channel, use a value rather than a pointer.
+- 接收者是`map`, `function` 或 `channel`，使用值类型，而不是指针。
 
   ```
   // Good:
@@ -1719,7 +1719,7 @@ The list below spells out each case in further detail:
   func (h Header) Add(key, value string) { /* omitted */ }
   ```
 
-- If the receiver is a “small” array or struct that is naturally a value type with no mutable fields and no pointers, a value receiver is usually the right choice.
+- 如果接收器是一个“小”数组或结构，它自然是一个没有可变字段和指针，那么值接收者通常是正确的选择。
 
   ```
   // Good:
@@ -1729,15 +1729,15 @@ The list below spells out each case in further detail:
   func (t Time) Add(d Duration) Time { /* omitted */ }
   ```
 
-- When in doubt, use a pointer receiver.
+- 如有疑问，请使用指针接收者。
 
-As a general guideline, prefer to make the methods for a type either all pointer methods or all value methods.
+作为一般准则，最好将类型的方法设为全部指针方法或全部值方法。
 
-**Note:** There is a lot of misinformation about whether passing a value or a pointer to a function can affect performance. The compiler can choose to pass pointers to values on the stack as well as copying values on the stack, but these considerations should not outweigh the readability and correctness of the code in most circumstances. When the performance does matter, it is important to profile both approaches with a realistic benchmark before deciding that one approach outperforms the other.
+**注意：** 关于是否值或指针的函数是否会影响性能，存在很多错误信息。 编译器可以选择将指针传递到堆栈上的值以及复制堆栈上的值，但在大多数情况下，这些考虑不应超过代码的可读性和正确性。 当性能确实很重要时，重要的是在确定一种方法优于另一种方法之前，用一个现实的基准来描述这两种方法。
 
-### `switch` and `break`
+### `switch` 和 `break`
 
-Do not use `break` statements without target labels at the ends of `switch` clauses; they are redundant. Unlike in C and Java, `switch` clauses in Go automatically break, and a `fallthrough` statement is needed to achieve the C-style behavior. Use a comment rather than `break` if you want to clarify the purpose of an empty clause.
+不要在`switch`子句末尾使用没有目标标签的`break`语句； 它们是多余的。 与 C 和 Java 不同，Go 中的 `switch` 子句会自动中断，并且需要 `fallthrough` 语句来实现 C 风格的行为。 如果您想阐明空子句的目的，请使用注释而不是 `break`。
 
 ```
 // Good:
@@ -1784,32 +1784,34 @@ default:
 >   }
 > ```
 
-### Synchronous functions
+### 同步函数
 
-Synchronous functions return their results directly and finish any callbacks or channel operations before returning. Prefer synchronous functions over asynchronous functions.
+同步函数直接返回它们的结果，并在返回之前完成所有回调或通道操作。 首选同步函数而不是异步函数。
 
-Synchronous functions keep goroutines localized within a call. This helps to reason about their lifetimes, and avoid leaks and data races. Synchronous functions are also easier to test, since the caller can pass an input and check the output without the need for polling or synchronization.
+同步函数使 goroutine 在调用中保持本地化。 这有助于推理它们的生命周期，并避免泄漏和数据竞争。 同步函数也更容易测试，因为调用者可以传递输入并检查输出，而无需轮询或同步。
 
-If necessary, the caller can add concurrency by calling the function in a separate goroutine. However, it is quite difficult (sometimes impossible) to remove unnecessary concurrency at the caller side.
+如有必要，调用者可以通过在单独的 goroutine 中调用函数来添加并发性。 然而，在调用方移除不必要的并发是相当困难的（有时是不可能的）。
 
-See also:
+也可以看看：
 
-- “Rethinking Classical Concurrency Patterns”, talk by Bryan Mills: [slides](https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view), [video](https://www.youtube.com/watch?v=5zXAHh5tJqQ)
+- “重新思考经典并发模式”，Bryan Mills 的演讲：[幻灯片](https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view)，[视频](https://www.youtube.com/ 看？v=5zXAHh5tJqQ)
 
-### Type aliases
+### 类型别名
 
-Use a *type definition*, `type T1 T2`, to define a new type. Use a [*type alias*](http://golang.org/ref/spec#Type_declarations), `type T1 = T2`, to refer to an existing type without defining a new type. Type aliases are rare; their primary use is to aid migrating packages to new source code locations. Don’t use type aliasing when it is not needed.
+使用*类型定义*，`type T1 T2`，定义一个新类型。 
+使用 [*类型别名*](http://golang.org/ref/spec#Type_declarations), `type T1 = T2` 来引用现有类型而不定义新类型。 
+类型别名很少见； 它们的主要用途是帮助将包迁移到新的源代码位置。 不要在不需要时使用类型别名。
 
-### Use %q
+### 使用 %q
 
-Go’s format functions (`fmt.Printf` etc.) have a `%q` verb which prints strings inside double-quotation marks.
+Go 的格式函数（`fmt.Printf` 等）有一个 `%q` 动词，它在双引号内打印字符串。
 
 ```
 // Good:
 fmt.Printf("value %q looks like English text", someText)
 ```
 
-Prefer using `%q` over doing the equivalent manually, using `%s`:
+更应该使用 `%q` 而不是使用 `%s` 手动执行等效操作：
 
 ```
 // Bad:
@@ -1818,17 +1820,15 @@ fmt.Printf("value \"%s\" looks like English text", someText)
 fmt.Printf("value '%s' looks like English text", someText)
 ```
 
-Using `%q` is recommended in output intended for humans where the input value could possibly be empty or contain control characters. It can be very hard to notice a silent empty string, but `""` stands out clearly as such.
+建议在供人使用的输出中使用 `%q`，其输入值可能为空或包含控制字符。 可能很难注意到一个无声的空字符串，但是 `""` 就这样清楚地突出了。
+### 使用 any
 
-### Use any
-
-Go 1.18 introduces an `any` type as an [alias](https://go.googlesource.com/proposal/+/master/design/18130-type-alias.md) to `interface{}`. Because it is an alias, `any` is equivalent to `interface{}` in many situations and in others it is easily interchangeable via an explicit conversion. Prefer to use `any` in new code.
-
-## Common libraries
+Go 1.18 将 `any` 类型作为 [别名](https://go.googlesource.com/proposal/+/master/design/18130-type-alias.md) 引入到 `interface{}`。 因为它是一个别名，所以 `any` 在许多情况下等同于 `interface{}`，而在其他情况下，它可以通过显式转换轻松互换。 在新代码中应使用 `any`。
+## 通用库
 
 ### Flags
 
-Go programs in the Google codebase use an internal variant of the [standard `flag` package](https://golang.org/pkg/flag/). It has a similar interface but interoperates well with internal Google systems. Flag names in Go binaries should prefer to use underscores to separate words, though the variables that hold a flag’s value should follow the standard Go name style ([mixed caps](https://google.github.io/styleguide/go/guide#mixed-caps)). Specifically, the flag name should be in snake case, and the variable name should be the equivalent name in camel case.
+Google 代码库中的 Go 程序使用 [标准 `flag` 包](https://golang.org/pkg/flag/) 的内部变体。 它具有类似的接口，但与 Google 内部系统的互操作性很好。 Go 二进制文件中的标志名称应该更应该使用下划线来分隔单词，尽管包含标志值的变量应该遵循标准的 Go 名称样式（[混合大写字母](https://google.github.io/styleguide/go/guide#mixed-caps)）。 具体来说，标志名称应该是蛇大小写，变量名称应该是骆驼大小写。
 
 ```
 // Good:
@@ -1841,91 +1841,91 @@ var (
 )
 ```
 
-Flags must only be defined in `package main` or equivalent.
+Flags只能在 `package main` 或等效项中定义。
 
-General-purpose packages should be configured using Go APIs, not by punching through to the command-line interface; don’t let importing a library export new flags as a side effect. That is, prefer explicit function arguments or struct field assignment or much less frequently and under the strictest of scrutiny exported global variables. In the extremely rare case that it is necessary to break this rule, the flag name must clearly indicate the package that it configures.
+通用包应该使用 Go API 进行配置，而不是通过命令行界面进行配置；不要让导入库导出新标志作为副作用。也就是说，更倾向于显式的函数参数或结构字段分配，或者低频和严格审查的全局变量导出。在需要打破此规则的极少数情况下，标志名称必须清楚地表明它配置的包。
 
-If your flags are global variables, place them in their own `var` group, following the imports section.
+如果您的标志是全局变量，在导入部分之后，将它们放在 `var` 组中。
 
-There is additional discussion around best practices for creating [complex CLIs](https://google.github.io/styleguide/go/best-practices#complex-clis) with subcommands.
+关于使用子命令创建 [complex CLI](https://google.github.io/styleguide/go/best-practices#complex-clis) 的最佳实践还有其他讨论。
 
-See also:
+也可以看看：
 
-- [Tip of the Week #45: Avoid Flags, Especially in Library Code](https://abseil.io/tips/45)
-- [Go Tip #10: Configuration Structs and Flags](https://google.github.io/styleguide/go/index.html#gotip)
-- [Go Tip #80: Dependency Injection Principles](https://google.github.io/styleguide/go/index.html#gotip)
+- [本周提示 #45：避免标记，尤其是在库代码中](https://abseil.io/tips/45)
+- [Go Tip #10：配置结构和标志](https://google.github.io/styleguide/go/index.html#gotip)
+- [Go Tip #80：依赖注入原则](https://google.github.io/styleguide/go/index.html#gotip)
 
-### Logging
+### 日志
 
-Go programs in the Google codebase use a variant of the [standard `log` package](https://pkg.go.dev/log). It has a similar but more powerful interface and interoperates well with internal Google systems. An open source version of this library is available as [package `glog`](https://pkg.go.dev/github.com/golang/glog), and open source Google projects may use that, but this guide refers to it as `log` throughout.
+Google 代码库中的 Go 程序使用 [标准 `log` 包](https://pkg.go.dev/log) 的变体。它具有类似但功能更强大的interface，并且可以与 Google 内部系统进行良好的互操作。该库的开源版本可通过 [package `glog`](https://pkg.go.dev/github.com/golang/glog) 获得，开源 Google 项目可能会使用它，但本指南指的是它始终作为“日志”。
 
-**Note:** For abnormal program exits, this library uses `log.Fatal` to abort with a stacktrace, and `log.Exit` to stop without one. There is no `log.Panic` function as in the standard library.
+**注意：** 对于异常的程序退出，这个库使用 `log.Fatal` 通过堆栈跟踪中止，使用 `log.Exit` 在没有堆栈跟踪的情况下停止。标准库中没有 `log.Panic` 函数。
 
-**Tip:** `log.Info(v)` is equivalent `log.Infof("%v", v)`, and the same goes for other logging levels. Prefer the non-formatting version when you have no formatting to do.
+**提示：** `log.Info(v)` 等价于 `log.Infof("%v", v)`，其他日志级别也是如此。当您没有格式化要做时，首选非格式化版本。
 
-See also:
+也可以看看：
 
-- Best practices on [logging errors](https://google.github.io/styleguide/go/best-practices#error-logging) and [custom verbosily levels](https://google.github.io/styleguide/go/best-practices#vlog)
-- When and how to use the log package to [stop the program](https://google.github.io/styleguide/go/best-practices#checks-and-panics)
+- [记录错误](https://google.github.io/styleguide/go/best-practices#error-logging) 和 [自定义详细日志级别](https://google.github.io/styleguide/go/best-practices#vlog)
+- 何时以及如何使用日志包[停止程序](https://google.github.io/styleguide/go/best-practices#checks-and-panics)
 
-### Contexts
+### 上下文
 
-Values of the [`context.Context`](https://pkg.go.dev/context) type carry security credentials, tracing information, deadlines, and cancellation signals across API and process boundaries. Unlike C++ and Java, which in the Google codebase use thread-local storage, Go programs pass contexts explicitly along the entire function call chain from incoming RPCs and HTTP requests to outgoing requests.
+[`context.Context`](https://pkg.go.dev/context) 类型的值携带跨 API 和进程边界的安全凭证、跟踪信息、截止日期和取消信号。 与 Google 代码库中使用线程本地存储的 C++ 和 Java 不同，Go 程序在整个函数调用链中显式地传递上下文，从传入的 RPC 和 HTTP 请求到传出请求。
 
-When passed to a function or method, `context.Context` is always the first parameter.
+当传递给函数或方法时，`context.Context` 始终是第一个参数。
 
 ```
 func F(ctx context.Context /* other arguments */) {}
 ```
 
-Exceptions are:
+例外情况是：
 
-- In an HTTP handler, where the context comes from [`req.Context()`](https://pkg.go.dev/net/http#Request.Context).
+- 在 HTTP 处理程序中，上下文来自 [`req.Context()`](https://pkg.go.dev/net/http#Request.Context)。
 
-- In streaming RPC methods, where the context comes from the stream.
+- 在流式 RPC 方法中，上下文来自流。
 
-  Code using gRPC streaming accesses a context from a `Context()` method in the generated server type, which implements `grpc.ServerStream`. See https://grpc.io/docs/languages/go/generated-code/.
+  使用 gRPC 流的代码从生成的服务器类型中的 `Context()` 方法访问上下文，该方法实现了 `grpc.ServerStream`。请参阅 https://grpc.io/docs/languages/go/generated-code/。
 
-- In entrypoint functions (see below for examples of such functions), use [`context.Background()`](https://pkg.go.dev/context/#Background).
+- 在入口函数（此类函数的示例见下文）中，使用 [`context.Background()`](https://pkg.go.dev/context/#Background)。
 
-  - In binary targets: `main`
-  - In general purpose code and libraries: `init`
-  - In tests: `TestXXX`, `BenchmarkXXX`, `FuzzXXX`
+  - 在二进制目标中：`main`
+  - 在通用代码和库中：`init`
+  - 在测试中：`TestXXX`、`BenchmarkXXX`、`FuzzXXX`
 
-> **Note**: It is very rare for code in the middle of a callchain to require creating a base context of its own using `context.Background()`. Always prefer taking a context from your caller, unless it’s the wrong context.
+> **注意**：调用链中间的代码很少需要使用 `context.Background()` 创建自己的基本上下文。更应该从调用者那里获取上下文，除非它是错误的上下文。
 >
-> You may come across server libraries (the implementation of Stubby, gRPC, or HTTP in Google’s server framework for Go) that construct a fresh context object per request. These contexts are immediately filled with information from the incoming request, so that when passed to the request handler, the context’s attached values have been propagated to it across the network boundary from the client caller. Moreover, these contexts’ lifetimes are scoped to that of the request: when the request is finished, the context is cancelled.
+> 您可能会遇到服务器库（在 Google 的 Go 服务器框架中实现 Stubby、gRPC 或 HTTP），它们为每个请求构建一个新的上下文对象。这些上下文立即填充来自传入请求的信息，因此当传递给请求处理程序时，上下文的附加值已从客户端调用者通过网络边界传播给它。此外，这些上下文的生命周期仅限于请求的生命周期：当请求完成时，上下文将被取消。
 >
-> Unless you are implementing a server framework, you shouldn’t create contexts with `context.Background()` in library code. Instead, prefer using context detachment, which is mentioned below, if there is an existing context available. If you think you do need `context.Background()` outside of entrypoint functions, discuss it with the Google Go style mailing list before committing to an implementation.
+> 除非你正在实现一个服务器框架，否则你不应该在库代码中使用 `context.Background()` 创建上下文。相反，如果有可用的现有上下文，则更应该使用下面提到的上下文分离。如果您认为在入口点函数之外确实需要`context.Background()`，请在提交实现之前与 Google Go 风格的邮件列表讨论它。
 
-The convention that `context.Context` comes first in functions also applies to test helpers.
+`context.Context` 在函数中首先出现的约定也适用于测试助手。
 
 ```
 // Good:
 func readTestFile(ctx context.Context, t *testing.T, path string) string {}
 ```
 
-Do not add a context member to a struct type. Instead, add a context parameter to each method on the type that needs to pass it along. The one exception is for methods whose signature must match an interface in the standard library or in a third party library outside Google’s control. Such cases are very rare, and should be discussed with the Google Go style mailing list before implementation and readability review.
+不要将上下文成员添加到结构类型。 相反，为需要传递它的类型的每个方法添加一个上下文参数。 一个例外是其签名必须与标准库或 Google 无法控制的第三方库中的接口匹配的方法。 这种情况非常罕见，应该在实施和可读性审查之前与 Google Go 风格的邮件列表讨论。
 
-Code in the Google codebase that must spawn background operations which can run after the parent context has been cancelled can use an internal package for detachment. Follow https://github.com/golang/go/issues/40221 for discussions on an open source alternative.
+Google 代码库中必须产生可以在取消父上下文后运行的后台操作的代码可以使用内部包进行分离。 关注 https://github.com/golang/go/issues/40221 讨论开源替代方案。
 
-Since contexts are immutable, it is fine to pass the same context to multiple calls that share the same deadline, cancellation signal, credentials, parent trace, and so on.
+由于上下文是不可变的，因此可以将相同的上下文传递给共享相同截止日期、取消信号、凭据、父跟踪等的多个调用。
 
-See also:
+更多参见：
 
-- [Contexts and structs](https://go.dev/blog/context-and-structs)
+- [上下文和结构](https://go.dev/blog/context-and-structs)
 
-#### Custom contexts
+#### 自定义上下文
 
-Do not create custom context types or use interfaces other than context in function signatures. There are no exceptions to this rule.
+不要在函数签名中创建自定义上下文类型或使用上下文以外的接口。 这条规定没有例外。
 
-Imagine if every team had a custom context. Every function call from package P to package Q would have to determine how to convert a `PContext` to a `QContext`, for all pairs of packages P and Q. This is impractical and error-prone for humans, and it makes automated refactorings that add context parameters nearly impossible.
+想象一下，如果每个团队都有一个自定义上下文。 对于包 P 和 Q 的所有对，从包 P 到包 Q 的每个函数调用都必须确定如何将“PContext”转换为“QContext”。这对人类来说是不切实际且容易出错的，并且它会进行自动重构 添加上下文参数几乎是不可能的。
 
-If you have application data to pass around, put it in a parameter, in the receiver, in globals, or in a Context value if it truly belongs there. Creating your own Context type is not acceptable since it undermines the ability of the Go team to make Go programs work properly in production.
+如果您要传递应用程序数据，请将其放入参数、接收器、全局变量中，或者如果它确实属于那里，则放入 Context 值中。 创建自己的 Context 类型是不可接受的，因为它破坏了 Go 团队使 Go 程序在生产中正常工作的能力。
 
 ### crypto/rand
 
-Do not use package `math/rand` to generate keys, even throwaway ones. If unseeded, the generator is completely predictable. Seeded with `time.Nanoseconds()`, there are just a few bits of entropy. Instead, use `crypto/rand`’s Reader, and if you need text, print to hexadecimal or base64.
+不要使用包 `math/rand` 来生成密钥，即使是一次性的。 如果未生成随机种子，则生成器是完全可预测的。 用`time.Nanoseconds()`生成种子，也只有几位熵。 相反，请使用 `crypto/rand` ，如果需要文本，请打印为十六进制或 base64。
 
 ```
 // Good:
@@ -1949,24 +1949,22 @@ func Key() string {
 }
 ```
 
-**Note:** `log.Fatalf` is not the standard library log. See [#logging].
+## 有用的测试失败
 
-## Useful test failures
+应该可以在不读取测试源的情况下诊断测试失败。 测试应该失败并显示有用的消息详细说明：
 
-It should be possible to diagnose a test’s failure without reading the test’s source. Tests should fail with helpful messages detailing:
+- 是什么导致了失败
+- 哪些输入导致错误
+- 实际结果
+- 预期的结果
 
-- What caused the failure
-- What inputs resulted in an error
-- The actual result
-- What was expected
+下面概述了实现这一目标的具体约定。
 
-Specific conventions for achieving this goal are outlined below.
+### 断言库
 
-### Assertion libraries
+不要创建“断言库”作为测试的助手。
 
-Do not create “assertion libraries” as helpers for testing.
-
-Assertion libraries are libraries that attempt to combine the validation and production of failure messages within a test (though the same pitfalls can apply to other test helpers as well). For more on the distinction between test helpers and assertion libraries, see [best practices](https://google.github.io/styleguide/go/best-practices#test-functions).
+断言库是试图在测试中结合验证和生成失败消息的库（尽管同样的陷阱也可能适用于其他测试助手）。 有关测试助手和断言库之间区别的更多信息，请参阅 [最佳实践](https://google.github.io/styleguide/go/best-practices#test-functions)。
 
 ```
 // Bad:
@@ -1978,7 +1976,7 @@ assert.IntEq(t, "obj.Comments", obj.Comments, 2)
 assert.StringNotEq(t, "obj.Body", obj.Body, "")
 ```
 
-Assertion libraries tend to either stop the test early (if `assert` calls `t.Fatalf` or `panic`) or omit relevant information about what the test got right:
+断言库倾向于提前停止测试（如果 `assert` 调用 `t.Fatalf` 或 `panic`）或省略有关测试正确的相关信息：
 
 ```
 // Bad:
@@ -1997,9 +1995,9 @@ func StringEq(t *testing.T, name, got, want string) {
 }
 ```
 
-Complex assertion functions often do not provide [useful failure messages](https://google.github.io/styleguide/go/decisions#useful-test-failures) and context that exists within the test function. Too many assertion functions and libraries lead to a fragmented developer experience: which assertion library should I use, what style of output format should it emit, etc.? Fragmentation produces unnecessary confusion, especially for library maintainers and authors of large-scale changes, who are responsible for fixing potential downstream breakages. Instead of creating a domain-specific language for testing, use Go itself.
+复杂的断言函数通常不提供 [有用的失败消息](https://google.github.io/styleguide/go/decisions#useful-test-failures) 和存在于测试函数中的上下文。 太多的断言函数和库会导致开发人员体验支离破碎：我应该使用哪个断言库，它应该发出什么样的输出格式，等等？ 碎片化会产生不必要的混乱，特别是对于负责修复潜在下游破坏的库维护者和大规模更改的作者。 与其创建用于测试的特定领域语言，不如使用 Go 本身。
 
-Assertion libraries often factor out comparisons and equality checks. Prefer using standard libraries such as [`cmp`](https://pkg.go.dev/github.com/google/go-cmp/cmp) and [`fmt`](https://golang.org/pkg/fmt/) instead:
+断言库通常会排除比较和相等检查。 更应该使用标准库，例如 [`cmp`](https://pkg.go.dev/github.com/google/go-cmp/cmp) 和 [`fmt`](https://golang.org/pkg/fmt/) 修改为：
 
 ```
 // Good:
@@ -2015,7 +2013,7 @@ if !cmp.Equal(got, want) {
 }
 ```
 
-For more domain-specific comparison helpers, prefer returning a value or an error that can be used in the test’s failure message instead of passing `*testing.T` and calling its error reporting methods:
+对于更多特定于域的比较助手，更应该返回一个可以在测试失败消息中使用的值或错误，而不是传递 `*testing.T` 并调用其错误报告方法：
 
 ```
 // Good:
@@ -2030,37 +2028,37 @@ func TestBlogPost_VeritableRant(t *testing.T) {
 }
 ```
 
-**Best Practice:** Were `postLength` non-trivial, it would make sense to test it directly, independently of any tests that use it.
+**最佳实践：** 如果 `postLength` 很重要，直接测试它是有意义的，独立于使用它的任何测试。
 
-See also:
+也可以看看：
 
-- [Equality comparison and diffs](https://google.github.io/styleguide/go/decisions#types-of-equality)
-- [Print diffs](https://google.github.io/styleguide/go/decisions#print-diffs)
-- For more on the distinction between test helpers and assertion helpers, see [best practices](https://google.github.io/styleguide/go/best-practices#test-functions)
+- [平等比较和差异](https://google.github.io/styleguide/go/decisions#types-of-equality)
+- [打印差异](https://google.github.io/styleguide/go/decisions#print-diffs)
+- 有关测试助手和断言助手之间区别的更多信息，请参阅[最佳实践](https://google.github.io/styleguide/go/best-practices#test-functions)
 
-### Identify the function
+### 标识出方法
 
-In most tests, failure messages should include the name of the function that failed, even though it seems obvious from the name of the test function. Specifically, your failure message should be `YourFunc(%v) = %v, want %v` instead of just `got %v, want %v`.
+在大多数测试中，失败消息应该包括失败的函数的名称，即使从测试函数的名称中看起来很明显。 具体来说，你的失败信息应该是 `YourFunc(%v) = %v, want %v` 而不仅仅是 `got %v, want %v`。
 
-### Identify the input
+### 标识出输入
 
-In most tests, failure messages should include the function inputs if they are short. If the relevant properties of the inputs are not obvious (for example, because the inputs are large or opaque), you should name your test cases with a description of what’s being tested and print the description as part of your error message.
+在大多数测试中，失败消息应该包括功能输入（如果它们很短）。 如果输入的相关属性不明显（例如，因为输入很大或不透明），您应该使用对正在测试的内容的描述来命名测试用例，并将描述作为错误消息的一部分打印出来。
 
 ### Got before want
 
-Test outputs should include the actual value that the function returned before printing the value that was expected. A standard format for printing test outputs is `YourFunc(%v) = %v, want %v`. Where you would write “actual” and “expected”, prefer using the words “got” and “want”, respectively.
+测试输出应包括函数在打印预期值之前返回的实际值。 打印测试输出的标准格式是 `YourFunc(%v) = %v, want %v`。 在你会写“实际”和“预期”的地方，更应该分别使用“得到”和“想要”这两个词。
 
-For diffs, directionality is less apparent, and as such it is important to include a key to aid in interpreting the failure. See the [section on printing diffs](https://google.github.io/styleguide/go/decisions#print-diffs). Whichever diff order you use in your failure messages, you should explicitly indicate it as a part of the failure message, because existing code is inconsistent about the ordering.
+对于差异，方向性不太明显，因此包含一个有助于解释失败的关键是很重要的。 请参阅 [关于打印差异的部分](https://google.github.io/styleguide/go/decisions#print-diffs)。 无论您在失败消息中使用哪种 diff 顺序，都应将其明确指示为失败消息的一部分，因为现有代码的顺序不一致。
 
-### Full structure comparisons
+### 全结构比较
 
-If your function returns a struct (or any data type with multiple fields such as slices, arrays, and maps), avoid writing test code that performs a hand-coded field-by-field comparison of the struct. Instead, construct the data that you’re expecting your function to return, and compare directly using a [deep comparison](https://google.github.io/styleguide/go/decisions#types-of-equality).
+如果您的函数返回一个结构体（或任何具有多个字段的数据类型，例如切片、数组和映射），请避免编写执行手动编码的结构体逐个字段比较的测试代码。相反，构建期望函数返回的数据，并使用 [深度比较](https://google.github.io/styleguide/go/decisions#types-of-equality) 直接进行比较。
 
-**Note:** This does not apply if your data contains irrelevant fields that obscure the intention of the test.
+**注意：** 如果您的数据包含模糊测试意图的不相关字段，则这不适用。
 
-If your struct needs to be compared for approximate (or equivalent kind of semantic) equality or it contains fields that cannot be compared for equality (e.g., if one of the fields is an `io.Reader`), tweaking a [`cmp.Diff`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff) or [`cmp.Equal`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Equal) comparison with [`cmpopts`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts) options such as [`cmpopts.IgnoreInterfaces`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#IgnoreInterfaces) may meet your needs ([example](https://play.golang.org/p/vrCUNVfxsvF)).
+如果您的结构需要比较近似（或等效类型的语义）相等，或者它包含无法比较相等的字段（例如，如果其中一个字段是 `io.Reader`），请调整 [`cmp. Diff`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff) 或 [`cmp.Equal`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Equal) 与 [`cmpopts`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts) 选项比较，例如[`cmpopts.IgnoreInterfaces`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#IgnoreInterfaces) 可能满足您的需求（[示例](https://play.golang.org/p/vrCUNVfxsvF))。
 
-If your function returns multiple return values, you don’t need to wrap those in a struct before comparing them. Just compare the return values individually and print them.
+如果您的函数返回多个返回值，则无需在比较它们之前将它们包装在结构中。只需单独比较返回值并打印它们。
 
 ```
 // Good:
