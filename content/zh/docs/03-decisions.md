@@ -67,7 +67,7 @@ Go 包名称不应该有下划线。如果您需要导入名称中确实有一�
 
 ### 常量命名Constant names
 
-常量名称必须像 Go 中的所有其他名称一样使用 [混合大写字母MixedCaps](https://google.github.io/styleguide/go/guide#mixed-caps)。 （[导出](https://tour.golang.org/basics/3) 常量以大写字母开头，而未导出的常量以小写字母开头。）即使打破了其他语言的约定，这也是适用的。常量名称不应是其值的派生词，而应该解释值锁表示的含义。
+常量名称必须像 Go 中的所有其他名称一样使用 [混合大写字母MixedCaps](https://google.github.io/styleguide/go/guide#mixed-caps)。 （[导出](https://tour.golang.org/basics/3) 常量以大写字母开头，而未导出的常量以小写字母开头。）即使打破了其他语言的约定，这也是适用的。常量名称不应是其值的派生词，而应该解释值所表示的含义。
 
 ```
 // Good:
@@ -123,13 +123,13 @@ const (
 
 函数和方法名称不应使用 `Get` 或 `get` 前缀，除非底层概念使用单词“get”（例如 HTTP GET）。此时，更应该直接以名词开头的名称，例如使用 `Counts` 而不是 `GetCounts`。
 
-如果该函数涉及执行复杂的计算或执行远程调用，则可以使用`Compute` 或 `Fetch`等不同的词代替`Get`，以使读者清楚函数调用可能需要时间和 可能会阻塞或失败。
+如果该函数涉及执行复杂的计算或执行远程调用，则可以使用`Compute` 或 `Fetch`等不同的词代替`Get`，以使读者清楚函数调用可能需要时间，并有可能会阻塞或失败。
 
 ### 变量名Variable names
 
 一般的经验法则是，名称的长度应与其范围的大小成正比，并与其在该范围内使用的次数成反比。在文件范围内创建的变量可能需要多个单词，而单个内部块作用域内的变量可能是单个单词甚至只是一两个字符，以保持代码清晰并避免无关信息。
 
-这是一条粗略的基线。这些数字准则不是严格的规则。要根据上下文、[清晰](https://google.github.io/styleguide/go/guide#clarity) 和[简洁](https://google.github.io/styleguide/go/guide#简洁）来进行判断。
+这是一条粗略的基础原则。这些数字准则不是严格的规则。要根据上下文、[清晰](https://google.github.io/styleguide/go/guide#clarity) 和[简洁](https://google.github.io/styleguide/go/guide#简洁）来进行判断。
 
 - 小范围是执行一两个小操作的范围，比如 1-7 行。
 - 中等范围是一些小的或一个大的操作，比如 8-15 行。
@@ -305,7 +305,7 @@ func (db *DB) UserCount() (int, error) {
 // if it helps rather than hinders.
 ```
 
-避免在小屏幕上重复换行的评论，这是一种糟糕的阅读体验。
+避免注释在小屏幕上重复换行，这是一种糟糕的阅读体验。
 
 ```
 # Bad:
@@ -358,11 +358,11 @@ type Options struct {
 
 ### 注释语句Comment sentences
 
-完整句子的注释应该像标准英语句子一样大写和标点符号。 （作为一个例外，如果在其他方面很清楚，可以以非大写的标识符名称开始一个句子。这种情况最好只在段落的开头进行。）
+完整的注释应该像标准英语句子一样包含大写和标点符号。 （作为一个例外，如果在其他方面很清楚，可以以非大写的标识符名称开始一个句子。这种情况最好只在段落的开头进行。）
 
 作为句子片段的注释对标点符号或大小写没有此类要求。
 
-[文档注释](https://google.github.io/styleguide/go/decisions#doc-comments) 应始终是完整的句子，因此应始终大写和标点符号。 简单的行尾注释（特别是对于结构字段）可以假设字段名称是主语的简单短语。
+[文档注释](https://google.github.io/styleguide/go/decisions#doc-comments) 应始终是完整的句子，因此应始终大写和标点符号。 简单的行尾注释（特别是对于结构字段）可以为假设字段名称是主语的简单短语。
 
 ```
 // Good:
@@ -426,7 +426,7 @@ func (n *Node) Parent1() (node *Node)
 func (n *Node) Parent2() (node *Node, err error)
 ```
 
-不要为了避免在函数内声明变量而使用命名结果参数。这种做法会导致不必要的 冗长API，但收益只是很小的简洁性。
+不要为了避免在函数内声明变量而使用命名结果参数。这种做法会导致不必要的冗长API，但收益只是微小的简洁性。
 
 [裸返回](https://tour.golang.org/basics/7) 仅在小函数中是可接受的。 一旦它是一个中等大小的函数，就需要明确你的返回值。 同样，不要仅仅因为可以裸返回就使用命名结果参数。 [清晰度](https://google.github.io/styleguide/go/guide#clarity) 总是比在你的函数中节省几行更重要。
 
@@ -475,7 +475,7 @@ package main
 
 - 命令行调用示例和 API 用法可以是有用的文档。 对于 Godoc 格式，缩进包含代码的注释行。
 
-- 如果没有明显的主文件或者包注释特别长，可以将文档注释放在名为 doc.go 的文件中，只有注释和包子句。
+- 如果没有明显的main文件或者包注释特别长，可以将文档注释放在名为 doc.go 的文件中，只有注释和包子句。
 
 - 可以使用多行注释代替多个单行注释。 如果文档包含可能对从源文件复制和粘贴有用的部分，如示例命令行（用于二进制文件）和模板示例，这将非常有用。
 
