@@ -2077,29 +2077,29 @@ if tail != `Fran & Freddie's Diner"` {
 }
 ```
 
-### Compare stable results
+### 比较稳定的结果
 
-Avoid comparing results that may depend on output stability of a package that you do not own. Instead, the test should compare on semantically relevant information that is stable and resistant to changes in dependencies. For functionality that returns a formatted string or serialized bytes, it is generally not safe to assume that the output is stable.
+避免比较那些可能依赖于非自有包输出稳定性的结果。相反，测试应该在语义相关的信息上进行比较，这些信息是稳定的，并能抵抗依赖关系的变化。对于返回格式化字符串或序列化字节的功能，一般来说，假设输出是稳定的是不安全的。
 
-For example, [`json.Marshal`](https://golang.org/pkg/encoding/json/#Marshal) can change (and has changed in the past) the specific bytes that it emits. Tests that perform string equality on the JSON string may break if the `json` package changes how it serializes the bytes. Instead, a more robust test would parse the contents of the JSON string and ensure that it is semantically equivalent to some expected data structure.
+例如，[`json.Marshal`](https://golang.org/pkg/encoding/json/#Marshal)可以改变（并且在过去已经改变）它所输出的特定字节。如果`json`包改变了它序列化字节的方式，在JSON字符串上执行字符串相等的测试可能会中断。相反，一个更强大的测试将解析JSON字符串的内容，并确保它在语义上等同于一些预期的数据结构。
 
-### Keep going
+### 测试继续运行
 
-Tests should keep going for as long as possible, even after a failure, in order to print out all of the failed checks in a single run. This way, a developer who is fixing the failing test doesn’t have to re-run the test after fixing each bug to find the next bug.
+测试应该尽可能地持续下去，即使是在失败之后，以便在一次运行中打印出所有的失败检查。这样一来，正在修复失败测试的开发人员就不必在修复每个错误后重新运行测试来寻找下一个错误。
 
-Prefer calling `t.Error` over `t.Fatal` for reporting a mismatch. When comparing several different properties of a function’s output, use `t.Error` for each of those comparisons.
+更倾向于调用`t.Error`而不是`t.Fatal`来报告不匹配。当比较一个函数输出的几个不同属性时，对每一个比较都使用`t.Error`。
 
-Calling `t.Fatal` is primarily useful for reporting an unexpected error condition, when subsequent comparison failures are not going to be meaningful.
+调用`t.Fatal`主要用于报告一个意外的错误情况，当后续的比较失败是没有意义的。
 
-For table-driven test, consider using subtests and use `t.Fatal` rather than `t.Error` and `continue`. See also [GoTip #25: Subtests: Making Your Tests Lean](https://google.github.io/styleguide/go/index.html#gotip).
+对于表驱动的测试，考虑使用子测试，使用`t.Fatal`而不是`t.Error`和`continue`。参见[GoTip #25: Subtests: Making Your Tests Lean]（https://google.github.io/styleguide/go/index.html#gotip）。
 
-**Best practice:** For more discussion about when `t.Fatal` should be used, see [best practices](https://google.github.io/styleguide/go/best-practices#t-fatal).
+**最佳实践：**关于何时应使用`t.Fatal`的更多讨论，见[最佳实践](https://google.github.io/styleguide/go/best-practices#t-fatal)。
 
-### Equality comparison and diffs
+### 等值比较和差异
 
-The `==` operator evaluates equality using [language-defined comparisons](http://golang.org/ref/spec#Comparison_operators). Scalar values (numbers, booleans, etc) are compared based on their values, but only some structs and interfaces can be compared in this way. Pointers are compared based on whether they point to the same variable, rather than based on the equality of the values to which they point.
+`==`操作符使用[语言定义的比较](http://golang.org/ref/spec#Comparison_operators)来评估平等性。标量值(数字、布尔运算等)根据其值进行比较, 但只有一些结构和接口可以用这种方式进行比较。指针的比较是基于它们是否指向同一个变量，而不是基于它们所指向的值是否相等。
 
-The [`cmp`](https://pkg.go.dev/github.com/google/go-cmp/cmp) package can compare more complex data structures not appropriately handled by `==`, such as slices. Use [`cmp.Equal`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Equal) for equality comparison and [`cmp.Diff`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff) to obtain a human-readable diff between objects.
+对于类似切片这种情况下，`==`是不能正确处理比较的，[`cmp`](https://pkg.go.dev/github.com/google/go-cmp/cmp)包则可以用于比较更复杂的数据结构。使用[`cmp.Equal`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Equal)进行等价比较，使用[`cmp.Diff`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff)获得对象之间可供人类阅读的差异。
 
 ```
 // Good:
@@ -2114,7 +2114,7 @@ if !cmp.Equal(got, want) {
 }
 ```
 
-As a general-purpose comparison library, `cmp` may not know how to compare certain types. For example, it can only compare protocol buffer messages if passed the [`protocmp.Transform`](https://pkg.go.dev/google.golang.org/protobuf/testing/protocmp#Transform) option.
+作为一个通用的比较库，`cmp`可能不知道如何比较某些类型。例如，它只能在传递[`protocmp.Transform`](https://pkg.go.dev/google.golang.org/protobuf/testing/protocmp#Transform)选项时比较`protobuf`的信息。
 
 ```
 // Good:
@@ -2123,61 +2123,61 @@ if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
 }
 ```
 
-Although the `cmp` package is not part of the Go standard library, it is maintained by the Go team and should produce stable equality results over time. It is user-configurable and should serve most comparison needs.
+虽然`cmp`包不是Go标准库的一部分，但它是由Go团队维护的，随着时间的推移应该会产生稳定的相等结果。它是用户可配置的，应该可以满足大多数的比较需求。
 
-Existing code may make use of the following older libraries, and may continue using them for consistency:
+现有的代码可能会使用以下旧的库，为了保持一致性，可以继续使用它们。
 
-- [`pretty`](https://pkg.go.dev/github.com/kylelemons/godebug/pretty) produces aesthetically pleasing difference reports. However, it quite deliberately considers values that have the same visual representation as equal. In particular, `pretty` does not catch differences between nil slices and empty ones, is not sensitive to different interface implementations with identical fields, and it is possible to use a nested map as the basis for comparison with a struct value. It also serializes the entire value into a string before producing a diff, and as such is not a good choice for comparing large values. By default, it compares unexported fields, which makes it sensitive to changes in implementation details in your dependencies. For this reason, it is not appropriate to use `pretty` on protobuf messages.
+- [`pretty`](https://pkg.go.dev/github.com/kylelemons/godebug/pretty)产生美观的差异报告。然而，它非常谨慎地认为具有相同视觉表现的数值是相等的。特别注意，`pretty`不区分nil切片和空切片之间的差异，对具有相同字段的不同接口实现也不敏感，而且有可能使用嵌套图作为与结构值比较的基础。在产生差异之前，它还会将整个值序列化为一个字符串，因此对于比较大的值来说不是一个好的选择。默认情况下，它比较的是未导出的字段，这使得它对你的依赖关系中实现细节的变化很敏感。由于这个原因，在protobuf信息上使用`pretty`是不合适的。
 
-Prefer using `cmp` for new code, and it is worth considering updating older code to use `cmp` where and when it is practical to do so.
+在新的代码中更倾向于使用`cmp`，值得考虑更新旧的代码，在实际可行的情况下使用`cmp`。
 
-Older code may use the standard library `reflect.DeepEqual` function to compare complex structures. `reflect.DeepEqual` should not be used for checking equality, as it is sensitive to changes in unexported fields and other implementation details. Code that is using `reflect.DeepEqual` should be updated to one of the above libraries.
+旧的代码可以使用标准库中的`reflect.DeepEqual`函数来比较复杂的结构。`reflect.DeepEqual`不应该被用来检查等值比较，因为它对未导出的字段和其他实现细节的变化很敏感。使用`reflect.DeepEqual`的代码应该更新为上述库之一。
 
-**Note:** The `cmp` package is designed for testing, rather than production use. As such, it may panic when it suspects that a comparison is performed incorrectly to provide instruction to users on how to improve the test to be less brittle. Given cmp’s propensity towards panicking, it makes it unsuitable for code that is used in production as a spurious panic may be fatal.
+**注意：** `cmp`包是为测试而设计的，而不是用于生产。因此，当它怀疑一个比较被错误地执行时，它可能会惊慌失措，以向用户提供如何改进测试的指导，使其不那么脆弱。鉴于cmp的恐慌倾向，它不适合在生产中使用的代码，因为虚假的panic可能是致命的。
 
-### Level of detail
+### 详细程度
 
-The conventional failure message, which is suitable for most Go tests, is `YourFunc(%v) = %v, want %v`. However, there are cases that may call for more or less detail:
+传统的失败信息，适用于大多数Go测试，是`YourFunc(%v) = %v, want %v`。然而，有些情况可能需要更多或更少的细节。
 
-- Tests performing complex interactions should describe the interactions too. For example, if the same `YourFunc` is called several times, identify which call failed the test. If it’s important to know any extra state of the system, include that in the failure output (or at least in the logs).
-- If the data is a complex struct with significant boilerplate, it is acceptable to describe only the important parts in the message, but do not overly obscure the data.
-- Setup failures do not require the same level of detail. If a test helper populates a Spanner table but Spanner was down, you probably don’t need to include which test input you were going to store in the database. `t.Fatalf("Setup: Failed to set up test database: %s", err)` is usually helpful enough to resolve the issue.
+- 进行复杂交互的测试也应该描述交互。例如，如果同一个`YourFunc`被调用了好几次，那么要确定哪个调用未通过测试。如果知道系统的任何额外状态是很重要的，那么在失败输出中应包括这些（或者至少在日志中）。
+- 如果数据是一个复杂的结构，在消息中只描述重要的部分是可以接受的，但不要过分掩盖数据。
+- 设置失败不需要同样水平的细节。如果一个测试助手填充了一个Spanner表，但Spanner却坏了，你可能不需要包括你要存储在数据库中的测试输入。`t.Fatalf("Setup: Failed to set up test database: %s", err)`通常足以解决这个问题。
 
-**Tip:** Make your failure mode trigger during development. Review what the failure message looks like and whether a maintainer can effectively deal with the failure.
+**提示：**应该在开发过程中触发失败。审查失败信息是什么样子的，维护者是否能有效地处理失败。
 
-There are some techniques for reproducing test inputs and outputs clearly:
+有一些技术可以清晰地再现测试输入和输出：
 
-- When printing string data, [`%q` is often useful](https://google.github.io/styleguide/go/decisions#use-percent-q) to emphasize that the value is important and to more easily spot bad values.
-- When printing (small) structs, `%+v` can be more useful than `%v`.
-- When validation of larger values fails, [printing a diff](https://google.github.io/styleguide/go/decisions#print-diffs) can make it easier to understand the failure.
+- 当打印字符串数据时，[`%q`通常是有用的](https://google.github.io/styleguide/go/decisions#use-percent-q)以强调该值的重要性，并更容易发现坏值。
+- 当打印（小）结构时，`%+v`可能比`%v`更有用。
+- 当验证较大的值失败时，[打印差异](https://google.github.io/styleguide/go/decisions#print-diffs)可以使人们更容易理解失败的原因。
 
-### Print diffs
+### 打印差异
 
-If your function returns large output then it can be hard for someone reading the failure message to find the differences when your test fails. Instead of printing both the returned value and the wanted value, make a diff.
+如果你的函数返回较大的输出，那么当你的测试失败时，阅读失败信息的人很难发现其中的差异。与其同时打印返回值和想要的值，不如做一个差异。
 
-To compute diffs for such values, `cmp.Diff` is preferred, particularly for new tests and new code, but other tools may be used. See [types of equality](https://google.github.io/styleguide/go/decisions#types-of-equality) for guidance regarding the strengths and weaknesses of each function.
+为了计算这些值的差异，`cmp.Diff`是首选，特别是对于新的测试和新的代码，但也可以使用其他工具。关于每个函数的优点和缺点的指导，见[类型的等值](https://google.github.io/styleguide/go/decisions#types-of-equality)。
 
 - [`cmp.Diff`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff)
 - [`pretty.Compare`](https://pkg.go.dev/github.com/kylelemons/godebug/pretty#Compare)
 
-You can use the [`diff`](https://pkg.go.dev/github.com/kylelemons/godebug/diff) package to compare multi-line strings or lists of strings. You can use this as a building block for other kinds of diffs.
+你可以使用[`diff`](https://pkg.go.dev/github.com/kylelemons/godebug/diff)包来比较多行字符串或字符串的列表。你可以把它作为其他类型的比较的构建块。
 
-Add some text to your failure message explaining the direction of the diff.
+在失败信息中添加一些文字，解释差异的方向。
 
-- Something like `diff (-want +got)` is good when you’re using the `cmp`, `pretty`, and `diff` packages (if you pass `(want, got)` to the function), because the `-` and `+` that you add to your format string will match the `-` and `+` that actually appear at the beginning of the diff lines. If you pass `(got, want)` to your function, the correct key would be `(-got +want)` instead.
-- The `messagediff` package uses a different output format, so the message `diff (want -> got)` is appropriate when you’re using it (if you pass `(want, got)` to the function), because the direction of the arrow will match the direction of the arrow in the “modified” lines.
+- 当你使用`cmp`，`pretty`和`diff`包时，类似`diff (-want +got)`的东西很好（如果把`(want, got)`传递给函数），因为你添加到格式字符串中的`-`和`+`将与实际出现在diff行开头的`-`和`+`匹配。如果把`(got, want)`传给函数，正确的键将是`(-got +want)`。
+- `messagediff`包使用不同的输出格式，所以当你使用它时，`diff (want -> got)`的信息是合适的（如果把`(want, got)`传给函数），因为箭头的方向将与 "修改 "行中箭头的方向一致。
 
-The diff will span multiple lines, so you should print a newline before you print the diff.
+差异将跨越多行，所以应该在打印差异之前打印一个新行。
 
-### Test error semantics
+### 测试错误语义
 
-When a unit test performs string comparisons or uses a vanilla `cmp` to check that particular kinds of errors are returned for particular inputs, you may find that your tests are brittle if any of those error messages are reworded in the future. Since this has the potential to turn your unit test into a change detector (see [TotT: Change-Detector Tests Considered Harmful](https://testing.googleblog.com/2015/01/testing-on-toilet-change-detector-tests.html) ), don’t use string comparison to check what type of error your function returns. However, it is permissible to use string comparisons to check that error messages coming from the package under test satisfy certain properties, for example, that it includes the parameter name.
+当一个单元测试执行字符串比较或使用 `cmp` 来检查特定的输入是否返回特定种类的错误时，你可能会发现，如果这些错误信息在将来被重新修改，你的测试就会很脆弱。因为这有可能将你的单元测试变成一个变化检测器（参见[TotT: Change-Detector Tests Considered Harmful](https://testing.googleblog.com/2015/01/testing-on-toilet-change-detector-tests.html)），不要使用字符串比较来检查你的函数返回什么类型的错误。然而，允许使用字符串比较来检查来自被测包的错误信息是否满足某些属性，例如，它是否包括参数名称。
 
-Error values in Go typically have a component intended for human eyes and a component intended for semantic control flow. Tests should seek to only test semantic information that can be reliably observed, rather than display information that is intended for human debugging, as this is often subject to future changes. For guidance on constructing errors with semantic meaning see [best-practices regarding errors](https://google.github.io/styleguide/go/best-practices#error-handling). If an error with insufficient semantic information is coming from a dependency outside your control, consider filing a bug against the owner to help improve the API, rather than relying on parsing the error message.
+Go中的错误值通常有一个用于人眼的部分和一个用于语义控制流的部分。测试应该力求只测试可以可靠观察到的语义信息，而不是显示用于人类调试的信息，因为这往往会在未来发生变化。关于构建具有语义的错误的指导，请参见[关于错误的最佳实践](https://google.github.io/styleguide/go/best-practices#error-handling)。如果语义信息不充分的错误来自于你无法控制的依赖关系，请考虑针对所有者提交一个错误，以帮助改进API，而不是依靠解析错误信息。
 
-Within unit tests, it is common to only care whether an error occurred or not. If so, then it is sufficient to only test whether the error was non-nil when you expected an error. If you would like to test that the error semantically matches some other error, then consider using `cmp` with [`cmpopts.EquateErrors`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#EquateErrors).
+在单元测试中，通常只关心错误是否发生。如果是这样，那么在你预期发生错误时，只测试错误是否为非零就足够了。如果你想测试错误在语义上与其他错误相匹配，那么可以考虑使用`cmp`与[`cmpopts.EquateErrors`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#EquateErrors)。
 
-> **Note:** If a test uses [`cmpopts.EquateErrors`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#EquateErrors) but all of its `wantErr` values are either `nil` or `cmpopts.AnyError`, then using `cmp` is [unnecessary mechanism](https://google.github.io/styleguide/go/guide#least-mechanism). Simplify the code by making the want field a `bool`. You can then use a simple comparison with `!=`.
+> **注意：**如果一个测试使用了[`cmpopts.EquateErrors`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#EquateErrors)，但是它所有的`wantErr`值都是`nil`或者`cmpopts.AnyError`，那么使用`cmp`是[不必要的](https://google.github.io/styleguide/go/guide#least-mechanism)。简化代码，使want字段改为`bool`类型，然后就可以用`！=`进行简单的比较。
 >
 > ```
 > // Good:
@@ -2187,23 +2187,23 @@ Within unit tests, it is common to only care whether an error occurred or not. I
 > }
 > ```
 
-See also [GoTip #13: Designing Errors for Checking](https://google.github.io/styleguide/go/index.html#gotip).
+另请参阅 [GoTip #13：设计用于检查的错误](https://google.github.io/styleguide/go/index.html#gotip)。
 
-## Test structure
+## 测试结构
 
-### Subtests
+### 子测试
 
-The standard Go testing library offers a facility to [define subtests](https://pkg.go.dev/testing#hdr-Subtests_and_Sub_benchmarks). This allows flexibility in setup and cleanup, controlling parallelism, and test filtering. Subtests can be useful (particularly for table-driven tests), but using them is not mandatory. See also https://blog.golang.org/subtests.
+标准的 Go 测试库提供了一种工具来 [定义子测试](https://pkg.go.dev/testing#hdr-Subtests_and_Sub_benchmarks)。这允许在设置和清理、控制并行性和测试过滤方面具有灵活性。子测试可能很有用（特别是对于表驱动测试），但使用它们不是强制性的。另请参阅 https://blog.golang.org/subtests。
 
-Subtests should not depend on the execution of other cases for success or initial state, because subtests are expected to be able to be run individually with using `go test -run` flags or with Bazel [test filter](https://bazel.build/docs/user-manual#test-filter) expressions.
+子测试不应该依赖于其他case的执行来获得成功或初始状态，因为子测试应该能够使用 `go test -run` 标志或使用 Bazel [测试过滤器](https://bazel.build/docs/user-manual#test-filter) 表达式。
 
-#### Subtest names
+#### 子测试名称
 
-Name your subtest such that it is readable in test output and useful on the command line for users of test filtering. When you use `t.Run` to create a subtest, the first argument is used as a descriptive name for the test. To ensure that test results are legible to humans reading the logs, choose subtest names that will remain useful and readable after escaping. Think of subtest names more like a function identifier than a prose description. The test runner replaces spaces with underscores, and escapes non-printing characters. If your test data benefits from a longer description, consider putting the description in a separate field (perhaps to be printed using `t.Log` or alongside failure messages).
+命名子测试，使其在测试输出中可读，并且在命令行上对测试过滤的用户有用。当您使用“t.Run”创建子测试时，第一个参数用作测试的描述性名称。为了确保测试结果对于阅读日志的人来说是清晰的，请选择在转义后仍然有用且可读的子测试名称。将子测试名称视为函数标识符而不是散文描述。测试运行程序用下划线替换空格，并转义非打印字符。如果您的测试数据受益于更长的描述，请考虑将描述放在单独的字段中（可能使用“t.Log”或与失败消息一起打印）。
 
-Subtests may be run individually using flags to the [Go test runner](https://golang.org/cmd/go/#hdr-Testing_flags) or Bazel [test filter](https://bazel.build/docs/user-manual#test-filter), so choose descriptive names that are also easy to type.
+可以使用 [Go 测试运行器](https://golang.org/cmd/go/#hdr-Testing_flags) 或 Bazel [测试过滤器](https://bazel.build/docs/user-manual#test-filter) 的标志单独运行子测试，选择易于输入的描述性名称。
 
-> **Warning:** Slash characters are particularly unfriendly in subtest names, since they have [special meaning for test filters](https://blog.golang.org/subtests#:~:text=Perhaps a bit,match any tests).
+> **警告：**斜杠字符在子测试名称中特别不友好，因为它们具有[测试过滤器的特殊含义](https://blog.golang.org/subtests#:~:text=Perhaps 一位匹配任何测试）。
 >
 > > ```
 > > # Bad:
@@ -2212,7 +2212,7 @@ Subtests may be run individually using flags to the [Go test runner](https://gol
 > > bazel test :mytest --test_filter="Time//New_York"   # Correct, but awkward.
 > > ```
 
-To [identify the inputs](https://google.github.io/styleguide/go/decisions#identify-the-input) of the function, include them in the test’s failure messages, where they won’t be escaped by the test runner.
+要[识别函数的输入](https://google.github.io/styleguide/go/decisions#identify-the-input)，将它们包含在测试的失败消息中，它们不会被测试执行者所忽略。
 
 ```
 // Good:
@@ -2241,7 +2241,7 @@ func TestTranslate(t *testing.T) {
 }
 ```
 
-Here are a few examples of things to avoid:
+以下是一些要避免的事情的例子：
 
 ```
 // Bad:
@@ -2251,14 +2251,14 @@ t.Run("check that there is no mention of scratched records or hovercrafts", ...)
 t.Run("AM/PM confusion", ...)
 ```
 
-### Table-driven tests
+### 表驱动测试
 
-Use table-driven tests when many different test cases can be tested using similar testing logic.
+当许多不同的测试用例可以使用相似的测试逻辑进行测试时，使用表驱动测试。
 
-- When testing whether the actual output of a function is equal to the expected output. For example, the many [tests of `fmt.Sprintf`](https://cs.opensource.google/go/go/+/master:src/fmt/fmt_test.go) or the minimal snippet below.
-- When testing whether the outputs of a function always conform to the same set of invariants. For example, [tests for `net.Dial`](https://cs.opensource.google/go/go/+/master:src/net/dial_test.go;l=318;drc=5b606a9d2b7649532fe25794fa6b99bd24e7697c).
+- 测试函数的实际输出是否等于预期输出时。 例如，许多 [`fmt.Sprintf` 的测试](https://cs.opensource.google/go/go/+/master:src/fmt/fmt_test.go) 或下面的最小片段。
+- 测试函数的输出是否始终符合同一组不变量时。 例如，[测试 `net.Dial`](https://cs.opensource.google/go/go/+/master:src/net/dial_test.go;l=318;drc=5b606a9d2b7649532fe25794fa6b99bd24e7697c)。
 
-Here is the minimal structure of a table-driven test, copied from the standard `strings` library. If needed, you may use different names, move the test slice into the test function, or add extra facilities such as subtests or setup and cleanup functions. Always keep [useful test failures](https://google.github.io/styleguide/go/decisions#useful-test-failures) in mind.
+这是从标准“字符串”库复制的表驱动测试的最小结构。 如果需要，您可以使用不同的名称，将测试切片移动到测试函数中，或者添加额外的工具，例如子测试或设置和清理函数。 始终牢记[有用的测试失败](https://google.github.io/styleguide/go/decisions#useful-test-failures)。
 
 ```
 // Good:
@@ -2292,16 +2292,15 @@ func TestCompare(t *testing.T) {
 }
 ```
 
-**Note**: The failure messages in this example above fulfill the guidance to [identify the function](https://google.github.io/styleguide/go/decisions#identify-the-function) and [identify the input](https://google.github.io/styleguide/go/decisions#identify-the-input). There’s no need to [identify the row numerically](https://google.github.io/styleguide/go/decisions#table-tests-identifying-the-row).
+**注意**：上面这个例子中的失败消息满足了[识别函数](https://google.github.io/styleguide/go/decisions#identify-the-function)和[识别输入](https://google.github.io/styleguide/go/decisions#identify-the-input)。无需[用数字标识行](https://google.github.io/styleguide/go/decisions#table-tests-identifying-the-row)。
 
-When some test cases need to be checked using different logic from other test cases, it is more appropriate to write multiple test functions, as explained in [GoTip #50: Disjoint Table Tests](https://google.github.io/styleguide/go/index.html#gotip). The logic of your test code can get difficult to understand when each entry in a table has its own different conditional logic to check each output for its inputs. If test cases have different logic but identical setup, a sequence of [subtests](https://google.github.io/styleguide/go/decisions#subtests) within a single test function might make sense.
+当需要使用与其他测试用例不同的逻辑来检查某些测试用例时，编写多个测试函数更为合适，如 [GoTip #50: Disjoint Table Tests](https://google.github.io/styleguide/go/index.html#gotip)。当表中的每个条目都有自己不同的条件逻辑来检查每个输出的输入时，测试代码的逻辑可能会变得难以理解。如果测试用例具有不同的逻辑但设置相同，则单个测试函数中的一系列[子测试](https://google.github.io/styleguide/go/decisions#subtests) 可能有意义。
 
-You can combine table-driven tests with multiple test functions. For example, when testing that a function’s output exactly matches the expected output and that the function returns a non-nil error for an invalid input, then writing two separate table-driven test functions is the best approach: one for normal non-error outputs, and one for error outputs.
+您可以将表驱动测试与多个测试函数结合起来。例如，当测试函数的输出与预期输出完全匹配并且函数为无效输入返回非零错误时，编写两个单独的表驱动测试函数是最好的方法：一个用于正常的非错误输出，一个用于错误输出。
 
-#### Data-driven test cases
+#### 数据驱动的测试用例
 
-Table test rows can sometimes become complicated, with the row values dictating conditional behavior inside the test case. The extra clarity from the duplication between the test cases is necessary for readability.
-
+表测试行有时会变得复杂，行值指示测试用例内的条件行为。 测试用例之间重复的额外清晰度对于可读性是必要的。
 ```
 // Good:
 type decodeCase struct {
@@ -2350,7 +2349,7 @@ func TestDecodeWithFake(t *testing.T) {
 }
 ```
 
-In the counterexample below, note how hard it is to distinguish between which type of `Codex` is used per test case in the case setup. (The highlighted parts run afoul of the advice from [TotT: Data Driven Traps!](https://testing.googleblog.com/2008/09/tott-data-driven-traps.html) .)
+在下面的反例中，请注意在case设置中区分每个测试案例使用哪种类型的 `Codex` 是多么困难。 （突出显示的部分与 [TotT：数据驱动陷阱！](https://testing.googleblog.com/2008/09/tott-data-driven-traps.html) 的建议相冲突。）
 
 ```
 // Bad:
@@ -2395,9 +2394,9 @@ func TestDecode(t *testing.T) {
 }
 ```
 
-#### Identifying the row
+#### 标识行
 
-Do not use the index of the test in the test table as a substitute for naming your tests or printing the inputs. Nobody wants to go through your test table and count the entries in order to figure out which test case is failing.
+不要使用测试表中的测试索引来代替命名测试或打印输入。 没有人愿意通过您的测试表并计算条目以找出哪个测试用例失败。
 
 ```
 // Bad:
@@ -2414,15 +2413,15 @@ for i, d := range tests {
 }
 ```
 
-Add a test description to your test struct and print it along failure messages. When using subtests, your subtest name should be effective in identifying the row.
+在您的测试结构中添加测试描述，并将其与失败信息一起打印。当使用子测试时，你的子测试名称应能有效识别行。
 
-**Important:** Even though `t.Run` scopes the output and execution, you must always [identify the input](https://google.github.io/styleguide/go/decisions#identify-the-input). The table test row names must follow the [subtest naming](https://google.github.io/styleguide/go/decisions#subtest-names) guidance.
+**重要的是：**即使`t.Run`对输出和执行有一定的范围，你必须始终[识别输入](https://google.github.io/styleguide/go/decisions#identify-the-input)。表的测试行名称必须遵循[子测试命名](https://google.github.io/styleguide/go/decisions#subtest-names)的指导。
 
-### Test helpers
+### 测试助手
 
-A test helper is a function that performs a setup or cleanup task. All failures that occur in test helpers are expected to be failures of the environment (not from the code under test) — for example when a test database cannot be started because there are no more free ports on this machine.
+一个测试助手是一个执行设置或清理任务的函数。所有发生在测试助手中的故障都被认为是环境的故障（而不是被测代码的故障）--例如，当一个测试数据库不能被启动，因为在这台机器上没有更多的空闲端口。
 
-If you pass a `*testing.T`, call [`t.Helper`](https://pkg.go.dev/testing#T.Helper) to attribute failures in the test helper to the line where the helper is called. This parameter should come after a [context](https://google.github.io/styleguide/go/decisions#contexts) parameter, if present, and before any remaining parameters.
+如果你传递一个`*testing.T`，调用[`t.Helper`](https://pkg.go.dev/testing#T.Helper)，将测试助手中的故障归结到调用助手的那一行。这个参数应该在[context](https://google.github.io/styleguide/go/decisions#contexts)参数之后，如果有的话，在任何其他参数之前。
 
 ```
 // Good:
@@ -2443,23 +2442,23 @@ func readFile(t *testing.T, filename string) string {
 }
 ```
 
-Do not use this pattern when it obscures the connection between a test failure and the conditions that led to it. Specifically, the guidance about [assert libraries](https://google.github.io/styleguide/go/decisions#assert) still applies, and [`t.Helper`](https://pkg.go.dev/testing#T.Helper) should not be used to implement such libraries.
+当这种模式掩盖了测试失败和导致失败的条件之间的联系时，请不要使用这种模式。具体来说，关于[断言库](https://google.github.io/styleguide/go/decisions#assert)的指导仍然适用，[`t.Helper`](https://pkg.go.dev/testing#T.Helper)不应该被用来实现这种库。
 
-**Tip:** For more on the distinction between test helpers and assertion helpers, see [best practices](https://google.github.io/styleguide/go/best-practices#test-functions).
+**提示：**更多关于测试助手和断言助手的区别，请参见[最佳实践](https://google.github.io/styleguide/go/best-practices#test-functions)。
 
-Although the above refers to `*testing.T`, much of the advice stays the same for benchmark and fuzz helpers.
+虽然上面提到的是`*testing.T`，但大部分建议对基准和模糊帮助器来说都是一样的。
 
-### Test package
+### 测试包
 
-#### Tests in the same package
+#### 同一包内的测试
 
-Tests may be defined in the same package as the code being tested.
+测试可以和被测试的代码定义在同一个包里。
 
-To write a test in the same package:
+要在同一个包中编写测试
 
-- Place the tests in a `foo_test.go` file
-- Use `package foo` for the test file
-- Do not explicitly import the package to be tested
+- 将测试放在一个`foo_test.go`文件中
+- 在测试文件中使用`package foo`。
+- 不要明确地导入要测试的包
 
 ```build
 # Good:
@@ -2482,13 +2481,13 @@ go_test(
 )
 ```
 
-A test in the same package can access unexported identifiers in the package. This may enable better test coverage and more concise tests. Be aware that any [examples](https://google.github.io/styleguide/go/decisions#examples) declared in the test will not have the package names that a user will need in their code.
+同一个包中的测试可以访问包中未导出的标识符。这可以实现更好的测试覆盖率和更简洁的测试。注意在测试中声明的任何[examples](https://google.github.io/styleguide/go/decisions#examples)都不会有用户在他们的代码中需要的包名。
 
-#### Tests in a different package
+#### 不同包中的测试
 
-It is not always appropriate or even possible to define a test in the same package as the code being tested. In these cases, use a package name with the `_test` suffix. This is an exception to the “no underscores” rule to [package names](https://google.github.io/styleguide/go/decisions#package-names). For example:
+将测试定义在与被测代码相同的包中并不总是合适的，甚至不可能。在这种情况下，使用一个带有`_test`后缀的包名。这是对[包名](https://google.github.io/styleguide/go/decisions#package-names)的 "不使用下划线"规则的一个例外。比如说。
 
-- If an integration test does not have an obvious library that it belongs to
+- 如果一个集成测试没有一个它明显属于的库
 
   ```
   // Good:
@@ -2497,7 +2496,7 @@ It is not always appropriate or even possible to define a test in the same packa
   import "testing"
   ```
 
-- If defining the tests in the same package results in circular dependencies
+- 如果在同一软件包中定义测试会导致循环依赖性
 
   ```
   // Good:
@@ -2509,30 +2508,30 @@ It is not always appropriate or even possible to define a test in the same packa
   )
   ```
 
-### Use package `testing`
+### 使用`testing`包
 
-The Go standard library provides the [`testing` package](https://pkg.go.dev/testing). This is the only testing framework permitted for Go code in the Google codebase. In particular, [assertion libraries](https://google.github.io/styleguide/go/decisions#assert) and third-party testing frameworks are not allowed.
+Go标准库提供了[`testing`包](https://pkg.go.dev/testing)。这是Google代码库中唯一允许用于Go代码的测试框架。特别是[断言库](https://google.github.io/styleguide/go/decisions#assert)和第三方测试框架是不允许的。
 
-The `testing` package provides a minimal but complete set of functionality for writing good tests:
+`testing`包为编写好的测试提供了最小但完整的功能集。
 
-- Top-level tests
-- Benchmarks
-- [Runnable examples](https://blog.golang.org/examples)
-- Subtests
-- Logging
-- Failures and fatal failures
+- 顶层测试
+- 基准
+- [可运行的例子](https://blog.golang.org/examples)
+- 子测试
+- 记录
+- 失败和致命的失败
 
-These are designed to work cohesively with core language features like [composite literal](https://go.dev/ref/spec#Composite_literals) and [if-with-initializer](https://go.dev/ref/spec#If_statements) syntax to enable test authors to write [clear, readable, and maintainable tests].
+这些设计是为了与核心语言特性如[复合字面](https://go.dev/ref/spec#Composite_literals)和[带有初始化的if语句](https://go.dev/ref/spec#If_statements)语法协同工作，使测试作者能够编写[清晰、可读、可维护的测试]。
 
-## Non-decisions
+## 非决策性的
 
-A style guide cannot enumerate positive prescriptions for all matters, nor can it enumerate all matters about which it does not offer an opinion. That said, here are a few things where the readability community has previously debated and has not achieved consensus about.
+风格指南不能列举所有事项的正面规定，也不能列举所有它不提供意见的事项。也就是说，这里有几件可读性社区以前争论过但没有达成共识的事情。
 
-- **Local variable initialization with zero value**. `var i int` and `i := 0` are equivalent. See also [initialization best practices](https://google.github.io/styleguide/go/best-practices#vardeclinitialization).
-- **Empty composite literal vs. `new` or `make`**. `&File{}` and `new(File)` are equivalent. So are `map[string]bool{}` and `make(map[string]bool)`. See also [composite declaration best practices](https://google.github.io/styleguide/go/best-practices#vardeclcomposite).
-- **got, want argument ordering in cmp.Diff calls**. Be locally consistent, and [include a legend](https://google.github.io/styleguide/go/decisions#print-diffs) in your failure message.
-- **`errors.New` vs `fmt.Errorf` on non-formatted strings**. `errors.New("foo")` and `fmt.Errorf("foo")` may be used interchangeably.
+- **零值的局部变量初始化**。`var i int`和`i := 0`是等同的。参见[初始化最佳实践](https://google.github.io/styleguide/go/best-practices#vardeclinitialization)。
+- **空的复合字面与`new`或`make`**。`&File{}`和`new(File)`是等同的。`map[string]bool{}`和`make(map[string]bool)`也是如此。参见[复合声明最佳实践](https://google.github.io/styleguide/go/best-practices#vardeclcomposite)。
+- **got/want参数在cmp.Diff调用中的排序**。要有本地一致性，并在你的失败信息中[包括一个图例](https://google.github.io/styleguide/go/decisions#print-diffs)。
+- **`errors.New`与`fmt.Errorf`在非格式化字符串上的对比**。`errors.New("foo")`和`fmt.Errorf("foo")`可以互换使用。
 
-If there are special circumstances where they come up again, the readability mentor might make an optional comment, but in general the author is free to pick the style they prefer in the given situation.
+如果有特殊情况，它们又出现了，可读性导师可能会做一个可选的注释，但一般来说，作者可以自由选择他们在特定情况下喜欢的风格。
 
-Naturally, if anything not covered by the style guide does need more discussion, authors are welcome to ask – either in the specific review, or on internal message boards.
+当然，如果风格指南中没有涉及的东西确实需要更多的讨论，欢迎在具体的审查中，或者在内部留言板上提出来。
