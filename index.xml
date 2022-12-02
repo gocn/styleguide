@@ -19,12 +19,11 @@ Google 的代码库基本上是统一和一致的。通常情况下，那些比�
 Go 代码应该以最简单的方式编写，在行为和性能方面都能实现其目标。在 Google Go 代码库中，简单的代码：
 从头至尾都易于阅读 不预设你已经知道它在做什么 不预设你能记住前面所有的代码 不含非必要的抽象层次 不含过于通用的命名 让读者清楚地了解到传值与决定的传播情况 有注释，解释为什么，而不是代码正在做什么，以避免未来的歧义 有独立的文档 包含有效的错误与失败用例测试 往往不是看起来“聪明”的代码 在代码的简单性和 API 使用的简单性之间可能会需要权衡。例如，让代码更复杂可能是值得的，这样 API 的终端用户可以更容易地正确调用 API。相反，把一些额外的工作留给 API 的终端用户也是值得的，这样代码就会保持简单和容易理解。</description></item><item><title/><link>https://gocn.github.io/styleguide/docs/03-decisions/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://gocn.github.io/styleguide/docs/03-decisions/</guid><description>Go 风格决策 # https://google.github.io/styleguide/go/decisions
 概述 | 指南 | 决策 | 最佳实践
-**注意：**本文是 Google Go 风格 系列文档的一部分。本文档是 规范性(normative) 但不是强制规范(canonical)，并且从属于Google 风格指南。请参阅概述获取更多详细信息。
+注意： 本文是 Google Go 风格 系列文档的一部分。本文档是 规范性(normative) 但不是强制规范(canonical)，并且从属于Google 风格指南。请参阅概述获取更多详细信息。
 关于 # 本文包含旨在统一和为 Go 可读性导师给出的建议提供标准指导、解释和示例的风格决策。
 本文档并不详尽，且会随着时间的推移而增加。如果风格指南 与此处给出的建议相矛盾，风格指南优先，并且本文档应相应更新。
 参见 关于 获取 Go 风格的全套文档。
 以下部分已从样式决策移至指南的一部分：
 混合大写字母MixedCaps: 参见 https://google.github.io/styleguide/go/guide#mixed-caps 格式化Formatting: 参见 https://google.github.io/styleguide/go/guide#formatting 行长度Line Length: 参见 https://google.github.io/styleguide/go/guide#line-length 命名Naming # 有关命名的总体指导，请参阅核心风格指南 中的命名部分，以下部分对命名中的特定区域提供进一步的说明。
 下划线Underscores # Go 中的命名通常不应包含下划线。这个原则有三个例外：
-仅由生成代码导入的包名称可能包含下划线。有关如何选择多词包名称的更多详细信息，请参阅包名称。 *_test.go 文件中的测试、基准和示例函数名称可能包含下划线。 与操作系统或 cgo 互操作的低级库可能会重用标识符，如 syscall 中所做的那样。在大多数代码库中，这预计是非常罕见的。 包名称Package names # Go 包名称应该简短并且只包含小写字母。由多个单词组成的包名称应全部小写。例如，包 tabwriter 不应该命名为 tabWriter、TabWriter 或 tab_writer。
-避免选择可能被常用局部变量遮蔽覆盖 的包名称。例如，usercount 是比 count 更好的包名，因为 count 是常用变量名。</description></item></channel></rss>
+仅由生成代码导入的包名称可能包含下划线。有关如何选择多词包名称的更多详细信息，请参阅包名称。 *_test.go 文件中的测试、基准和示例函数名称可能包含下划线。 与操作系统或 cgo 互操作的低级库可能会重用标识符，如 syscall 中所做的那样。在大多数代码库中，这预计是非常罕见的。 包名称Package names # Go 包名称应该简短并且只包含小写字母。由多个单词组成的包名称应全部小写。例如，包 tabwriter 不应该命名为 tabWriter、TabWriter 或 tab_writer。</description></item></channel></rss>
