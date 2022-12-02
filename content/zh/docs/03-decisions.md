@@ -26,7 +26,7 @@ https://google.github.io/styleguide/go/decisions
 
 ### 下划线Underscores
 
-Go 中的命名通常不应包含下划线。 这个原则有三个例外：
+Go 中的命名通常不应包含下划线。这个原则有三个例外：
 
 1. 仅由生成代码导入的包名称可能包含下划线。有关如何选择多词包名称的更多详细信息，请参阅[包名称](https://google.github.io/styleguide/go/decisions#package-names)。
 2. `*_test.go` 文件中的测试、基准和示例函数名称可能包含下划线。
@@ -37,7 +37,7 @@ Go 包名称应该简短并且只包含小写字母。由多个单词组成的�
 
 避免选择可能被常用局部变量[遮蔽覆盖](https://google.github.io/styleguide/go/best-practices#shadowing) 的包名称。例如，`usercount` 是比 `count` 更好的包名，因为 `count` 是常用变量名。
 
-Go 包名称不应该有下划线。如果您需要导入名称中确实有一个包（通常来自生成的或第三方代码），则必须在导入时将其重命名为适合在 Go 代码中使用的名称。
+Go 包名称不应该有下划线。如果你需要导入名称中确实有一个包（通常来自生成的或第三方代码），则必须在导入时将其重命名为适合在 Go 代码中使用的名称。
 
 一个例外是仅由生成的代码导入的包名称可能包含下划线。具体例子包括：
 
@@ -67,7 +67,7 @@ Go 包名称不应该有下划线。如果您需要导入名称中确实有一�
 
 ### 常量命名Constant names
 
-常量名称必须像 Go 中的所有其他名称一样使用 [混合大写字母MixedCaps](https://google.github.io/styleguide/go/guide#mixed-caps)。 （[导出](https://tour.golang.org/basics/3) 常量以大写字母开头，而未导出的常量以小写字母开头。）即使打破了其他语言的约定，这也是适用的。常量名称不应是其值的派生词，而应该解释值所表示的含义。
+常量名称必须像 Go 中的所有其他名称一样使用 [混合大写字母MixedCaps](https://google.github.io/styleguide/go/guide#mixed-caps)。（[导出](https://tour.golang.org/basics/3) 常量以大写字母开头，而未导出的常量以小写字母开头。）即使打破了其他语言的约定，这也是适用的。常量名称不应是其值的派生词，而应该解释值所表示的含义。
 
 ```
 // Good:
@@ -89,7 +89,7 @@ const kMaxBufferSize = 1024
 const KMaxUsersPergroup = 500
 ```
 
-根据它们的角色而不是它们的值来命名常量。 如果一个常量除了它的值之外没有其他作用，那么就没有必要将它定义为一个常量。
+根据它们的角色而不是它们的值来命名常量。如果一个常量除了它的值之外没有其他作用，那么就没有必要将它定义为一个常量。
 
 ```
 // Bad:
@@ -103,10 +103,10 @@ const (
 
 ### 缩写词Initialisms
 
-名称中的首字母缩略词或单独的首字母缩略词（例如，“URL”和“NATO”）应该具有相同的大小写。 `URL` 应显示为 `URL` 或 `url`（如 `urlPony` 或 `URLPony`），绝不能显示为 `Url`。 这也适用于 `ID` 是“identifier”的缩写； 写 `appID` 而不是 `appId`。
+名称中的首字母缩略词或单独的首字母缩略词（例如，“URL”和“NATO”）应该具有相同的大小写。`URL` 应显示为 `URL` 或 `url`（如 `urlPony` 或 `URLPony`），绝不能显示为 `Url`。这也适用于 `ID` 是“identifier”的缩写； 写 `appID` 而不是 `appId`。
 
 - 在具有多个首字母缩写的名称中（例如 `XMLAPI` 因为它包含 `XML` 和 `API`），给定首字母缩写中的每个字母都应该具有相同的大小写，但名称中的每个首字母缩写不需要具有相同的大小写。
-- 在带有包含小写字母的首字母缩写的名称中（例如`DDoS`、`iOS`、`gRPC`），首字母缩写应该像在标准中一样出现，除非您需要为了满足 [导出](https://golang.org/ref/spec#Exported_identifiers) 而更改第一个字母。在这些情况下，整个缩写词应该是相同的情况（例如 `ddos`、`IOS`、`GRPC`）。
+- 在带有包含小写字母的首字母缩写的名称中（例如`DDoS`、`iOS`、`gRPC`），首字母缩写应该像在标准中一样出现，除非你需要为了满足 [导出](https://golang.org/ref/spec#Exported_identifiers) 而更改第一个字母。在这些情况下，整个缩写词应该是相同的情况（例如 `ddos`、`IOS`、`GRPC`）。
 
 | 缩写词 | 范围      | 正确  | 错误                              |
 | ------------- | ---------- | -------- | -------------------------------------- |
@@ -136,7 +136,7 @@ const (
 - 大范围是一个或几个大操作，比如 15-25 行。
 - 非常大的范围是指超过一页（例如，超过 25 行）的任何内容。
 
-在小范围内可能非常清楚的名称（例如，`c` 表示计数器）在较大范围内可能不够用，并且需要澄清以提醒进一步了解其在代码中的用途。一个作用域中有很多变量，或者表示相似值或概念的变量，那就可能需要比作用域建议的采用更长的变量名称。
+在小范围内可能非常清楚的名称（例如，`c` 表示计数器）在较大范围内可能不够用，并且需要澄清以提示进一步了解其在代码中的用途。一个作用域中有很多变量，或者表示相似值或概念的变量，那就可能需要比作用域建议的采用更长的变量名称。
 
 概念的特殊性也有助于保持变量名称的简洁。例如，假设只有一个数据库在使用，像`db`这样的短变量名通常可能保留给非常小的范围，即使范围非常大，也可能保持完全清晰。在这种情况下，根据范围的大小，单个词`database`可能是可接受的，但不是必需的，因为`db`是该词的一种非常常见的缩写，几乎没有其他解释。
 
@@ -154,7 +154,7 @@ const (
 
   - 对于数字，`userCount` 是比 `numUsers` 或 `usersInt` 更好的名称。
   - 对于切片，`users` 是一个比 `userSlice` 更好的名字。
-  - 如果范围内有两个版本的值，则包含类似类型的限定符是可以接受的，例如，您可能将输入存储在 `ageString` 中，并使用 `age` 作为解析值。
+  - 如果范围内有两个版本的值，则包含类似类型的限定符是可以接受的，例如，你可能将输入存储在 `ageString` 中，并使用 `age` 作为解析值。
 
 - 省略[上下文](https://google.github.io/styleguide/go/decisions#repetitive-in-context) 中清楚的单词。例如，在 UserCount 方法的实现中，名为 userCount 的局部变量可能是多余的； `count`、`users` 甚至 `c` 都具有可读性。
 
@@ -173,7 +173,7 @@ const (
 
 ### 重复Repetition
 
-一段 Go 源代码应该避免不必要的重复。 一个常见的情形是重复名称，其中通常包含不必要的单词或重复其上下文或类型。 如果相同或相似的代码段在很近的地方多次出现，代码本身也可能是不必要的重复。
+一段 Go 源代码应该避免不必要的重复。一个常见的情形是重复名称，其中通常包含不必要的单词或重复其上下文或类型。如果相同或相似的代码段在很近的地方多次出现，代码本身也可能是不必要的重复。
 
 重复命名可以有多种形式，包括：
 
@@ -212,7 +212,7 @@ limit, err := strconv.Atoi(limitRaw)
 
 #### 外部上下文 vs 本地名称External context vs. local names
 
-包含来自周围上下文信息的名称通常会产生额外的噪音，而没有任何好处。 包名、方法名、类型名、函数名、导入路径，甚至文件名都可以提供自动限定其名称的上下文。
+包含来自周围上下文信息的名称通常会产生额外的噪音，而没有任何好处。包名、方法名、类型名、函数名、导入路径，包含来自其上下文信息的名称。
 Names that include information from their surrounding context often create extra noise without benefit. The package name, method name, type name, function name, import path, and even filename can all provide context that automatically qualifies all names within.
 
 ```
@@ -244,7 +244,7 @@ func Process(in *pb.FooProto) *Report {
 }
 ```
 
-重复通常应该在符号用户的上下文中进行评估，而不是孤立地进行评估。例如，下面的代码有很多名称，在某些情况下可能没问题，但在上下文中是多余的：
+重复通常应该在符号使用者的上下文中进行评估，而不是孤立地进行评估。例如，下面的代码有很多名称，在某些情况下可能没问题，但在上下文中是多余的：
 
 ```
 // Bad:
@@ -273,17 +273,17 @@ func (db *DB) UserCount() (int, error) {
 
 ## 评论Commentary
 
-关于评论的约定（包括评论什么、使用什么风格、如何提供可运行的示例等）旨在支持阅读公共 API 文档的体验。 有关详细信息，请参阅 [Effective Go](http://golang.org/doc/effective_go.html#commentary)。
+关于评论的约定（包括评论什么、使用什么风格、如何提供可运行的示例等）旨在支持阅读公共 API 文档的体验。有关详细信息，请参阅 [Effective Go](http://golang.org/doc/effective_go.html#commentary)。
 
 最佳实践文档关于 [文档约定](https://google.github.io/styleguide/go/best-practices#documentation-conventions) 的部分进一步讨论了这一点。
 
-**最佳实践：**在开发和代码审查期间使用[文档预览](https://google.github.io/styleguide/go/best-practices#documentation-preview) 查看文档和可运行示例是否有用 并以您期望的方式呈现。
+**最佳实践：**在开发和代码审查期间使用[文档预览](https://google.github.io/styleguide/go/best-practices#documentation-preview) 查看文档和可运行示例是否有用并以你期望的方式呈现。
 
-**提示：** Godoc 使用很少的特殊格式； 列表和代码片段通常应该缩进以避免换行。 除缩进外，通常应避免装饰。
+**提示：** Godoc 使用很少的特殊格式； 列表和代码片段通常应该缩进以避免换行。除缩进外，通常应避免装饰。
 
 ### 注释行长度Comment line length
 
-确保即使在较窄的屏幕上注释的可读性。
+确保注释在即使在较窄的屏幕上的可读性。
 
 当评论变得太长时，建议将其包装成多个单行评论。在可能的情况下，争取在 80 列宽的终端上阅读良好的注释，但这并不是硬性限制； Go 中的注释没有固定的行长度限制。例如，标准库经常选择根据标点符号来打断注释，这有时会使个别行更接近 60-70 个字符标记。
 
@@ -322,7 +322,7 @@ repeatedly.
 
 ### 文档注释Doc comments
 
-所有顶级导出名称都必须有文档注释，具有不明显行为或含义的未导出类型或函数声明也应如此。 这些注释应该是[完整句子](https://google.github.io/styleguide/go/decisions#comment-sentences)，以所描述对象的名称开头。 冠词（“a”、“an”、“the”）可以放在名字前面，使其读起来更自然。
+所有顶级导出名称都必须有文档注释，具有不明显行为或含义的未导出类型或函数声明也应如此。这些注释应该是[完整句子](https://google.github.io/styleguide/go/decisions#comment-sentences)，以所描述对象的名称开头。冠词（“a”、“an”、“the”）可以放在名字前面，使其读起来更自然。
 
 ```
 // Good:
@@ -354,15 +354,15 @@ type Options struct {
 }
 ```
 
-**最佳实践：**如果你对未导出的代码有文档注释，请遵循与导出代码相同的习惯（即，以未导出的名称开始注释）。 这使得以后导出它变得容易，只需在注释和代码中用新导出的名称替换未导出的名称即可。
+**最佳实践：**如果你对未导出的代码有文档注释，请遵循与导出代码相同的习惯（即，以未导出的名称开始注释）。这使得以后导出它变得容易，只需在注释和代码中用新导出的名称替换未导出的名称即可。
 
 ### 注释语句Comment sentences
 
-完整的注释应该像标准英语句子一样包含大写和标点符号。 （作为一个例外，如果在其他方面很清楚，可以以非大写的标识符名称开始一个句子。这种情况最好只在段落的开头进行。）
+完整的注释应该像标准英语句子一样包含大写和标点符号。（作为一个例外，如果在其他方面很清楚，可以以非大写的标识符名称开始一个句子。这种情况最好只在段落的开头进行。）
 
 作为句子片段的注释对标点符号或大小写没有此类要求。
 
-[文档注释](https://google.github.io/styleguide/go/decisions#doc-comments) 应始终是完整的句子，因此应始终大写和标点符号。 简单的行尾注释（特别是对于结构字段）可以为假设字段名称是主语的简单短语。
+[文档注释](https://google.github.io/styleguide/go/decisions#doc-comments) 应始终是完整的句子，因此应始终大写和标点符号。简单的行尾注释（特别是对于结构字段）可以为假设字段名称是主语的简单短语。
 
 ```
 // Good:
@@ -383,13 +383,13 @@ type Server struct {
 
 ### 示例Examples
 
-包应该清楚地记录它们的预期用途。 尝试提供一个[可运行的例子](http://blog.golang.org/examples)； 示例出现在 Godoc 中。 可运行示例属于测试文件，而不是生产源文件。 请参阅此示例（[Godoc](https://pkg.go.dev/time#example-Duration)，[source](https://cs.opensource.google/go/go/+/HEAD:src/time /example_test.go））。
+包应该清楚地记录它们的预期用途。尝试提供一个[可运行的例子](http://blog.golang.org/examples)； 示例出现在 Godoc 中。可运行示例属于测试文件，而不是生产源文件。请参阅此示例（[Godoc](https://pkg.go.dev/time#example-Duration)，[source](https://cs.opensource.google/go/go/+/HEAD:src/time /example_test.go））。
 
-如果无法提供可运行的示例，可以在代码注释中提供示例代码。 与注释中的其他代码和命令行片段一样，它应该遵循标准格式约定。
+如果无法提供可运行的示例，可以在代码注释中提供示例代码。与注释中的其他代码和命令行片段一样，它应该遵循标准格式约定。
 
 ### 命名的结果参数Named result parameters
 
-当有命名参数时，请考虑函数签名在 Godoc 中的显示方式。 函数本身的名称和结果参数的类型通常要足够清楚。
+当有命名参数时，请考虑函数签名在 Godoc 中的显示方式。函数本身的名称和结果参数的类型通常要足够清楚。
 
 ```
 // Good:
@@ -428,17 +428,17 @@ func (n *Node) Parent2() (node *Node, err error)
 
 不要为了避免在函数内声明变量而使用命名结果参数。这种做法会导致不必要的冗长API，但收益只是微小的简洁性。
 
-[裸返回](https://tour.golang.org/basics/7) 仅在小函数中是可接受的。 一旦它是一个中等大小的函数，就需要明确你的返回值。 同样，不要仅仅因为可以裸返回就使用命名结果参数。 [清晰度](https://google.github.io/styleguide/go/guide#clarity) 总是比在你的函数中节省几行更重要。
+[裸返回](https://tour.golang.org/basics/7) 仅在小函数中是可接受的。一旦它是一个中等大小的函数，就需要明确你的返回值。同样，不要仅仅因为可以裸返回就使用命名结果参数。[清晰度](https://google.github.io/styleguide/go/guide#clarity) 总是比在你的函数中节省几行更重要。
 
 如果必须在延迟闭包中更改结果参数的值，则命名结果参数始终是可以接受的。
 
-> **提示：** 类型通常比函数签名中的名称更清晰。 [GoTip #38：作为命名类型的函数](https://google.github.io/styleguide/go/index.html#gotip) 演示了这一点。
+> **提示：** 类型通常比函数签名中的名称更清晰。[GoTip #38：作为命名类型的函数](https://google.github.io/styleguide/go/index.html#gotip) 演示了这一点。
 >
 > 在上面的 [`WithTimeout`](https://pkg.go.dev/context#WithTimeout) 中，代码使用了一个 [`CancelFunc`](https://pkg.go.dev/context#CancelFunc) 而不是结果参数列表中的原始`func()`，并且几乎不需要做任何记录工作。
 
 ### 包注释
 
-包注释必须出现在包内语句的上方，注释和包名称之间没有空行。 例子：
+包注释必须出现在包内语句的上方，注释和包名称之间没有空行。例子：
 
 ```
 // Good:
@@ -448,7 +448,7 @@ func (n *Node) Parent2() (node *Node, err error)
 package math
 ```
 
-每个包必须有一个包注释。 如果一个包由多个文件组成，那么其中一个文件应该有包注释。
+每个包必须有一个包注释。如果一个包由多个文件组成，那么其中一个文件应该有包注释。
 
 `main` 包的注释形式略有不同，其中 BUILD 文件中的 `go_binary` 规则的名称代替了包名。
 
@@ -459,7 +459,7 @@ package math
 package main
 ```
 
-只要二进制文件的名称与 BUILD 文件中所写的完全一致，其他风格的注释也是可以了。 当二进制名称是第一个单词时，即使它与命令行调用的拼写不严格匹配，也需要将其大写。
+只要二进制文件的名称与 BUILD 文件中所写的完全一致，其他风格的注释也是可以了。当二进制名称是第一个单词时，即使它与命令行调用的拼写不严格匹配，也需要将其大写。
 
 ```
 // Good:
@@ -473,11 +473,11 @@ package main
 
 提示:
 
-- 命令行调用示例和 API 用法可以是有用的文档。 对于 Godoc 格式，缩进包含代码的注释行。
+- 命令行调用示例和 API 用法可以是有用的文档。对于 Godoc 格式，缩进包含代码的注释行。
 
 - 如果没有明显的main文件或者包注释特别长，可以将文档注释放在名为 doc.go 的文件中，只有注释和包子句。
 
-- 可以使用多行注释代替多个单行注释。 如果文档包含可能对从源文件复制和粘贴有用的部分，如示例命令行（用于二进制文件）和模板示例，这将非常有用。
+- 可以使用多行注释代替多个单行注释。如果文档包含可能对从源文件复制和粘贴有用的部分，如示例命令行（用于二进制文件）和模板示例，这将非常有用。
 
   ```
   // Good:
@@ -490,15 +490,15 @@ package main
   package template
   ```
 
-- 供维护者使用且适用于整个文件的注释通常放在导入声明之后。 这些不会出现在 Godoc 中，也不受上述包注释规则的约束。
+- 供维护者使用且适用于整个文件的注释通常放在导入声明之后。这些不会出现在 Godoc 中，也不受上述包注释规则的约束。
 
 ## 导入
 
 ### 导入重命名
 
-只有在为了避免与其他导入的名称冲突时，才使用重命名导入。 （由此推论，[好的包名称](https://google.github.io/styleguide/go/decisions#package-names) 不需要重命名。）如果发生名称冲突，最好重命名 最本地或特定于项目的导入。 包的本地别名必须遵循[包命名指南](https://google.github.io/styleguide/go/decisions#package-names)，包括禁止使用下划线和大写字母。
+只有在为了避免与其他导入的名称冲突时，才使用重命名导入。（由此推论，[好的包名称](https://google.github.io/styleguide/go/decisions#package-names) 不需要重命名。）如果发生名称冲突，最好重命名 最本地或特定于项目的导入。包的本地别名必须遵循[包命名指南](https://google.github.io/styleguide/go/decisions#package-names)，包括禁止使用下划线和大写字母。
 
-生成的 protocol buffer 包必须重命名以从其名称中删除下划线，并且它们的别名必须具有 `pb` 后缀。 有关详细信息，请参阅[proto和stub最佳实践](https://google.github.io/styleguide/go/best-practices#import-protos)。
+生成的 protocol buffer 包必须重命名以从其名称中删除下划线，并且它们的别名必须具有 `pb` 后缀。有关详细信息，请参阅[ proto 和 stub 最佳实践](https://google.github.io/styleguide/go/best-practices#import-protos)。
 
 ```
 // Good:
@@ -507,7 +507,7 @@ import (
 )
 ```
 
-导入的包名称没有有用的识别信息时（例如 `package v1`），应该重命名以包括以前的路径组件。 重命名必须与导入相同包的其他本地文件一致，并且可以包括版本号。
+导入的包名称没有有用的识别信息时（例如 `package v1`），应该重命名以包括以前的路径组件。重命名必须与导入相同包的其他本地文件一致，并且可以包括版本号。
 
 **注意：** 最好重命名包以符合 [好的包命名规则](https://google.github.io/styleguide/go/decisions#package-names)，但在vendor目录下的包通常是不可行的。
 
@@ -520,7 +520,7 @@ import (
 )
 ```
 
-如果您需要导入一个名称与您要使用的公共局部变量名称（例如 `url`、`ssh`）冲突的包，并且您希望重命名该包，首选方法是使用 `pkg ` 后缀（例如 `urlpkg`）。 请注意，可以使用局部变量隐藏包； 仅当此类变量在范围内时仍需要使用此包时，才需要重命名。
+如果你需要导入一个名称与你要使用的公共局部变量名称（例如 `url`、`ssh`）冲突的包，并且你希望重命名该包，首选方法是使用 `pkg` 后缀（例如 `urlpkg`）。请注意，可以使用局部变量隐藏包； 仅当此类变量在范围内时仍需要使用此包时，才需要重命名。
 
 ### 导入分组
 
@@ -547,7 +547,7 @@ import (
 )
 ```
 
-将导入项分成多个组是可以接受的，例如，如果您想要一个单独的组来重命名、导入仅为了特殊效果 或另一个特殊的导入组。
+将导入项分成多个组是可以接受的，例如，如果你想要一个单独的组来重命名、导入仅为了特殊效果 或另一个特殊的导入组。
 
 ```
 // Good:
@@ -573,7 +573,7 @@ import (
 
 Google 程序有时也是 AppEngine 应用程序，应该有一个单独的组用于 AppEngine 导入。
 
-Gofmt 负责按导入路径对每个组进行排序。但是，它不会自动将导入分成组。流行的 [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) 工具结合了 Gofmt 和导入管理，根据上述规则将导入进行分组。通过 [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) 来管理导入安排是可行的，但随着文件的修改，其导入列表必须保持内部一致。
+Gofmt 负责按导入路径对每个组进行排序。但是，它不会自动将导入分成组。流行的 [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) 工具结合了 Gofmt 和导入管理，根据上述规则将导入进行分组。通过 [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) 来管理导入顺序是可行的，但随着文件的修改，其导入列表必须保持内部一致。
 
 ### 导入"空" (`import _`)
 
@@ -584,18 +584,18 @@ Gofmt 负责按导入路径对每个组进行排序。但是，它不会自动�
 - [time/tzdata](https://pkg.go.dev/time/tzdata)
 - [image/jpeg](https://pkg.go.dev/image/jpeg) 在图像处理中的代码
 
-避免在工具包中导入空白，即使工具包间接依赖于它们。 将副作用导入限制到主包有助于控制依赖性，并使得编写依赖于不同导入的测试成为可能，而不会发生冲突或浪费构建成本。
+避免在工具包中导入空白，即使工具包间接依赖于它们。将副作用导入限制到主包有助于控制依赖性，并使得编写依赖于不同导入的测试成为可能，而不会发生冲突或浪费构建成本。
 
 以下是此规则的唯一例外情况：
 
-- 您可以使用空白导入来绕过 [nogo 静态检查器](https://github.com/bazelbuild/rules_go/blob/master/go/nogo.rst) 中对不允许导入的检查。
-- 您可以在使用 `//go:embed` 编译器指令的源文件中使用 [embed](https://pkg.go.dev/embed) 包的空白导入。
+- 你可以使用空白导入来绕过 [nogo 静态检查器](https://github.com/bazelbuild/rules_go/blob/master/go/nogo.rst) 中对不允许导入的检查。
+- 你可以在使用 `//go:embed` 编译器指令的源文件中使用 [embed](https://pkg.go.dev/embed) 包的空白导入。
 
-**提示：**如果生产环境中您创建的工具包间接依赖于副作用导入，请记录这里的预期用途。
+**提示：**如果生产环境中你创建的工具包间接依赖于副作用导入，请记录这里的预期用途。
 
 ### 导入 “.” (`import .`)
 
-`import .` 形式是一种语言特性，它允许将从另一个包导出的标识符无条件地带到当前包中。 有关更多信息，请参阅[语言规范](https://go.dev/ref/spec#Import_declarations)。
+`import .` 形式是一种语言特性，它允许将从另一个包导出的标识符无条件地带到当前包中。有关更多信息，请参阅[语言规范](https://go.dev/ref/spec#Import_declarations)。
 
 **不要**在 Google 代码库中使用此功能； 这使得更难判断功能来自何处。
 
@@ -624,14 +624,14 @@ var myThing = foo.Bar()
 
 ### 返回错误
 
-使用 `error` 表示函数可能会失败。 按照惯例，`error` 是最后一个结果参数。
+使用 `error` 表示函数可能会失败。按照惯例，`error` 是最后一个结果参数。
 
 ```
 // Good:
 func Good() error { /* ... */ }
 ```
 
-返回 `nil` 错误是表示操作成功的惯用方式，否则表示可能会失败。 如果函数返回错误，除非另有明确说明，否则调用者必须将所有非错误返回值视为未确定。 通常来说，非错误返回值是它们的零值，但也不能直接这么假设。
+返回 `nil` 错误是表示操作成功的惯用方式，否则表示可能会失败。如果函数返回错误，除非另有明确说明，否则调用者必须将所有非错误返回值视为未确定。通常来说，非错误返回值是它们的零值，但也不能直接这么假设。
 
 ```
 // Good:
@@ -644,7 +644,7 @@ func GoodLookup() (*Result, error) {
 }
 ```
 
-返回错误的导出函数应使用`error`类型返回它们。 具体的错误类型容易受到细微错误的影响：一个 `nil` 指针可以包装到接口中，从而就变成非 nil 值（参见 [关于该主题的 Go FAQ 条目](https://golang.org/doc/faq#nil_error)）。
+返回错误的导出函数应使用`error`类型返回它们。具体的错误类型容易受到细微错误的影响：一个 `nil` 指针可以包装到接口中，从而就变成非 nil 值（参见 [关于该主题的 Go FAQ 条目](https://golang.org/doc/faq#nil_error)）。
 
 ```
 // Bad:
@@ -655,7 +655,7 @@ func Bad() *os.PathError { /*...*/ }
 
 ### 错误字符串
 
-错误字符串不应大写（除非以导出名称、专有名词或首字母缩写词开头）并且不应以标点符号结尾。 这是因为错误字符串通常在打印给用户之前出现在其他上下文中。
+错误字符串不应大写（除非以导出名称、专有名词或首字母缩写词开头）并且不应以标点符号结尾。这是因为错误字符串通常在打印给用户之前出现在其他上下文中。
 
 ```
 // Bad:
@@ -675,13 +675,13 @@ t.Errorf("Op(%q) failed unexpectedly; err=%v", args, err)
 
 ### 错误处理
 
-遇到错误的代码应该慎重选择如何处理它。 使用 _ 变量丢弃错误通常是不合适的。 如果函数返回错误，请执行以下操作之一：
+遇到错误的代码应该慎重选择如何处理它。使用 _ 变量丢弃错误通常是不合适的。如果函数返回错误，请执行以下操作之一：
 
 - 立即处理并解决错误
 - 将错误返回给调用者
 - 在特殊情况下，调用 [`log.Fatal`](https://pkg.go.dev/github.com/golang/glog#Fatal) 或（如绝对有必要）则调用 `panic`
 
-**注意：** `log.Fatalf` 不是标准库日志。 参见 [#logging]。
+**注意：** `log.Fatalf` 不是标准库日志。参见 [#logging]。
 
 在极少数情况下适合忽略或丢弃错误（例如调用 [`(*bytes.Buffer).Write`](https://pkg.go.dev/bytes#Buffer.Write) 被记录为永远不会失败），随附的注释应该解释为什么这是安全的。
 
@@ -696,7 +696,7 @@ n, _ := b.Write(p) // never returns a non-nil error
 
 ### In-band 错误
 
-在C和类似语言中，函数通常会返回-1、null或空字符串等值，以示错误或丢失结果。这就是所谓的带内`In-band`处理。
+在C和类似语言中，函数通常会返回-1、null或空字符串等值，以示错误或丢失结果。这就是所谓的`In-band`处理。
 
 ```
 // Bad:
@@ -704,7 +704,7 @@ n, _ := b.Write(p) // never returns a non-nil error
 func Lookup(key string) int
 ```
 
-未能检查`In-band`错误值会导致错误，并可能将error归于错误的功能。
+未能检查`In-band`错误值会导致错误，并可能将 error 归于错误的功能。
 
 ```
 // Bad:
@@ -721,9 +721,9 @@ Go对多重返回值的支持提供了一个更好的解决方案（见[Effectiv
 func Lookup(key string) (value string, ok bool)
 ```
 
-这个API可以防止调用者错误地编写`Parse(Lookup(key))`，从而导致编译时错误，因为`Lookup(key)`有两个返回值。
+这个 API 可以防止调用者错误地编写`Parse(Lookup(key))`，从而导致编译时错误，因为`Lookup(key)`有两个返回值。
 
-以这种方式返回错误，可以鼓励更强大和明确的错误处理。
+以这种方式返回错误，来构筑更强大和明确的错误处理。
 
 ```
 // Good:
@@ -734,7 +734,7 @@ if !ok {
 return Parse(value)
 ```
 
-一些标准库函数，如包`strings`中的函数，返回`In-band`错误值。这大大简化了字符串处理的代码，但代价是要求程序员更加勤奋。一般来说，Google代码库中的Go代码应该为错误返回额外的值。
+一些标准库函数，如包`strings`中的函数，返回`In-band`错误值。这大大简化了字符串处理的代码，但代价是要求程序员更加勤奋。一般来说，Google 代码库中的 Go 代码应该为错误返回额外的值
 
 ### 缩进错误流程
 
@@ -757,7 +757,7 @@ if err != nil {
 }
 ```
 
-> **提示：**如果你使用一个变量超过几行代码，通常不值得使用`带有初始化的if`风格。在这种情况下，通常最好将声明移出，使用标准的`if`语句。
+> **提示：**如果你使用一个变量超过几行代码，通常不值得使用`带有初始化的 if `风格。在这种情况下，通常最好将声明移出，使用标准的`if`语句。
 >
 > ```
 > // Good:
@@ -784,7 +784,7 @@ if err != nil {
 
 ### 字面格式化
 
-Go有一个非常强大的[复合字面语法](https://golang.org/ref/spec#Composite_literals)，用它可以在一个表达式中表达深度嵌套的复杂值。在可能的情况下，应该使用这种字面语法，而不是逐字段建值。字面意义的 `gofmt`格式一般都很好，但有一些额外的规则可以使这些字面意义保持可读和可维护。
+Go 有一个非常强大的[复合字面语法](https://golang.org/ref/spec#Composite_literals)，用它可以在一个表达式中表达深度嵌套的复杂值。在可能的情况下，应该使用这种字面语法，而不是逐字段建值。字面意义的 `gofmt`格式一般都很好，但有一些额外的规则可以使这些字面意义保持可读和可维护。
 
 #### 字段名称
 
@@ -797,7 +797,7 @@ Go有一个非常强大的[复合字面语法](https://golang.org/ref/spec#Compo
   good := otherpkg.Type{A: 42}
   ```
 
-  结构中字段的位置和字段的完整集合（当字段名被省略时，这两者都是有必要搞清楚的）通常不被认为是结构的公共API的一部分；需要指定字段名以避免不必要的耦合。
+  结构中字段的位置和字段的完整集合（当字段名被省略时，这两者都是有必要搞清楚的）通常不被认为是结构的公共 API 的一部分；需要指定字段名以避免不必要的耦合。
 
   ```
   // Bad:
@@ -834,7 +834,7 @@ Go有一个非常强大的[复合字面语法](https://golang.org/ref/spec#Compo
 
 #### 匹配的大括号
 
-一对大括号的最后一半应该总是出现在一行中，其缩进量与开头的大括号相同。单行字词必然具有这个属性。当字面意义跨越多行时，保持这一属性可以使字面意义的括号匹配与函数和`if`语句等常见Go语法结构的括号匹配相同。
+一对大括号的最后一半应该总是出现在一行中，其缩进量与开头的大括号相同。单行字词必然具有这个属性。当字面意义跨越多行时，保持这一属性可以使字面意义的括号匹配与函数和`if`语句等常见 Go 语法结构的括号匹配相同。
 
 这方面最常见的错误是在多行结构字中把收尾括号与值放在同一行。在这种情况下，该行应以逗号结束，收尾括号应出现在下一行。
 
@@ -901,7 +901,7 @@ bad := []*Type{
 
 #### 重复的类型名称
 
-重复的类型名称可以从slice和map字面上省略，这对减少杂乱是有帮助的。明确重复类型名称的一个合理场合，当在你的项目中处理一个不常见的复杂类型时，当重复的类型名称在相隔很远的行上时，可以提醒读者的上下文。
+重复的类型名称可以从 slice 和 map 字面上省略，这对减少杂乱是有帮助的。明确重复类型名称的一个合理场合，当在你的项目中处理一个不常见的复杂类型时，当重复的类型名称在一行上却相隔很远的时候，可以提醒读者的上下文。
 
 ```
 // Good:
@@ -930,9 +930,9 @@ repetitive := map[Type1]*Type2{
 
 #### 零值字段
 
-[零值](https://golang.org/ref/spec#The_zero_value)字段可以从结构字段中省略，但不能因此而失去清晰度。
+[零值](https://golang.org/ref/spec#The_zero_value)字段可以从结构字段中省略，但不能因此而失去`清晰`这个风格原则。
 
-设计良好的API经常采用零值结构来提高可读性。例如，从下面的结构中省略三个零值字段，可以使人们注意到正在指定的唯一选项。
+设计良好的 API 经常采用零值结构来提高可读性。例如，从下面的结构中省略三个零值字段，可以使人们注意到正在指定的唯一选项。
 
 ```
 // Bad:
@@ -1035,7 +1035,7 @@ s = append(s, 42)
 fmt.Println(s)      // [42]
 ```
 
-如果你声明一个空片作为局部变量（特别是如果它可以成为返回值的来源），最好选择nil初始化，以减少调用者的错误风险。
+如果你声明一个空切片作为局部变量（特别是如果它可以成为返回值的来源），最好选择 nil 初始化，以减少调用者的错误风险
 
 ```
 // Good:
@@ -1044,7 +1044,7 @@ var t []string
 t := []string{}
 ```
 
-不要创建强迫调用者区分nil和空片的API。
+不要创建强迫调用者区分 nil 和空切片的 API。
 
 ```
 // Good:
@@ -1058,9 +1058,9 @@ func Ping(hosts []string) ([]string, error) { ... }
 func Ping(hosts []string) []string { ... }
 ```
 
-在设计接口时，避免区分 `nil` 切片和非 `nil` 的零长度分片，因为这可能导致微妙的编程错误。这通常是通过使用`len`来检查是否为空，而不是`==nil`来实现的。
+在设计接口时，避免区分 `nil` 切片和非 `nil` 的零长度切片，因为这可能导致微妙的编程错误。这通常是通过使用`len`来检查是否为空，而不是`==nil`来实现的。
 
-这个实现同时接受`nil`和零长度的片子为 "空"。
+这个实现同时将`nil`和零长度的切片视为 "空"。
 
 ```
 // Good:
@@ -1114,9 +1114,9 @@ if longCondition1 && longCondition2 &&
 
 ### 函数格式化
 
-函数或方法声明的签名应该保持在一行，以避免[缩进的混乱](https://google.github.io/styleguide/go/decisions#indentation-confusion)。
+函数定义或方法声明的签名应该保持在一行，以避免[缩进的混乱](https://google.github.io/styleguide/go/decisions#indentation-confusion)。
 
-函数参数列表可以成为Go源文件中最长的几行。然而，它们在缩进的变化之前，因此很难以不使后续行看起来像函数体的一部分的方式来断行，从而造成混乱。
+函数参数列表可以成为Go源文件中最长的几行。然而，它们在缩进的变化之前，因此很难以不使后续行看起来像函数体的一部分的混乱方式来断行。
 
 ```
 // Bad:
@@ -1171,7 +1171,7 @@ bad := foo.Call(long, list, of, parameters,
     with, arbitrary, line, breaks)
 ```
 
-不要为特定的函数参数添加注释。 相反，使用 [option struct](https://google.github.io/styleguide/go/best-practices#option-structure) 或在函数文档中添加更多细节。
+不要为特定的函数参数添加注释。相反，使用 [option struct](https://google.github.io/styleguide/go/best-practices#option-structure) 或在函数文档中添加更多细节。
 
 ```
 // Good:
@@ -1198,7 +1198,7 @@ replacements := []string{
 replacer := strings.NewReplacer(replacements...)
 ```
 
-当 API 无法更改或本地调用是不寻常的（无论调用是否太长），如果有助于理解本次调用，始终允许添加换行符。
+当 API 无法更改或本地调用是不频繁的（无论调用是否太长），在有助于理解本次调用的前提下，那么是始终允许添加换行符的。
 
 ```
 // Good:
@@ -1216,7 +1216,7 @@ canvas.RenderCube(cube,
 
 请注意，上面示例中的行没有在特定的列边界处换行，而是根据坐标三元组进行分组。
 
-函数中的长字符串不应该因为行的长度而被破坏。 对于包含此类字符串的函数，可以在字符串格式之后添加换行符，并且可以在下一行或后续行中提供参数。 最好根据输入的语义分组来决定换行符应该放在哪里，而不是单纯基于行长。
+函数中的长字符串不应该因为行的长度而被破坏。对于包含此类字符串的函数，可以在字符串格式之后添加换行符，并且可以在下一行或后续行中提供参数。最好根据输入的语义分组来决定换行符应该放在哪里，而不是单纯基于行长。
 
 ```
 // Good:
@@ -1287,7 +1287,7 @@ if _, err := client.Update(ctx, &upb.UserUpdateRequest{
 }
 ```
 
-同样，不要尝试在 `for` 语句中人为的插入换行符。 如果没有优雅的重构方式，是可以允许单纯的较长的行：
+同样，不要尝试在 `for` 语句中人为的插入换行符。如果没有优雅的重构方式，是可以允许单纯的较长的行：
 
 ```
 // Good:
@@ -1362,7 +1362,7 @@ if result == "foo" {
 }
 ```
 
-不要采用常量在前的表达含糊的条件写法([尤达条件式](https://en.wikipedia.org/wiki/Yoda_conditions))
+不要采用常量在前的表达含糊的写法([尤达条件式](https://en.wikipedia.org/wiki/Yoda_conditions))
 
 ```
 // Bad:
@@ -1373,9 +1373,9 @@ if "foo" == result {
 
 ### 复制
 
-为了避免意外的别名和类似的错误，从另一个包复制结构时要小心。 例如 `sync.Mutex` 是不能复制的同步对象，
+为了避免意外的别名和类似的错误，从另一个包复制结构时要小心。例如 `sync.Mutex` 是不能复制的同步对象。
 
-`bytes.Buffer` 类型包含一个 `[]byte` 切片和切片可以引用的小数组，这是为了对小字符串的优化。 如果你复制一个 `Buffer`，复制的切片会指向原始切片中的数组，从而在后续方法调用产生意外的效果。
+`bytes.Buffer` 类型包含一个 `[]byte` 切片和切片可以引用的小数组，这是为了对小字符串的优化。如果你复制一个 `Buffer`，复制的切片会指向原始切片中的数组，从而在后续方法调用产生意外的效果。
 
 一般来说，如果类型的方法与指针类型`*T`相关联，不要复制类型为`T`的值。
 
@@ -1386,7 +1386,7 @@ b1 := bytes.Buffer{}
 b2 := b1
 ```
 
-调用值接收者的方法可以隐藏副本。 当您编写 API 时，如果您的结构包含不应复制的字段，您通常应该采用并返回指针类型。
+调用值接收者的方法可以隐藏拷贝。当你编写 API 时，如果你的结构包含不应复制的字段，你通常应该采用并返回指针类型。
 
 如此是可接受的:
 
@@ -1422,17 +1422,17 @@ func Consumer(r Record) {...} // Makes a copy of r.buf
 
 ### 不要 panic
 
-不要使用 `panic` 进行正常的错误处理。 相反，使用 `error` 和多个返回值。 请参阅 [关于错误的有效 Go 部分](http://golang.org/doc/effective_go.html#errors)。
+不要使用 `panic` 进行正常的错误处理。相反，使用 `error` 和多个返回值。请参阅 [关于错误的有效 Go 部分](http://golang.org/doc/effective_go.html#errors)。
 
-在 `package main` 和初始化代码中，考虑 [`log.Exit`](https://pkg.go.dev/github.com/golang/glog#Exit) 中应该终止程序的错误（例如，无效配置 )，因为在许多这些情况下，堆栈跟踪对阅读者没有帮助。 请注意 [`log.Exit`](https://pkg.go.dev/github.com/golang/glog#Exit) 中调用了 [`os.Exit`](https://pkg.go.dev/os#Exit) ，此时所有`defer`函数都将不会运行。
+在 `package main` 和初始化代码中，考虑 [`log.Exit`](https://pkg.go.dev/github.com/golang/glog#Exit) 中应该终止程序的错误（例如，无效配置 )，因为在许多这些情况下，堆栈跟踪对阅读者没有帮助。请注意 [`log.Exit`](https://pkg.go.dev/github.com/golang/glog#Exit) 中调用了 [`os.Exit`](https://pkg.go.dev/os#Exit) ，此时所有`defer`函数都将不会运行。
 
 对于那些表示“不可能”出现的条件错误、命名错误，应该在代码评审、测试期间发现，函数应合理地返回错误或调用 [`log.Fatal`](https://pkg.go.dev /github.com/golang/glog#Fatal）。
 
-**注意：** `log.Fatalf` 不是标准库日志。 请参阅 [#logging]。
+**注意：** `log.Fatalf` 不是标准库日志。请参阅 [#logging]。
 
 ### Must类函数
 
-用于在失败时停止程序的辅助函数应遵循命名约定“MustXYZ”（或“mustXYZ”）。 一般来说，它们应该只在程序启动的早期被调用，而不是在像用户输入时，此时更应该首选 `error` 处理。
+用于在失败时停止程序的辅助函数应遵循命名约定“MustXYZ”（或“mustXYZ”）。一般来说，它们应该只在程序启动的早期被调用，而不是在像用户输入时，此时更应该首选 `error` 处理。
 
 这类方式，通常只在[包初始化时]（https://golang.org/ref/spec#Package_initialization）进行包级变量初始化的函数常见（例如[template.Must](https://golang.org/pkg/text/template/#Must) 和 [regexp.MustCompile](https://golang.org/pkg/regexp/#MustCompile))。
 
@@ -1451,7 +1451,7 @@ func MustParse(version string) *Version {
 var DefaultVersion = MustParse("1.2.3")
 ```
 
-相同的约定也可用于仅停止当前测试的情况（使用 `t.Fatal`）。 这样在创建测试时通常很方便，例如在 [表驱动测试](https://google.github.io/styleguide/go/decisions#table-driven-tests) 的结构字段中，作为返回错误的函数是不能直接复制给结构字段的。
+相同的约定也可用于仅停止当前测试的情况（使用 `t.Fatal`）。这样在创建测试时通常很方便的，例如在 [表驱动测试](https://google.github.io/styleguide/go/decisions#table-driven-tests) 的结构字段中，作为返回错误的函数是不能直接复制给结构字段的。
 
 ```
 // Good:
@@ -1482,7 +1482,7 @@ func TestCreateObject(t *testing.T) {
 
 在这两种情况下，这种模式的价值在于可以在“值”上下文中调用。不应在难以确保捕获错误的地方或应[检查](https://google.github.io/styleguide/go/decisions#handle-errors)错误的上下文中调用这些程序（如，在许多请求处理程序中）。对于常量输入，这允许测试确保“必须”的参数格式正确，对于非常量的输入，它允许测试验证错误是否[正确处理或传播](https://google.github.io/styleguide/go/best-practices#error-handling)。
 
-在测试中使用 `Must` 函数的地方，通常应该 [标记为测试助手](https://google.github.io/styleguide/go/decisions#mark-test-helpers) 并调用 `t.Fatal`（请参阅[测试助手中的错误处理](https://google.github.io/styleguide/go/best-practices#test-helper-error-handling)来了解使用它的更多注意事项）。
+在测试中使用 `Must` 函数的地方，通常应该 [标记为测试辅助函数](https://google.github.io/styleguide/go/decisions#mark-test-helpers) 并调用 `t.Fatal`（请参阅[测试辅助函数中的错误处理](https://google.github.io/styleguide/go/best-practices#test-helper-error-handling)来了解使用它的更多注意事项）。
 
 当有可能通过 [普通错误处理](https://google.github.io/styleguide/go/best-practices#error-handling) 处理时，就不应该使用`Must`类函数：
 
@@ -1499,9 +1499,9 @@ func Version(o *servicepb.Object) (*version.Version, error) {
 
 当你生成 goroutines 时，要明确它们何时或是否退出。
 
-Goroutines 可以在阻塞通道发送或接收出现泄漏。 垃圾收集器不会终止一个 goroutine，即使它被阻塞的通道已经不可用。
+Goroutines 可以在阻塞通道发送或接收出现泄漏。垃圾收集器不会终止一个 goroutine，即使它被阻塞的通道已经不可用。
 
-即使 goroutine 没有泄漏，在不再需要时仍处于运行状态也会导致其他微妙且难以诊断的问题。 向已关闭的通道上发送会导致panic。
+即使 goroutine 没有泄漏，在不再需要时仍处于运行状态也会导致其他微妙且难以诊断的问题。向已关闭的通道上发送会导致panic。
 
 
 ```
@@ -1512,9 +1512,9 @@ close(ch)
 ch <- 13 // panic
 ```
 
-“在结果已经不需要之后”修改仍在使用的入参可能会导致数据竞争。 运行任意长时间的 goroutine 会导致不可预测的内存占用。
+“在结果已经不需要之后”修改仍在使用的入参可能会导致数据竞争。运行任意长时间的 goroutine 会导致不可预测的内存占用。
 
-并发代码的编写应该让 goroutine 生命周期非常明显。 通常，这意味着在与同步相关的代码限制的函数范围内，将逻辑分解为 [同步函数](https://google.github.io/styleguide/go/decisions#synchronous-functions)。 如果并发性仍然不明显，那么文档说明 goroutine 在何时、为何退出就很重要。
+并发代码的编写应该让 goroutine 生命周期非常明显。通常，这意味着在与同步相关的代码限制的函数范围内，将逻辑分解为 [同步函数](https://google.github.io/styleguide/go/decisions#synchronous-functions)。如果并发性仍然不明显，那么文档说明 goroutine 在何时、为何退出就很重要。
 
 遵循上下文使用最佳实践的代码通常有助于明确这一点，其通常使用 `context.Context` 进行管理：
 
@@ -1530,7 +1530,7 @@ func (w *Worker) Run(ctx context.Context) error {
 }
 ```
 
-上面还有其他使用通道的情况，例如 `chan struct{}`、同步变量、[条件变量](https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view) 等等。 重要的部分是 goroutine 的终结对于后续维护者来说是显而易见的。
+上面还有其他使用通道的情况，例如 `chan struct{}`、同步变量、[条件变量](https://drive.google.com/file/d/1nPdvhB0PutEJzdCq5ms6UI58dp50fcAN/view) 等等。重要的部分是 goroutine 的 结束对于后续维护者来说是显而易见的。
 
 相比之下，以下代码不关心其衍生的 goroutine 何时完成：
 
@@ -1549,7 +1549,7 @@ func (w *Worker) Run() {
 
 这段代码看起来还行，但有几个潜在的问题：
 
-- 代码在可能会有未知的行为，即使操作系统已经释放资源，程序也可能没有完全干净地结束
+- 该代码在生产中可能有未定义的行为，即使操作系统已经释放资源，程序也可能没有完全干净地结束
 - 由于代码的不确定生命周期，代码难以进行有效的测试
 - 代码可能会出现资源泄漏，如上所述
 
@@ -1609,19 +1609,19 @@ func NewThinger() Thinger { return Thinger{ ... } }
 
 ### 泛型
 
-泛型（正式名称为“[类型参数](https://go.dev/design/43651-type-parameters)”）在满足业务需求时被允许使用。在许多应用程序中，使用现有传统的（切片、映射、接口等）方式也可以正常工作，而不会增加复杂性，因此请注意不要过早使用。请参阅关于 [最小机制](https://google.github.io/styleguide/go/guide#least-mechanism) 的讨论。
+在满足业务需求时，泛型（正式名称为“[类型参数](https://go.dev/design/43651-type-parameters)”）才应该被使用。在许多应用程序中，使用现有语言特性中传统方式（切片、映射、接口等）也可以正常工作，而不会增加复杂性，因此请注意不要过早使用。请参阅关于 [最小机制](https://google.github.io/styleguide/go/guide#least-mechanism) 的讨论。
 
-在使用泛型的导出时，请确保对其进行适当的记录。强烈鼓励包含可运行的 [examples](https://google.github.io/styleguide/go/decisions#examples)。
+在引入使用泛型的导出 API 时，请确保对其进行适当的记录。强烈鼓励包含可运行的 [示例](https://google.github.io/styleguide/go/decisions#examples)。
 
-不要仅仅因为你正在实现一个不关心其成员元素类型的算法或数据结构而使用泛型。如果在实践中只有一种类型被实例化，那么首先让您的代码在该类型上工作，而不使用泛型。与删除发现不必要的抽象相比，稍后添加多态性将更简单。
+不要仅仅因为你正在实现一个算法或不关心元素类型的数据结构而使用泛型。如果在实践中只有一种类型可以使用，那么首先让您的代码在该类型上工作，而不使用泛型。与其删除不必要的抽象，稍后为其添加多态将更简单。
 
 不要使用泛型来发明领域特定语言 (DSL)。特别是，不要引入可能会给阅读者带来沉重负担的错误处理框架。相反，更应该使用 [错误处理](https://google.github.io/styleguide/go/decisions#errors) 做法。对于测试，要特别小心引入 [断言库](https://google.github.io/styleguide/go/decisions#assert) 或框架，尤其是很少发现[失败case](https://google.github.io/styleguide/go/decisions#useful-test-failures)的。
 
 一般来说：
 
 - [写代码，不要去设计类型](https://www.youtube.com/watch?v=Pa_e9EeCdy8&t=1250s)。来自 Robert Griesemer 和 Ian Lance Taylor 的 GopherCon 演讲。
-- 如果您有几种类型共享一个有用的统一界面，请考虑使用该界面对解决方案进行建模。可能不需要泛型。
-- 否则，不要依赖 `any` 类型和过多的 [类型断言](https://tour.golang.org/methods/16)，这时应考虑泛型。
+- 如果你有几种类型共享一个统一接口，请考虑使用该接口对解决方案进行建模。这种情况可能不需要泛型。
+- 否则，不要依赖 `any` 类型和过多的 [类型断言](https://tour.golang.org/methods/16)的情况，应考虑泛型。
 
 更多也可以参考：
 
@@ -1630,15 +1630,15 @@ func NewThinger() Thinger { return Thinger{ ... } }
 
 ### 参数值传递
 
-不要为了节省几个字节而将指针作为函数参数传递。 如果一个函数在整个过程中只将参数`x`处理为`*x`，那么不应该采用指针。 常见的例子包括传递一个指向字符串的指针（`*string`）或一个指向接口值的指针（`*io.Reader`）。 在这两种情况下，值本身都是固定大小的，可以直接传递。
+不要为了节省几个字节而将指针作为函数参数传递。如果一个函数在整个过程中只将参数`x`处理为`*x`，那么不应该采用指针。常见的例子包括传递一个指向字符串的指针（`*string`）或一个指向接口值的指针（`*io.Reader`）。在这两种情况下，值本身都是固定大小的，可以直接传递。
 
-此建议不适用于大型结构体，甚至可能会增加大小的小型结构。 特别是，`pb`消息通常应该通过指针而不是值来处理。 指针类型满足 `proto.Message` 接口（被 `proto.Marshal`、`protocmp.Transform` 等接受），并且协议缓冲区消息可能非常大，并且随着时间的推移通常会变得更大。
+此建议不适用于大型结构体，甚至可能会增加大小的小型结构。特别是，`pb`消息通常应该通过指针而不是值来处理。指针类型满足 `proto.Message` 接口（被 `proto.Marshal`、`protocmp.Transform` 等接受），并且协议缓冲区消息可能非常大，并且随着时间的推移通常会变得更大。
 
 ### 接收者类型
 
-[方法接收者](https://golang.org/ref/spec#Method_declarations) 和常规函数参数一样，也可以使用值或指针传递。 选择哪个应该基于该方法应该属于哪个[方法集]（https://golang.org/ref/spec#Method_sets）。
+[方法接收者](https://golang.org/ref/spec#Method_declarations) 和常规函数参数一样，也可以使用值或指针传递。选择哪个应该基于该方法应该属于哪个[方法集]（https://golang.org/ref/spec#Method_sets）。
 
-**正确性胜过速度或简单性。** 在某些情况下是必须使用指针的。 在其他情况下，如果您对代码的增长方式没有很好的了解，请为大类型选择指针或作为面向未来的指针，并为[简单的的数据]((https://en.wikipedia.org/wiki/Passive_data_structure))使用值。
+**正确性胜过速度或简单性。** 在某些情况下是必须使用指针的。在其他情况下，如果你对代码的增长方式没有很好的了解，请为大类型或考虑未来适用性上选择指针，并为[简单的的数据]((https://en.wikipedia.org/wiki/Passive_data_structure))使用值。
 
 下面的列表更详细地说明了每个案例：
 
@@ -1681,13 +1681,13 @@ func NewThinger() Thinger { return Thinger{ ... } }
   }
   ```
 
-  **提示：** 检查类型的 [Godoc](https://pkg.go.dev/time#example-Duration) 以获取有关复制是否安全的信息。
+  **提示：** 检查类型是否可被安全复制的相关信息可参考 [Godoc](https://pkg.go.dev/time#example-Duration)。
 
-- 如果接收者是“大”结构或数组，则指针接收者可能更有效。 传递结构相当于将其所有字段或元素作为参数传递给方法。 如果这看起来太大而无法[按值传递](https://google.github.io/styleguide/go/decisions#pass-values)，那么指针是一个不错的选择。
+- 如果接收者是“大”结构或数组，则指针接收者可能更有效。传递结构相当于将其所有字段或元素作为参数传递给方法。如果这看起来太大而无法[按值传递](https://google.github.io/styleguide/go/decisions#pass-values)，那么指针是一个不错的选择。
 
 - 对于将调用修改接收者的其他函数，而这些修改对此方法不可见，请使用值类型； 否则使用指针。
 
-- 如果接收者是一个结构或数组，其元素中的任何一个都是指向可能发生变异的东西的指针，那么更应该指针接收者以使阅读者清楚地了解可变性的意图。
+- 如果接收者是一个结构或数组，其元素中的任何一个都是指向可能发生变化的东西的指针，那么更应该指针接收者以使阅读者清楚地了解可变性的意图。
 
   ```
   // Good:
@@ -1733,11 +1733,11 @@ func NewThinger() Thinger { return Thinger{ ... } }
 
 作为一般准则，最好将类型的方法设为全部指针方法或全部值方法。
 
-**注意：** 关于是否值或指针的函数是否会影响性能，存在很多错误信息。 编译器可以选择将指针传递到堆栈上的值以及复制堆栈上的值，但在大多数情况下，这些考虑不应超过代码的可读性和正确性。 当性能确实很重要时，重要的是在确定一种方法优于另一种方法之前，用一个现实的基准来描述这两种方法。
+**注意：** 关于是否值或指针的函数是否会影响性能，存在很多错误信息。编译器可以选择将指针传递到堆栈上的值以及复制堆栈上的值，但在大多数情况下，这些考虑不应超过代码的可读性和正确性。当性能确实很重要时，重要的是在确定一种方法优于另一种方法之前，用一个实际的基准来描述这两种方法。
 
 ### `switch` 和 `break`
 
-不要在`switch`子句末尾使用没有目标标签的`break`语句； 它们是多余的。 与 C 和 Java 不同，Go 中的 `switch` 子句会自动中断，并且需要 `fallthrough` 语句来实现 C 风格的行为。 如果您想阐明空子句的目的，请使用注释而不是 `break`。
+不要在`switch`子句末尾使用没有目标标签的`break`语句； 它们是多余的。与 C 和 Java 不同，Go 中的 `switch` 子句会自动中断，并且需要 `fallthrough` 语句来实现 C 风格的行为。如果你想阐明空子句的目的，请使用注释而不是 `break`。
 
 ```
 // Good:
@@ -1786,11 +1786,11 @@ default:
 
 ### 同步函数
 
-同步函数直接返回它们的结果，并在返回之前完成所有回调或通道操作。 首选同步函数而不是异步函数。
+同步函数直接返回它们的结果，并在返回之前完成所有回调或通道操作。首选同步函数而不是异步函数。
 
-同步函数使 goroutine 在调用中保持本地化。 这有助于推理它们的生命周期，并避免泄漏和数据竞争。 同步函数也更容易测试，因为调用者可以传递输入并检查输出，而无需轮询或同步。
+同步函数使 goroutine 在调用中保持本地化。这有助于推理它们的生命周期，并避免泄漏和数据竞争。同步函数也更容易测试，因为调用者可以传递输入并检查输出，而无需轮询或同步。
 
-如有必要，调用者可以通过在单独的 goroutine 中调用函数来添加并发性。 然而，在调用方移除不必要的并发是相当困难的（有时是不可能的）。
+如有必要，调用者可以通过在单独的 goroutine 中调用函数来添加并发性。然而，在调用方移除不必要的并发是相当困难的（有时是不可能的）。
 
 也可以看看：
 
@@ -1798,9 +1798,9 @@ default:
 
 ### 类型别名
 
-使用*类型定义*，`type T1 T2`，定义一个新类型。 
-使用 [*类型别名*](http://golang.org/ref/spec#Type_declarations), `type T1 = T2` 来引用现有类型而不定义新类型。 
-类型别名很少见； 它们的主要用途是帮助将包迁移到新的源代码位置。 不要在不需要时使用类型别名。
+使用*类型定义*，`type T1 T2`，定义一个新类型。
+使用 [*类型别名*](http://golang.org/ref/spec#Type_declarations), `type T1 = T2` 来引用现有类型而不定义新类型。
+类型别名很少见； 它们的主要用途是帮助将包迁移到新的源代码位置。不要在不需要时使用类型别名。
 
 ### 使用 %q
 
@@ -1820,15 +1820,15 @@ fmt.Printf("value \"%s\" looks like English text", someText)
 fmt.Printf("value '%s' looks like English text", someText)
 ```
 
-建议在供人使用的输出中使用 `%q`，其输入值可能为空或包含控制字符。 可能很难注意到一个无声的空字符串，但是 `""` 就这样清楚地突出了。
+建议在供人使用的输出中使用 `%q`，其输入值可能为空或包含控制字符。可能很难注意到一个无声的空字符串，但是 `""` 就这样清楚地突出了。
 ### 使用 any
 
-Go 1.18 将 `any` 类型作为 [别名](https://go.googlesource.com/proposal/+/master/design/18130-type-alias.md) 引入到 `interface{}`。 因为它是一个别名，所以 `any` 在许多情况下等同于 `interface{}`，而在其他情况下，它可以通过显式转换轻松互换。 在新代码中应使用 `any`。
+Go 1.18 将 `any` 类型作为 [别名](https://go.googlesource.com/proposal/+/master/design/18130-type-alias.md) 引入到 `interface{}`。因为它是一个别名，所以 `any` 在许多情况下等同于 `interface{}`，而在其他情况下，它可以通过显式转换轻松互换。在新代码中应使用 `any`。
 ## 通用库
 
 ### Flags
 
-Google 代码库中的 Go 程序使用 [标准 `flag` 包](https://golang.org/pkg/flag/) 的内部变体。 它具有类似的接口，但与 Google 内部系统的互操作性很好。 Go 二进制文件中的标志名称应该更应该使用下划线来分隔单词，尽管包含标志值的变量应该遵循标准的 Go 名称样式（[混合大写字母](https://google.github.io/styleguide/go/guide#mixed-caps)）。 具体来说，标志名称应该是蛇大小写，变量名称应该是骆驼大小写。
+Google 代码库中的 Go 程序使用 [标准 `flag` 包](https://golang.org/pkg/flag/) 的内部变体。它具有类似的接口，但与 Google 内部系统的互操作性很好。Go 二进制文件中的标志名称应该更应该使用下划线来分隔单词，尽管包含标志值的变量应该遵循标准的 Go 名称样式（[混合大写字母](https://google.github.io/styleguide/go/guide#mixed-caps)）。具体来说，标志名称应该是蛇形命名，变量名称应该是驼峰命名。
 
 ```
 // Good:
@@ -1845,7 +1845,7 @@ Flags只能在 `package main` 或等效项中定义。
 
 通用包应该使用 Go API 进行配置，而不是通过命令行界面进行配置；不要让导入库导出新标志作为副作用。也就是说，更倾向于显式的函数参数或结构字段分配，或者低频和严格审查的全局变量导出。在需要打破此规则的极少数情况下，标志名称必须清楚地表明它配置的包。
 
-如果您的标志是全局变量，在导入部分之后，将它们放在 `var` 组中。
+如果你的标志是全局变量，在导入部分之后，将它们放在 `var` 组中。
 
 关于使用子命令创建 [complex CLI](https://google.github.io/styleguide/go/best-practices#complex-clis) 的最佳实践还有其他讨论。
 
@@ -1861,7 +1861,7 @@ Google 代码库中的 Go 程序使用 [标准 `log` 包](https://pkg.go.dev/log
 
 **注意：** 对于异常的程序退出，这个库使用 `log.Fatal` 通过堆栈跟踪中止，使用 `log.Exit` 在没有堆栈跟踪的情况下停止。标准库中没有 `log.Panic` 函数。
 
-**提示：** `log.Info(v)` 等价于 `log.Infof("%v", v)`，其他日志级别也是如此。当您没有格式化要做时，首选非格式化版本。
+**提示：** `log.Info(v)` 等价于 `log.Infof("%v", v)`，其他日志级别也是如此。当你没有格式化要做时，首选非格式化版本。
 
 也可以看看：
 
@@ -1870,7 +1870,7 @@ Google 代码库中的 Go 程序使用 [标准 `log` 包](https://pkg.go.dev/log
 
 ### 上下文
 
-[`context.Context`](https://pkg.go.dev/context) 类型的值携带跨 API 和进程边界的安全凭证、跟踪信息、截止日期和取消信号。 与 Google 代码库中使用线程本地存储的 C++ 和 Java 不同，Go 程序在整个函数调用链中显式地传递上下文，从传入的 RPC 和 HTTP 请求到传出请求。
+[`context.Context`](https://pkg.go.dev/context) 类型的值携带跨 API 和进程边界的安全凭证、跟踪信息、截止日期和取消信号。与 Google 代码库中使用线程本地存储的 C++ 和 Java 不同，Go 程序在整个函数调用链中显式地传递上下文，从传入的 RPC 和 HTTP 请求到传出请求。
 
 当传递给函数或方法时，`context.Context` 始终是第一个参数。
 
@@ -1894,20 +1894,20 @@ func F(ctx context.Context /* other arguments */) {}
 
 > **注意**：调用链中间的代码很少需要使用 `context.Background()` 创建自己的基本上下文。更应该从调用者那里获取上下文，除非它是错误的上下文。
 >
-> 您可能会遇到服务器库（在 Google 的 Go 服务器框架中实现 Stubby、gRPC 或 HTTP），它们为每个请求构建一个新的上下文对象。这些上下文立即填充来自传入请求的信息，因此当传递给请求处理程序时，上下文的附加值已从客户端调用者通过网络边界传播给它。此外，这些上下文的生命周期仅限于请求的生命周期：当请求完成时，上下文将被取消。
+> 你可能会遇到服务库（在 Google 的 Go 服务框架中实现 Stubby、gRPC 或 HTTP），它们为每个请求构建一个新的上下文对象。这些上下文立即填充来自传入请求的信息，因此当传递给请求处理程序时，上下文的附加值已从客户端调用者通过网络边界传播给它。此外，这些上下文的生命周期仅限于请求的生命周期：当请求完成时，上下文将被取消。
 >
-> 除非你正在实现一个服务器框架，否则你不应该在库代码中使用 `context.Background()` 创建上下文。相反，如果有可用的现有上下文，则更应该使用下面提到的上下文分离。如果您认为在入口点函数之外确实需要`context.Background()`，请在提交实现之前与 Google Go 风格的邮件列表讨论它。
+> 除非你正在实现一个服务器框架，否则你不应该在库代码中使用 `context.Background()` 创建上下文。相反，如果有可用的现有上下文，则更应该使用下面提到的上下文分离。如果你认为在入口点函数之外确实需要`context.Background()`，请在提交实现之前与 Google Go 风格的邮件列表讨论它。
 
-`context.Context` 在函数中首先出现的约定也适用于测试助手。
+`context.Context` 在函数中首先出现的约定也适用于测试辅助函数。
 
 ```
 // Good:
 func readTestFile(ctx context.Context, t *testing.T, path string) string {}
 ```
 
-不要将上下文成员添加到结构类型。 相反，为需要传递它的类型的每个方法添加一个上下文参数。 一个例外是其签名必须与标准库或 Google 无法控制的第三方库中的接口匹配的方法。 这种情况非常罕见，应该在实施和可读性审查之前与 Google Go 风格的邮件列表讨论。
+不要将上下文成员添加到结构类型。相反，为需要传递它的类型的每个方法添加一个上下文参数。一个例外是其签名必须与标准库或 Google 无法控制的第三方库中的接口匹配的方法。这种情况非常罕见，应该在实施和可读性审查之前与 Google Go 风格的邮件列表讨论。
 
-Google 代码库中必须产生可以在取消父上下文后运行的后台操作的代码可以使用内部包进行分离。 关注 https://github.com/golang/go/issues/40221 讨论开源替代方案。
+Google 代码库中必须产生可以在取消父上下文后运行的后台操作的代码可以使用内部包进行分离。关注 https://github.com/golang/go/issues/40221 讨论开源替代方案。
 
 由于上下文是不可变的，因此可以将相同的上下文传递给共享相同截止日期、取消信号、凭据、父跟踪等的多个调用。
 
@@ -1917,15 +1917,15 @@ Google 代码库中必须产生可以在取消父上下文后运行的后台操�
 
 #### 自定义上下文
 
-不要在函数签名中创建自定义上下文类型或使用上下文以外的接口。 这条规定没有例外。
+不要在函数签名中创建自定义上下文类型或使用上下文以外的接口。这条规定没有例外。
 
-想象一下，如果每个团队都有一个自定义上下文。 对于包 P 和 Q 的所有对，从包 P 到包 Q 的每个函数调用都必须确定如何将“PContext”转换为“QContext”。这对人类来说是不切实际且容易出错的，并且它会进行自动重构 添加上下文参数几乎是不可能的。
+想象一下，如果每个团队都有一个自定义上下文。对于包 P 和 Q 的所有对，从包 P 到包 Q 的每个函数调用都必须确定如何将“PContext”转换为“QContext”。这对开发者来说是不切实际且容易出错的，并且它会进行自动重构 添加上下文参数几乎是不可能的。
 
-如果您要传递应用程序数据，请将其放入参数、接收器、全局变量中，或者如果它确实属于那里，则放入 Context 值中。 创建自己的 Context 类型是不可接受的，因为它破坏了 Go 团队使 Go 程序在生产中正常工作的能力。
+如果你要传递应用程序数据，请将其放入参数、接收器、全局变量中，或者如果它确实属于那里，则放入 Context 值中。创建自己的 Context 类型是不可接受的，因为它破坏了 Go 团队使 Go 程序在生产中正常工作的能力。
 
 ### crypto/rand
 
-不要使用包 `math/rand` 来生成密钥，即使是一次性的。 如果未生成随机种子，则生成器是完全可预测的。 用`time.Nanoseconds()`生成种子，也只有几位熵。 相反，请使用 `crypto/rand` ，如果需要文本，请打印为十六进制或 base64。
+不要使用包 `math/rand` 来生成密钥，即使是一次性的。如果未生成随机种子，则生成器是完全可预测的。用`time.Nanoseconds()`生成种子，也只有几位熵。相反，请使用 `crypto/rand` ，如果需要文本，请打印为十六进制或 base64。
 
 ```
 // Good:
@@ -1951,7 +1951,7 @@ func Key() string {
 
 ## 有用的测试失败
 
-应该可以在不读取测试源的情况下诊断测试失败。 测试应该失败并显示有用的消息详细说明：
+应该可以在不读取测试代码的情况下诊断测试失败。测试失败应当显示详细有用的消息说明：
 
 - 是什么导致了失败
 - 哪些输入导致错误
@@ -1962,9 +1962,9 @@ func Key() string {
 
 ### 断言库
 
-不要创建“断言库”作为测试的助手。
+不要创建“断言库”作为测试辅助函数。
 
-断言库是试图在测试中结合验证和生成失败消息的库（尽管同样的陷阱也可能适用于其他测试助手）。 有关测试助手和断言库之间区别的更多信息，请参阅 [最佳实践](https://google.github.io/styleguide/go/best-practices#test-functions)。
+断言库是试图在测试中结合验证和生成失败消息的库（尽管同样的陷阱也可能适用于其他测试辅助函数）。有关测试辅助函数和断言库之间区别的更多信息，请参阅 [最佳实践](https://google.github.io/styleguide/go/best-practices#test-functions)。
 
 ```
 // Bad:
@@ -1995,9 +1995,9 @@ func StringEq(t *testing.T, name, got, want string) {
 }
 ```
 
-复杂的断言函数通常不提供 [有用的失败消息](https://google.github.io/styleguide/go/decisions#useful-test-failures) 和存在于测试函数中的上下文。 太多的断言函数和库会导致开发人员体验支离破碎：我应该使用哪个断言库，它应该发出什么样的输出格式，等等？ 碎片化会产生不必要的混乱，特别是对于负责修复潜在下游破坏的库维护者和大规模更改的作者。 与其创建用于测试的特定领域语言，不如使用 Go 本身。
+复杂的断言函数通常不提供 [有用的失败消息](https://google.github.io/styleguide/go/decisions#useful-test-failures) 和存在于测试函数中的上下文。太多的断言函数和库会导致开发人员体验支离破碎：我应该使用哪个断言库，它应该发出什么样的输出格式等问题？ 碎片化会产生不必要的混乱，特别是对于负责修复潜在下游破坏的库维护者和大规模更改的作者。与其创建用于测试的特定领域语言，不如使用 Go 本身。
 
-断言库通常会排除比较和相等检查。 更应该使用标准库，例如 [`cmp`](https://pkg.go.dev/github.com/google/go-cmp/cmp) 和 [`fmt`](https://golang.org/pkg/fmt/) 修改为：
+断言库通常会排除比较和相等检查。更应该使用标准库，例如 [`cmp`](https://pkg.go.dev/github.com/google/go-cmp/cmp) 和 [`fmt`](https://golang.org/pkg/fmt/) 修改为：
 
 ```
 // Good:
@@ -2028,37 +2028,37 @@ func TestBlogPost_VeritableRant(t *testing.T) {
 }
 ```
 
-**最佳实践：** 如果 `postLength` 很重要，直接测试它是有意义的，独立于使用它的任何测试。
+**最佳实践：** 如果 `postLength` 很重要，直接测试它是有意义的，独立于调用它的其他函数测试。
 
 也可以看看：
 
-- [平等比较和差异](https://google.github.io/styleguide/go/decisions#types-of-equality)
+- [等值比较和差异](https://google.github.io/styleguide/go/decisions#types-of-equality)
 - [打印差异](https://google.github.io/styleguide/go/decisions#print-diffs)
-- 有关测试助手和断言助手之间区别的更多信息，请参阅[最佳实践](https://google.github.io/styleguide/go/best-practices#test-functions)
+- 有关测试辅助函数和断言助手之间区别的更多信息，请参阅[最佳实践](https://google.github.io/styleguide/go/best-practices#test-functions)
 
 ### 标识出方法
 
-在大多数测试中，失败消息应该包括失败的函数的名称，即使从测试函数的名称中看起来很明显。 具体来说，你的失败信息应该是 `YourFunc(%v) = %v, want %v` 而不仅仅是 `got %v, want %v`。
+在大多数测试中，失败消息应该包括失败的函数的名称，即使从测试函数的名称中看起来很明显。具体来说，你的失败信息应该是 `YourFunc(%v) = %v, want %v` 而不仅仅是 `got %v, want %v`。
 
 ### 标识出输入
 
-在大多数测试中，失败消息应该包括功能输入（如果它们很短）。 如果输入的相关属性不明显（例如，因为输入很大或不透明），您应该使用对正在测试的内容的描述来命名测试用例，并将描述作为错误消息的一部分打印出来。
+在大多数测试中，失败消息应该包括功能输入（如果它们很短）。如果输入的相关属性不明显（例如，因为输入很大或不透明），你应该使用对正在测试的内容的描述来命名测试用例，并将描述作为错误消息的一部分打印出来。
 
 ### Got before want
 
-测试输出应包括函数在打印预期值之前返回的实际值。 打印测试输出的标准格式是 `YourFunc(%v) = %v, want %v`。 在你会写“实际”和“预期”的地方，更应该分别使用“得到”和“想要”这两个词。
+测试输出应包括函数在打印预期值之前返回的实际值。打印测试输出的标准格式是 `YourFunc(%v) = %v, want %v`。在你会写“实际”和“预期”的地方，更应该分别使用“get”和“want”这两个词。
 
-对于差异，方向性不太明显，因此包含一个有助于解释失败的关键是很重要的。 请参阅 [关于打印差异的部分](https://google.github.io/styleguide/go/decisions#print-diffs)。 无论您在失败消息中使用哪种 diff 顺序，都应将其明确指示为失败消息的一部分，因为现有代码的顺序不一致。
+对于差异，方向性不太明显，因此包含一个有助于解释失败的关键是很重要的。请参阅 [关于打印差异的部分](https://google.github.io/styleguide/go/decisions#print-diffs)。无论你在失败消息中使用哪种 diff 顺序，都应将其明确指示为失败消息的一部分，因为现有代码的顺序不一致。
 
 ### 全结构比较
 
-如果您的函数返回一个结构体（或任何具有多个字段的数据类型，例如切片、数组和映射），请避免编写执行手动编码的结构体逐个字段比较的测试代码。相反，构建期望函数返回的数据，并使用 [深度比较](https://google.github.io/styleguide/go/decisions#types-of-equality) 直接进行比较。
+如果你的函数返回一个结构体（或任何具有多个字段的数据类型，例如切片、数组和映射），请避免编写执行手动编码的结构体逐个字段比较的测试代码。相反，构建期望函数返回的数据，并使用 [深度比较](https://google.github.io/styleguide/go/decisions#types-of-equality) 直接进行比较。
 
-**注意：** 如果您的数据包含模糊测试意图的不相关字段，则这不适用。
+**注意：** 如果你的数据包含模糊测试意图的不相关字段，则这不适用。
 
-如果您的结构需要比较近似（或等效类型的语义）相等，或者它包含无法比较相等的字段（例如，如果其中一个字段是 `io.Reader`），请调整 [`cmp. Diff`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff) 或 [`cmp.Equal`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Equal) 与 [`cmpopts`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts) 选项比较，例如[`cmpopts.IgnoreInterfaces`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#IgnoreInterfaces) 可能满足您的需求（[示例](https://play.golang.org/p/vrCUNVfxsvF))。
+如果你的结构比较时需要近似相等（或等效类型的语义），或者它包含无法比较相等的字段（例如，如果其中一个字段是 `io.Reader`），请调整 [`cmp. Diff`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff) 或 [`cmp.Equal`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Equal) 与 [`cmpopts`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts) 选项比较，例如[`cmpopts.IgnoreInterfaces`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts#IgnoreInterfaces) 可能满足你的需求（[示例](https://play.golang.org/p/vrCUNVfxsvF))。
 
-如果您的函数返回多个返回值，则无需在比较它们之前将它们包装在结构中。只需单独比较返回值并打印它们。
+如果你的函数返回多个返回值，则无需在比较它们之前将它们包装在结构中。只需单独比较返回值并打印它们。
 
 ```
 // Good:
@@ -2083,7 +2083,7 @@ if tail != `Fran & Freddie's Diner"` {
 
 例如，[`json.Marshal`](https://golang.org/pkg/encoding/json/#Marshal)可以改变（并且在过去已经改变）它所输出的特定字节。如果`json`包改变了它序列化字节的方式，在JSON字符串上执行字符串相等的测试可能会中断。相反，一个更强大的测试将解析JSON字符串的内容，并确保它在语义上等同于一些预期的数据结构。
 
-### 测试继续运行
+### 测试继续进行
 
 测试应该尽可能地持续下去，即使是在失败之后，以便在一次运行中打印出所有的失败检查。这样一来，正在修复失败测试的开发人员就不必在修复每个错误后重新运行测试来寻找下一个错误。
 
@@ -2097,7 +2097,7 @@ if tail != `Fran & Freddie's Diner"` {
 
 ### 等值比较和差异
 
-`==`操作符使用[语言定义的比较](http://golang.org/ref/spec#Comparison_operators)来评估平等性。标量值(数字、布尔运算等)根据其值进行比较, 但只有一些结构和接口可以用这种方式进行比较。指针的比较是基于它们是否指向同一个变量，而不是基于它们所指向的值是否相等。
+`==`操作符使用[语言定义的比较](http://golang.org/ref/spec#Comparison_operators)来评估相等性。标量值(数字、布尔运算等)根据其值进行比较, 但只有一些结构和接口可以用这种方式进行比较。指针的比较是基于它们是否指向同一个变量，而不是基于它们所指向的值是否相等。
 
 对于类似切片这种情况下，`==`是不能正确处理比较的，[`cmp`](https://pkg.go.dev/github.com/google/go-cmp/cmp)包则可以用于比较更复杂的数据结构。使用[`cmp.Equal`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Equal)进行等价比较，使用[`cmp.Diff`](https://pkg.go.dev/github.com/google/go-cmp/cmp/cmp#Diff)获得对象之间可供人类阅读的差异。
 
@@ -2133,7 +2133,7 @@ if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
 
 旧的代码可以使用标准库中的`reflect.DeepEqual`函数来比较复杂的结构。`reflect.DeepEqual`不应该被用来检查等值比较，因为它对未导出的字段和其他实现细节的变化很敏感。使用`reflect.DeepEqual`的代码应该更新为上述库之一。
 
-**注意：** `cmp`包是为测试而设计的，而不是用于生产。因此，当它怀疑一个比较被错误地执行时，它可能会惊慌失措，以向用户提供如何改进测试的指导，使其不那么脆弱。鉴于cmp的恐慌倾向，它不适合在生产中使用的代码，因为虚假的panic可能是致命的。
+**注意：** `cmp`包是为测试而设计的，而不是用于生产。因此，当它怀疑一个比较被错误地执行时，它可能会 panic ，以向用户提供如何改进测试的指导，使其不那么脆弱。鉴于cmp的恐慌倾向，它不适合在生产中使用的代码，因为虚假的panic可能是致命的。
 
 ### 详细程度
 
@@ -2141,7 +2141,7 @@ if diff := cmp.Diff(want, got, protocmp.Transform()); diff != "" {
 
 - 进行复杂交互的测试也应该描述交互。例如，如果同一个`YourFunc`被调用了好几次，那么要确定哪个调用未通过测试。如果知道系统的任何额外状态是很重要的，那么在失败输出中应包括这些（或者至少在日志中）。
 - 如果数据是一个复杂的结构，在消息中只描述重要的部分是可以接受的，但不要过分掩盖数据。
-- 设置失败不需要同样水平的细节。如果一个测试助手填充了一个Spanner表，但Spanner却坏了，你可能不需要包括你要存储在数据库中的测试输入。`t.Fatalf("Setup: Failed to set up test database: %s", err)`通常足以解决这个问题。
+- 设置失败不需要同样水平的细节。如果一个测试辅助函数填充了一个Spanner表，但Spanner却坏了，你可能不需要包括你要存储在数据库中的测试输入。`t.Fatalf("Setup: Failed to set up test database: %s", err)`通常足以解决这个问题。
 
 **提示：**应该在开发过程中触发失败。审查失败信息是什么样子的，维护者是否能有效地处理失败。
 
@@ -2199,7 +2199,7 @@ Go中的错误值通常有一个用于人眼的部分和一个用于语义控制
 
 #### 子测试名称
 
-命名子测试，使其在测试输出中可读，并且在命令行上对测试过滤的用户有用。当您使用“t.Run”创建子测试时，第一个参数用作测试的描述性名称。为了确保测试结果对于阅读日志的人来说是清晰的，请选择在转义后仍然有用且可读的子测试名称。将子测试名称视为函数标识符而不是散文描述。测试运行程序用下划线替换空格，并转义非打印字符。如果您的测试数据受益于更长的描述，请考虑将描述放在单独的字段中（可能使用“t.Log”或与失败消息一起打印）。
+命名子测试，使其在测试输出中可读，并且在命令行上对测试过滤的用户有用。当你使用“t.Run”创建子测试时，第一个参数用作测试的描述性名称。为了确保测试结果对于阅读日志的人来说是清晰的，请选择在转义后仍然有用且可读的子测试名称。将子测试名称视为函数标识符而不是散文描述。测试运行程序用下划线替换空格，并转义非打印字符。如果你的测试数据受益于更长的描述，请考虑将描述放在单独的字段中（可能使用“t.Log”或与失败消息一起打印）。
 
 可以使用 [Go 测试运行器](https://golang.org/cmd/go/#hdr-Testing_flags) 或 Bazel [测试过滤器](https://bazel.build/docs/user-manual#test-filter) 的标志单独运行子测试，选择易于输入的描述性名称。
 
@@ -2255,10 +2255,10 @@ t.Run("AM/PM confusion", ...)
 
 当许多不同的测试用例可以使用相似的测试逻辑进行测试时，使用表驱动测试。
 
-- 测试函数的实际输出是否等于预期输出时。 例如，许多 [`fmt.Sprintf` 的测试](https://cs.opensource.google/go/go/+/master:src/fmt/fmt_test.go) 或下面的最小片段。
-- 测试函数的输出是否始终符合同一组不变量时。 例如，[测试 `net.Dial`](https://cs.opensource.google/go/go/+/master:src/net/dial_test.go;l=318;drc=5b606a9d2b7649532fe25794fa6b99bd24e7697c)。
+- 测试函数的实际输出是否等于预期输出时。例如，许多 [`fmt.Sprintf` 的测试](https://cs.opensource.google/go/go/+/master:src/fmt/fmt_test.go) 或下面的最小片段。
+- 测试函数的输出是否始终符合同一组不变量时。例如，[测试 `net.Dial`](https://cs.opensource.google/go/go/+/master:src/net/dial_test.go;l=318;drc=5b606a9d2b7649532fe25794fa6b99bd24e7697c)。
 
-这是从标准“字符串”库复制的表驱动测试的最小结构。 如果需要，您可以使用不同的名称，将测试切片移动到测试函数中，或者添加额外的工具，例如子测试或设置和清理函数。 始终牢记[有用的测试失败](https://google.github.io/styleguide/go/decisions#useful-test-failures)。
+这是从标准“字符串”库复制的表驱动测试的最小结构。如果需要，你可以使用不同的名称，将测试切片移动到测试函数中，或者添加额外的工具，例如子测试或设置和清理函数。始终牢记[有用的测试失败](https://google.github.io/styleguide/go/decisions#useful-test-failures)。
 
 ```
 // Good:
@@ -2296,11 +2296,11 @@ func TestCompare(t *testing.T) {
 
 当需要使用与其他测试用例不同的逻辑来检查某些测试用例时，编写多个测试函数更为合适，如 [GoTip #50: Disjoint Table Tests](https://google.github.io/styleguide/go/index.html#gotip)。当表中的每个条目都有自己不同的条件逻辑来检查每个输出的输入时，测试代码的逻辑可能会变得难以理解。如果测试用例具有不同的逻辑但设置相同，则单个测试函数中的一系列[子测试](https://google.github.io/styleguide/go/decisions#subtests) 可能有意义。
 
-您可以将表驱动测试与多个测试函数结合起来。例如，当测试函数的输出与预期输出完全匹配并且函数为无效输入返回非零错误时，编写两个单独的表驱动测试函数是最好的方法：一个用于正常的非错误输出，一个用于错误输出。
+你可以将表驱动测试与多个测试函数结合起来。例如，当测试函数的输出与预期输出完全匹配并且函数为无效输入返回非零错误时，编写两个单独的表驱动测试函数是最好的方法：一个用于正常的非错误输出，一个用于错误输出。
 
 #### 数据驱动的测试用例
 
-表测试行有时会变得复杂，行值指示测试用例内的条件行为。 测试用例之间重复的额外清晰度对于可读性是必要的。
+表测试行有时会变得复杂，行值指示测试用例内的条件行为。测试用例之间重复的额外清晰度对于可读性是必要的。
 ```
 // Good:
 type decodeCase struct {
@@ -2349,7 +2349,7 @@ func TestDecodeWithFake(t *testing.T) {
 }
 ```
 
-在下面的反例中，请注意在case设置中区分每个测试案例使用哪种类型的 `Codex` 是多么困难。 （突出显示的部分与 [TotT：数据驱动陷阱！](https://testing.googleblog.com/2008/09/tott-data-driven-traps.html) 的建议相冲突。）
+在下面的反例中，请注意在case设置中区分每个测试案例使用哪种类型的 `Codex` 是多么困难。（突出显示的部分与 [TotT：数据驱动陷阱！](https://testing.googleblog.com/2008/09/tott-data-driven-traps.html) 的建议相冲突。）
 
 ```
 // Bad:
@@ -2396,7 +2396,7 @@ func TestDecode(t *testing.T) {
 
 #### 标识行
 
-不要使用测试表中的测试索引来代替命名测试或打印输入。 没有人愿意通过您的测试表并计算条目以找出哪个测试用例失败。
+不要使用测试表中的测试索引来代替命名测试或打印输入。没有人愿意通过你的测试表并计算条目以找出哪个测试用例失败。
 
 ```
 // Bad:
@@ -2413,15 +2413,15 @@ for i, d := range tests {
 }
 ```
 
-在您的测试结构中添加测试描述，并将其与失败信息一起打印。当使用子测试时，你的子测试名称应能有效识别行。
+在你的测试结构中添加测试描述，并将其与失败信息一起打印。当使用子测试时，你的子测试名称应能有效识别行。
 
 **重要的是：**即使`t.Run`对输出和执行有一定的范围，你必须始终[识别输入](https://google.github.io/styleguide/go/decisions#identify-the-input)。表的测试行名称必须遵循[子测试命名](https://google.github.io/styleguide/go/decisions#subtest-names)的指导。
 
-### 测试助手
+### 测试辅助函数
 
-一个测试助手是一个执行设置或清理任务的函数。所有发生在测试助手中的故障都被认为是环境的故障（而不是被测代码的故障）--例如，当一个测试数据库不能被启动，因为在这台机器上没有更多的空闲端口。
+一个测试辅助函数是一个执行设置或清理任务的函数。所有发生在测试辅助函数中的故障都被认为是环境的故障（而不是被测代码的故障）--例如，当一个测试数据库不能被启动，因为在这台机器上没有更多的空闲端口。
 
-如果你传递一个`*testing.T`，调用[`t.Helper`](https://pkg.go.dev/testing#T.Helper)，将测试助手中的故障归结到调用助手的那一行。这个参数应该在[context](https://google.github.io/styleguide/go/decisions#contexts)参数之后，如果有的话，在任何其他参数之前。
+如果你传递一个`*testing.T`，调用[`t.Helper`](https://pkg.go.dev/testing#T.Helper)，将测试辅助函数中的故障归结到调用助手的那一行。这个参数应该在[context](https://google.github.io/styleguide/go/decisions#contexts)参数之后，如果有的话，在任何其他参数之前。
 
 ```
 // Good:
@@ -2444,7 +2444,7 @@ func readFile(t *testing.T, filename string) string {
 
 当这种模式掩盖了测试失败和导致失败的条件之间的联系时，请不要使用这种模式。具体来说，关于[断言库](https://google.github.io/styleguide/go/decisions#assert)的指导仍然适用，[`t.Helper`](https://pkg.go.dev/testing#T.Helper)不应该被用来实现这种库。
 
-**提示：**更多关于测试助手和断言助手的区别，请参见[最佳实践](https://google.github.io/styleguide/go/best-practices#test-functions)。
+**提示：**更多关于测试辅助函数和断言助手的区别，请参见[最佳实践](https://google.github.io/styleguide/go/best-practices#test-functions)。
 
 虽然上面提到的是`*testing.T`，但大部分建议对基准和模糊帮助器来说都是一样的。
 
