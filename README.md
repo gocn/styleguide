@@ -56,6 +56,13 @@ The articles in 《Google Go 编程规范》 are licensed under a [Creative Comm
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/lsj1342">
+            <img src="https://avatars.githubusercontent.com/u/43659912?v=4" width="100;" alt="lsj1342"/>
+            <br />
+            <sub><b>刘思家</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/pseudoyu">
             <img src="https://avatars.githubusercontent.com/u/69753389?v=4" width="100;" alt="pseudoyu"/>
             <br />
