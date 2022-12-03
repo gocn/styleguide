@@ -1,4 +1,4 @@
-## Go 编程风格指南 - 最佳实践
+# Go 编程风格指南 - 最佳实践
 
 原文：[https://google.github.io/styleguide/go](https://google.github.io/styleguide/go)
 
@@ -56,28 +56,27 @@
 
 -  不要重复传参的变量名称
 
-  ```go
-  // Bad:
-  func OverrideFirstWithSecond(dest, source *Config) error
-  ```
+    ```go
+    // Bad:
+    func OverrideFirstWithSecond(dest, source *Config) error
+    ```
 
-  ```go
-  // Good:
-  func Override(dest, source *Config) error
-  ```
+    ```go
+    // Good:
+    func Override(dest, source *Config) error
+    ```
 
 - 不要重复返回值的名称和类型
 
-  ```go
-  // Bad:
-  func TransformYAMLToJSON(input *Config) *jsonconfig.Config
-  ```
+    ```go
+    // Bad:
+    func TransformYAMLToJSON(input *Config) *jsonconfig.Config
+    ```
 
-  ```go
-  // Good:
-  func Transform(input *Config) *jsonconfig.Config
+    ```go
+    // Good:
+    func Transform(input *Config) *jsonconfig.Config
   ```
-
 
 当有必要区分类似名称的函数时，包含额外信息是可以接受的。
 
