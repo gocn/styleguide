@@ -1,6 +1,6 @@
 ## Go 编程风格指南 - 最佳实践
 
-https://google.github.io/styleguide/go/best-practices
+原文：[https://google.github.io/styleguide/go](https://google.github.io/styleguide/go)
 
 [概述](https://google.github.io/styleguide/go/index) | [指南](https://google.github.io/styleguide/go/guide) | [决策](https://google.github.io/styleguide/go/decisions) | [最佳实践](https://google.github.io/styleguide/go/best-practices)
 
@@ -31,14 +31,14 @@ https://google.github.io/styleguide/go/best-practices
   ```go
   // Bad:
   package yamlconfig
-  
+
   func ParseYAMLConfig(input string) (*Config, error)
   ```
 
   ```go
   // Good:
   package yamlconfig
-  
+
   func Parse(input string) (*Config, error)
   ```
 
@@ -971,7 +971,7 @@ func (Worker) Run(ctx context.Context) error
   // until all operations from the run loop finish. Use Stop for graceful
   // shutdown.
   func (Worker) Run(ctx context.Context) error
-  
+
   func (Worker) Stop()
   ```
 
@@ -982,7 +982,7 @@ func (Worker) Run(ctx context.Context) error
   // NewReceiver starts receiving messages sent to the specified queue.
   // The context should not have a deadline.
   func NewReceiver(ctx context.Context) *Receiver
-  
+
   // Principal returns a human-readable name of the party who made the call.
   // The context must have a value attached to it from security.NewContext.
   func Principal(ctx context.Context) (name string, ok bool)
@@ -1021,7 +1021,7 @@ func (*Buffer) Grow(n int)
   ```go
   // Good:
   package lrucache
-  
+
   // Lookup returns the data associated with the key from the cache.
   //
   // This operation is not safe for concurrent use.
@@ -1035,7 +1035,7 @@ func (*Buffer) Grow(n int)
   ```go
   // Good:
   package fortune_go_proto
-  
+
   // NewFortuneTellerClient returns an *rpc.Client for the FortuneTeller service.
   // It is safe for simultaneous use by multiple goroutines.
   func NewFortuneTellerClient(cc *rpc.ClientConn) *FortuneTellerClient
@@ -1050,7 +1050,7 @@ func (*Buffer) Grow(n int)
   ```go
   // Good:
   package health
-  
+
   // A Watcher reports the health of some entity (usually a backen service).
   //
   // Watcher methods are safe for simultaneous use by multiple goroutines.
@@ -1058,7 +1058,7 @@ func (*Buffer) Grow(n int)
       // Watch sends true on the passed-in channel when the Watcher's
       // status has changed.
       Watch(changed chan<- bool) (unwatch func())
-  
+
       // Health returns nil if the entity being watched is healthy, or a
       // non-nil error explaining why the entity is not healthy.
       Health() error
@@ -1728,12 +1728,12 @@ func ExercisePlayer(b *chess.Board, p chess.Player) error
 
   ```go
   var badMoves []error
-  
+
   move := p.Move()
   if putsOwnKingIntoCheck(b, move) {
       badMoves = append(badMoves, PutsSelfIntoCheckError{Move: move})
   }
-  
+
   if len(badMoves) > 0 {
       return SimulationError{BadMoves: badMoves}
   }

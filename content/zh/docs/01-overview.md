@@ -1,4 +1,4 @@
-# Go Style
+# 概览
 
 原文：[https://google.github.io/styleguide/go](https://google.github.io/styleguide/go)
 

@@ -1,5 +1,9 @@
 # Go 编程规范
 
+原文：[https://google.github.io/styleguide/go](https://google.github.io/styleguide/go)
+
+[概述](https://google.github.io/styleguide/go/index) | [指南](https://google.github.io/styleguide/go/guide) | [决策](https://google.github.io/styleguide/go/decisions) | [最佳实践](https://google.github.io/styleguide/go/best-practices)
+
 ## 风格原则
 
 以下几条总体原则总结了如何编写可读的 Go 代码。以下为具有可读性的代码特征，按重要性排序：

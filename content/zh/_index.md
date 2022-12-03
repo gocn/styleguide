@@ -1,7 +1,7 @@
 ---
 title: Google Go 编程规范
 type: docs
---- 
+---
 
 # Google Go 编程规范
 
@@ -29,6 +29,8 @@ hugo server
 
 1. 概览
 2. Go 编程规范
+3. Go 编程风格指南 - 最佳实践
+4. Go 风格决策
 
 ## 授权
 

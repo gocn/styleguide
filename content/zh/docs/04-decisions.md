@@ -1,6 +1,6 @@
 # Go 风格决策
 
-https://google.github.io/styleguide/go/decisions
+原文：[https://google.github.io/styleguide/go](https://google.github.io/styleguide/go)
 
 [概述](https://google.github.io/styleguide/go/index) | [指南](https://google.github.io/styleguide/go/guide) | [决策](https://google.github.io/styleguide/go/decisions) | [最佳实践](https://google.github.io/styleguide/go/best-practices)
 
@@ -150,7 +150,7 @@ const (
 
 - 不要简单地省略字母来节省打字时间。例如，`Sandbox` 优于 `Sbx`，特别是对于导出的名称。
 
-- 大多数变量名可省略 [类型和类似类型的词](https://google.github.io/styleguide/go/decisions#repetitive-with-type) 
+- 大多数变量名可省略 [类型和类似类型的词](https://google.github.io/styleguide/go/decisions#repetitive-with-type)
 
   - 对于数字，`userCount` 是比 `numUsers` 或 `usersInt` 更好的名称。
   - 对于切片，`users` 是一个比 `userSlice` 更好的名字。
@@ -484,7 +484,7 @@ package main
   /*
   The seed_generator command is a utility that generates a Finch seed file
   from a set of JSON study configs.
-  
+
       seed_generator *.json | base64 > finch-seed.base64
   */
   package template
@@ -1647,7 +1647,7 @@ func NewThinger() Thinger { return Thinger{ ... } }
   ```
   // Good:
   type Buffer []byte
-  
+
   func (b Buffer) Len() int { return len(b) }
   ```
 
@@ -1656,12 +1656,12 @@ func NewThinger() Thinger { return Thinger{ ... } }
   ```
   // Good:
   type Counter int
-  
+
   func (c *Counter) Inc() { *c++ }
-  
+
   // See https://pkg.go.dev/container/heap.
   type Queue []Item
-  
+
   func (q *Queue) Push(x Item) { *q = append([]Item{x}, *q...) }
   ```
 
@@ -1673,7 +1673,7 @@ func NewThinger() Thinger { return Thinger{ ... } }
       mu    sync.Mutex
       total int
   }
-  
+
   func (c *Counter) Inc() {
       c.mu.Lock()
       defer c.mu.Unlock()
@@ -1694,7 +1694,7 @@ func NewThinger() Thinger { return Thinger{ ... } }
   type Counter struct {
       m *Metric
   }
-  
+
   func (c *Counter) Inc() {
       c.m.Add(1)
   }
@@ -1705,7 +1705,7 @@ func NewThinger() Thinger { return Thinger{ ... } }
   ```
   // Good:
   type User string
-  
+
   func (u User) String() { return string(u) }
   ```
 
@@ -1715,7 +1715,7 @@ func NewThinger() Thinger { return Thinger{ ... } }
   // Good:
   // See https://pkg.go.dev/net/http#Header.
   type Header map[string][]string
-  
+
   func (h Header) Add(key, value string) { /* omitted */ }
   ```
 
@@ -1725,7 +1725,7 @@ func NewThinger() Thinger { return Thinger{ ... } }
   // Good:
   // See https://pkg.go.dev/time#Time.
   type Time struct { /* omitted */ }
-  
+
   func (t Time) Add(d Duration) Time { /* omitted */ }
   ```
 
@@ -2492,7 +2492,7 @@ go_test(
   ```
   // Good:
   package gmailintegration_test
-  
+
   import "testing"
   ```
 
@@ -2501,7 +2501,7 @@ go_test(
   ```
   // Good:
   package fireworks_test
-  
+
   import (
     "fireworks"
     "fireworkstestutil" // fireworkstestutil also imports fireworks
