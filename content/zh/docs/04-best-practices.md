@@ -2243,3 +2243,6 @@ usage := "" +
   "\n" +
   "custom_tool [args]"
 ```
+
+{{< button relref="./03-decisions.md" >}}上一章{{< /button >}}
+{{< button relref="/" >}}首页{{< /button >}}
