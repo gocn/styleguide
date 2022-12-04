@@ -20,13 +20,13 @@ Google 的代码库基本上是统一和一致的。通常情况下，那些比�
 标准库中包含了许多这一原则发挥作用的例子。例如：
 在 package sort 中的维护者注释 好的同一软件包中可运行的例子，这对用户（他们会查看 godoc）和维护者（他们作为测试的一部分运行）都有利 strings.Cut 只有四行代码，但它们提高了callsites 的清晰性和正确性 简约 # 你的 Go 代码对于使用、阅读和维护它的人来说应该是简单的。
 Go 代码应该以最简单的方式编写，在行为和性能方面都能实现其目标。在 Google Go 代码库中，简单的代码：</description></item><item><title/><link>https://gocn.github.io/styleguide/docs/03-decisions/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://gocn.github.io/styleguide/docs/03-decisions/</guid><description>Go 风格决策 # 原文：https://google.github.io/styleguide/go
-概述 | 指南 | 决策 | 最佳实践
+概述 | 风格指南 | 风格决策 | 最佳实践
 注意： 本文是 Google Go 风格 系列文档的一部分。本文档是 规范性(normative) 但不是强制规范(canonical)，并且从属于Google 风格指南。请参阅概述获取更多详细信息。
 关于 # 本文包含旨在统一和为 Go 可读性导师给出的建议提供标准指导、解释和示例的风格决策。
 本文档并不详尽，且会随着时间的推移而增加。如果风格指南 与此处给出的建议相矛盾，风格指南优先，并且本文档应相应更新。
 参见 关于 获取 Go 风格的全套文档。
 以下部分已从样式决策移至指南的一部分：
-混合大写字母MixedCaps: 参见 https://google.github.io/styleguide/go/guide#mixed-caps 格式化Formatting: 参见 https://google.github.io/styleguide/go/guide#formatting 行长度Line Length: 参见 https://google.github.io/styleguide/go/guide#line-length 命名Naming # 有关命名的总体指导，请参阅核心风格指南 中的命名部分，以下部分对命名中的特定区域提供进一步的说明。
+混合大写字母MixedCaps: 参见 https://gocn.github.io/styleguide/docs/02-guide/#大小写混合 格式化Formatting: 参见 https://gocn.github.io/styleguide/docs/02-guide/#格式化 行长度Line Length: 参见 https://gocn.github.io/styleguide/docs/02-guide/#行长度 命名Naming # 有关命名的总体指导，请参阅核心风格指南 中的命名部分，以下部分对命名中的特定区域提供进一步的说明。
 下划线Underscores # Go 中的命名通常不应包含下划线。这个原则有三个例外：
 仅由生成代码导入的包名称可能包含下划线。有关如何选择多词包名称的更多详细信息，请参阅包名称。 *_test.go 文件中的测试、基准和示例函数名称可能包含下划线。 与操作系统或 cgo 互操作的低级库可能会重用标识符，如 syscall 中所做的那样。在大多数代码库中，这预计是非常罕见的。 包名称Package names # Go 包名称应该简短并且只包含小写字母。由多个单词组成的包名称应全部小写。例如，包 tabwriter 不应该命名为 tabWriter、TabWriter 或 tab_writer。</description></item><item><title/><link>https://gocn.github.io/styleguide/docs/04-best-practices/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://gocn.github.io/styleguide/docs/04-best-practices/</guid><description>Go 编程风格指南 - 最佳实践 # 原文：https://google.github.io/styleguide/go
 概述 | 指南 | 决策 | 最佳实践
