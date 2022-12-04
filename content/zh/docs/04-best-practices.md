@@ -2,15 +2,15 @@
 
 原文：[https://google.github.io/styleguide/go](https://google.github.io/styleguide/go)
 
-[概述](https://google.github.io/styleguide/go/index) | [指南](https://google.github.io/styleguide/go/guide) | [决策](https://google.github.io/styleguide/go/decisions) | [最佳实践](https://google.github.io/styleguide/go/best-practices)
+[概述](https://gocn.github.io/styleguide/docs/01-overview/) | [风格指南](https://gocn.github.io/styleguide/docs/02-guide/) | [风格决策](https://gocn.github.io/styleguide/docs/03-decisions/) | [最佳实践](https://gocn.github.io/styleguide/docs/04-best-practices/)
 
-**注意：**本文是 Google [Go 风格](https://google.github.io/styleguide/go/index) 系列文档的一部分。本文档是 **[规范性(normative)](https://google.github.io/styleguide/go/index#normative) 但不是[强制规范(canonical)](https://google.github.io/styleguide/go/index#canonical )**，并且从属于[Google 风格指南](https://google.github.io/styleguide/go/guide)。请参阅[概述](https://google.github.io/styleguide/go/index#about)获取更多详细信息。
+**注意：** 本文是 Google [Go 风格](https://gocn.github.io/styleguide/docs/01-overview/) 系列文档的一部分。本文档是 **[规范性(normative)](https://gocn.github.io/styleguide/docs/01-overview/#标准normative) 但不是[强制规范(canonical)](https://gocn.github.io/styleguide/docs/01-overview/#规范canonical)**，并且从属于[Google 风格指南](https://gocn.github.io/styleguide/docs/02-guide/)。请参阅[概述](https://gocn.github.io/styleguide/docs/01-overview/#关于)获取更多详细信息。
 
 ## 关于
 
 本文件记录了**关于如何更好地应用 Go 风格指南的指导意见**。该指导旨在解决经常出现的通用问题，但不一定适用于所有情况。在可能的情况下，我们讨论了多种替代方法，以及决定何时该用和何时不该用这些方法的考虑因素。
 
-查看[概述](https://google.github.io/styleguide/go/index#about)来获取完整的风格指导文档
+查看[概述](https://gocn.github.io/styleguide/docs/01-overview/#关于)来获取完整的风格指导文档
 
 ## 命名
 
@@ -18,7 +18,7 @@
 
 #### 避免重复
 
-在为一个函数或方法选择名称时，要考虑该名称将被阅读的环境。请考虑以下建议，以避免在调用地点出现过多的[重复](https://google.github.io/styleguide/go/decisions#repetition):
+在为一个函数或方法选择名称时，要考虑该名称将被阅读的环境。请考虑以下建议，以避免在调用地点出现过多的[重复](https://gocn.github.io/styleguide/docs/03-decisions/#重复repetition):
 
 - 以下内容一般可以从函数和方法名称中省略。
 
@@ -26,7 +26,7 @@
   - 方法的接收器的类型
   - 一个输入或输出是否是一个指针
 
-- 对于函数，不要[重复软件包的名称](https://google.github.io/styleguide/go/decisions#repetitive-with-package)。
+- 对于函数，不要[重复软件包的名称](https://gocn.github.io/styleguide/docs/03-decisions/#包名-vs-可导出符号名package-vs-exported-symbol-name)。
 
   ```go
   // Bad:
@@ -86,7 +86,7 @@ func (c *Config) WriteTextTo(w io.Writer) (int64, error)
 func (c *Config) WriteBinaryTo(w io.Writer) (int64, error)
 ```
 
-#### [命名约定](https://google.github.io/styleguide/go/best-practices#naming-conventions)
+#### 命名约定
 
 在为函数和方法选择名称时，还有一些常见的约定：
 
@@ -97,7 +97,7 @@ func (c *Config) WriteBinaryTo(w io.Writer) (int64, error)
   func (c *Config) JobName(key string) (value string, ok bool)
   ```
 
-  这方面的一个推论是，函数和方法名称应该[避免使用前缀`Get`](https://google.github.io/styleguide/go/decisions#getters)。
+  这方面的一个推论是，函数和方法名称应该[避免使用前缀`Get`](https://gocn.github.io/styleguide/docs/03-decisions/#get方法getters)。
 
   ```
   // Bad:
@@ -132,7 +132,7 @@ func (c *Config) WriteBinaryTo(w io.Writer) (int64, error)
 
 ### 测试替身包和类型
 
-有几个原则你可以应用于[命名](https://google.github.io/styleguide/go/guide#naming)包和类型，提供测试辅助函数，特别是[测试替身](https://en.wikipedia.org/wiki/Test_double)。一个测试替身可以是一个桩、假的、模拟的或间谍的。
+有几个原则你可以应用于[命名](https://gocn.github.io/styleguide/docs/02-guide/#命名)包和类型，提供测试辅助函数，特别是[测试替身](https://en.wikipedia.org/wiki/Test_double)。一个测试替身可以是一个桩、假的、模拟的或间谍的。
 这些例子大多使用打桩。如果你的代码使用假的或其他类型的测试替身，请相应地更新你的名字。
 假设你有一个重点突出的包，提供与此类似的生产代码：
 
@@ -212,7 +212,7 @@ go_library(
 
 另见:
 
--   [Go Tip #42: 为测试便编写桩](https://google.github.io/styleguide/go/index.html#gotip)
+-   [Go Tip #42: 为测试便编写桩](https://gocn.github.io/styleguide/docs/01-overview/#gotip)
 
 #### 多重测试替身行为
 
@@ -432,9 +432,9 @@ func (s *Server) innerHandler(ctx context.Context, req *pb.MyRequest) *pb.MyResp
 }
 ```
 
-在我们称之为 stomping 的情况下，因为没有新的变量，所以被分配的类型必须与原始变量的类型相匹配。有了 shadowing，一个全新的实体被引入，所以它可以有不同的类型。有意的影子可以是一种有用的做法，但如果能提高[清晰度](https://google.github.io/styleguide/go/guide#clarity)，你总是可以使用一个新的名字。
+在我们称之为 stomping 的情况下，因为没有新的变量，所以被分配的类型必须与原始变量的类型相匹配。有了 shadowing，一个全新的实体被引入，所以它可以有不同的类型。有意的影子可以是一种有用的做法，但如果能提高[清晰度](https://gocn.github.io/styleguide/docs/02-guide/#清晰)，你总是可以使用一个新的名字。
 
-除了非常小的范围之外，使用与标准包同名的变量并不是一个好主意，因为这使得该包的自由函数和值无法访问。相反，当为你的包挑选名字时，要避免使用那些可能需要[导入重命名](https://google.github.io/styleguide/go/decisions#import-renaming)或在客户端造成阴影的其他好的变量名称。
+除了非常小的范围之外，使用与标准包同名的变量并不是一个好主意，因为这使得该包的自由函数和值无法访问。相反，当为你的包挑选名字时，要避免使用那些可能需要[导入重命名](https://gocn.github.io/styleguide/docs/03-decisions/#导入重命名)或在客户端造成阴影的其他好的变量名称。
 
 ```go
 // Bad:
@@ -448,7 +448,7 @@ func LongFunction() {
 
 Go 包在 `package` 声明中指定了一个名称，与导入路径分开。包的名称比路径更重要，因为它的可读性。
 
-Go 包的名字应该是[与包所提供的内容相关](https://google.github.io/styleguide/go/decisions#package-names)。将包命名为 `util`、`helper`、`common` 或类似的名字通常是一个糟糕的选择（但它可以作为名字的一部分）。没有信息的名字会使代码更难读，而且如果使用的范围太广，很容易造成不必要的[导入冲突](https://google.github.io/styleguide/go/decisions#import-renaming)。
+Go 包的名字应该是[与包所提供的内容相关](https://gocn.github.io/styleguide/docs/03-decisions/#包名称package-names)。将包命名为 `util`、`helper`、`common` 或类似的名字通常是一个糟糕的选择（但它可以作为名字的一部分）。没有信息的名字会使代码更难读，而且如果使用的范围太广，很容易造成不必要的[导入冲突](https://gocn.github.io/styleguide/docs/03-decisions/#导入重命名)。
 
 相反，考虑一下调用站会是什么样子。
 
@@ -484,13 +484,13 @@ b := helper.Marshal(curve, x, y)
 
 综上所述，把你的整个项目放在一个包里可能会使这个包变得太大。当一个东西在概念上是不同的，给它一个自己的小包可以使它更容易使用。客户端所知道的包的短名称和导出的类型名称一起构成了一个有意义的标识符：例如`bytes.Buffer`, `ring.New`。[博文](https://go.dev/blog/package-names)有更多的例子。
 
-Go 风格在文件大小方面很灵活，因为维护者可以将包内的代码从一个文件移到另一个文件而不影响调用者。但作为一般准则：通常情况下，一个文件有几千行，或者有许多小文件，都不是一个好主意。没有像其他一些语言那样的 "一个类型，一个文件 "的约定。作为一个经验法则，文件应该足够集中，以便维护者可以知道哪个文件包含了什么东西，而且文件应该足够小，以便一旦有了这些东西，就很容易找到。标准库经常将大型包分割成几个源文件，将相关的代码按文件分组。[`bytes` 包](https://go.dev/src/bytes/) 的源代码就是一个很好的例子。有很长包文档的包可以选择专门的一个文件，称为`doc.go`，其中有[包文档](https://google.github.io/styleguide/go/decisions#package-comments)，包声明，而没有其他内容，但这不是必须的。
+Go 风格在文件大小方面很灵活，因为维护者可以将包内的代码从一个文件移到另一个文件而不影响调用者。但作为一般准则：通常情况下，一个文件有几千行，或者有许多小文件，都不是一个好主意。没有像其他一些语言那样的 "一个类型，一个文件 "的约定。作为一个经验法则，文件应该足够集中，以便维护者可以知道哪个文件包含了什么东西，而且文件应该足够小，以便一旦有了这些东西，就很容易找到。标准库经常将大型包分割成几个源文件，将相关的代码按文件分组。[`bytes` 包](https://go.dev/src/bytes/) 的源代码就是一个很好的例子。有很长包文档的包可以选择专门的一个文件，称为`doc.go`，其中有[包文档](https://gocn.github.io/styleguide/docs/03-decisions/#包注释)，包声明，而没有其他内容，但这不是必须的。
 
 在 Google 代码库和使用 Bazel 的项目中，Go 代码的目录布局与开源 Go 项目不同：你可以在一个目录中拥有多个`go_library`目标。如果你期望在未来将你的项目开源，那么给每个包提供自己的目录是一个很好的理由。
 
 另见：
 
--   [测试替身包](https://google.github.io/styleguide/go/best-practices#naming-doubles)
+-   [测试替身包](https://gocn.github.io/styleguide/docs/04-best-practices/#测试替身包和类型)
 
 ## 导入
 
@@ -555,9 +555,9 @@ import (
 
 处理（产生或消耗）错误的代码应该刻意这样做。忽略或盲目地传播错误的返回值可能是很诱人的。然而，值得注意的是，调用框架中的当前函数是否被定位为最有效地处理该错误。这是一个很大的话题，很难给出明确的建议。请使用你自己的判断，但要记住以下的考虑。
 
-- 当创建一个错误值时，决定是否给它任何[结构](https://google.github.io/styleguide/go/best-practices#error-structure)。
-- 当处理一个错误时，考虑[添加信息](https://google.github.io/styleguide/go/best-practices#error-extra-info)，这些信息你有，但调用者和/或被调用者可能没有。
-- 也请参见关于[错误记录](https://google.github.io/styleguide/go/best-practices#error-logging)的指导。
+- 当创建一个错误值时，决定是否给它任何[结构](https://gocn.github.io/styleguide/docs/04-best-practices/#错误结构)。
+- 当处理一个错误时，考虑[添加信息](https://gocn.github.io/styleguide/docs/04-best-practices/#为错误添加信息)，这些信息你有，但调用者和/或被调用者可能没有。
+- 也请参见关于[错误记录](https://gocn.github.io/styleguide/docs/04-best-practices/#错误日志)的指导。
 
 虽然忽略一个错误通常是不合适的，但一个合理的例外是在协调相关操作时，通常只有第一个错误是有用的。包[`errgroup`](https://pkg.go.dev/golang.org/x/sync/errgroup)为一组操作提供了一个方便的抽象，这些操作都可以作为一个组失败或被取消。
 
@@ -567,9 +567,9 @@ import (
 -   [Go博客关于错误的文章](https://go.dev/blog/go1.13-errors)
 -   [`errors` 包](https://pkg.go.dev/errors)
 -   [`upspin.io/errors`包](https://commandcenter.blogspot.com/2017/12/error-handling-in-upspin.html)
--   [GoTip #89: 何时使用规范的状态码作为错误？](https://google.github.io/styleguide/go/index.html#gotip)
--   [GoTip #48: 错误的哨兵值](https://google.github.io/styleguide/go/index.html#gotip)
--   [GoTip #13: 设计用于检查的错误](https://google.github.io/styleguide/go/index.html#gotip)
+-   [GoTip #89: 何时使用规范的状态码作为错误？](https://gocn.github.io/styleguide/docs/01-overview/#gotip)
+-   [GoTip #48: 错误的哨兵值](https://gocn.github.io/styleguide/docs/01-overview/#gotip)
+-   [GoTip #13: 设计用于检查的错误](https://gocn.github.io/styleguide/docs/01-overview/#gotip)
 
 ### 错误结构
 
@@ -632,7 +632,7 @@ func handlePet(...) {
 }
 ```
 
-不要试图根据字符串的形式来区分错误。(参见[Go Tip #13: 设计用于检查的错误](https://google.github.io/styleguide/go/index.html#gotip)以了解更多信息）。
+不要试图根据字符串的形式来区分错误。(参见[Go Tip #13: 设计用于检查的错误](https://gocn.github.io/styleguide/docs/01-overview/#gotip)以了解更多信息）。
 
 ```go
 // Bad:
@@ -645,7 +645,7 @@ func handlePet(...) {
 
 如果错误中有调用者需要的额外信息，最好是以结构化方式呈现。例如，[`os.PathError`](https://pkg.go.dev/os#PathError) 类型的记录是将失败操作的路径名，放在调用者可以轻松访问的结构域中。
 
-其他错误结构可以酌情使用，例如一个包含错误代码和细节字符串的项目结构。[Package `status`](https://pkg.go.dev/google.golang.org/grpc/status) 是一种常见的封装方式；如果你选择这种方式（你没有义务这么做），请使用 [规范错误码](https://pkg.go.dev/google.golang.org/grpc/codes)。参见 [Go Tip #89: 何时使用规范的状态码作为错误](https://google.github.io/styleguide/go/index.html#gotip) 以了解使用状态码是否是正确的选择。
+其他错误结构可以酌情使用，例如一个包含错误代码和细节字符串的项目结构。[Package `status`](https://pkg.go.dev/google.golang.org/grpc/status) 是一种常见的封装方式；如果你选择这种方式（你没有义务这么做），请使用 [规范错误码](https://pkg.go.dev/google.golang.org/grpc/codes)。参见 [Go Tip #89: 何时使用规范的状态码作为错误](https://gocn.github.io/styleguide/docs/01-overview/#gotip) 以了解使用状态码是否是正确的选择。
 
 ### 为错误添加信息
 
@@ -698,7 +698,7 @@ if err := os.Open("settings.txt"); err != nil {
 
 最好避免使用`%w`，除非你也记录（并有测试来验证）你所暴露的基本错误。如果你不期望你的调用者调用`errors.Unwrap`, `errors.Is`等等，就不要费心使用`%w`。
 
-同样的概念适用于[结构化错误](https://google.github.io/styleguide/go/best-practices#error-structure)，如[`*status.Status`](https://pkg.go.dev/google.golang.org/grpc/status)（见[规范错误码](https://pkg.go.dev/google.golang.org/grpc/codes)）。例如，如果你的服务器向后端发送畸形的请求，并收到一个`InvalidArgument` 错误码，这个代码不应该传播给客户端，假设客户端没有做错。相反，应该向客户端返回一个`内部`的规范码。
+同样的概念适用于[结构化错误](https://gocn.github.io/styleguide/docs/04-best-practices/#错误结构)，如[`*status.Status`](https://pkg.go.dev/google.golang.org/grpc/status)（见[规范错误码](https://pkg.go.dev/google.golang.org/grpc/codes)）。例如，如果你的服务器向后端发送畸形的请求，并收到一个`InvalidArgument` 错误码，这个代码不应该传播给客户端，假设客户端没有做错。相反，应该向客户端返回一个`内部`的规范码。
 
 然而，注解错误有助于自动日志系统保留错误的状态有效载荷。例如，在一个内部函数中注释错误是合适的：
 
@@ -744,7 +744,7 @@ func (*FortuneTeller) SuggestFortune(context.Context, *pb.SuggestionRequest) (*p
 
 倾向于将`%w`放在错误字符串的末尾。
 
-错误可以用[`%w`动词](https://blog.golang.org/go1.13-errors)来包装，或者把它们放在一个实现`Unwrap()错误`的[结构化错误](https://google.github.io/styleguide/go/index.html#gotip)中（例如：[`fs.PathError`](https://pkg.go.dev/io/fs#PathError)）。
+错误可以用[`%w`动词](https://blog.golang.org/go1.13-errors)来包装，或者把它们放在一个实现`Unwrap()错误`的[结构化错误](https://gocn.github.io/styleguide/docs/01-overview/#gotip)中（例如：[`fs.PathError`](https://pkg.go.dev/io/fs#PathError)）。
 
 被包裹的错误形成错误链：每一层新的包裹都会在错误链的前面增加一个新的条目。错误链可以用`Unwrap()error`方法进行遍历。比如说：
 
@@ -800,8 +800,8 @@ fmt.Println(err3) // err3-1 err2-1 err1 err2-2 err3-2
 
 函数有时需要告诉外部系统一个错误，而不把它传播给其调用者。在这里，日志是一个明显的选择；但要注意记录错误的内容和方式。
 
-- 像[好的测试失败信息](https://google.github.io/styleguide/go/decisions#useful-test-failures)一样，日志信息应该清楚地表达出错的原因，并通过包括相关信息来帮助维护者诊断问题。
-- 避免重复。如果你返回一个错误，通常最好不要自己记录，而是让调用者处理。调用者可以选择记录错误，也可以使用[`rate.sometimes`](https://pkg.go.dev/golang.org/x/time/rate#Sometimes)限制记录的速度。其他选择包括尝试恢复，甚至是[停止程序](https://google.github.io/styleguide/go/best-practices#checks-and-panics)。在任何情况下，让调用者控制有助于避免日志垃圾。
+- 像[好的测试失败信息](https://gocn.github.io/styleguide/docs/03-decisions/#有用的测试失败)一样，日志信息应该清楚地表达出错的原因，并通过包括相关信息来帮助维护者诊断问题。
+- 避免重复。如果你返回一个错误，通常最好不要自己记录，而是让调用者处理。调用者可以选择记录错误，也可以使用[`rate.sometimes`](https://pkg.go.dev/golang.org/x/time/rate#Sometimes)限制记录的速度。其他选择包括尝试恢复，甚至是[停止程序](https://gocn.github.io/styleguide/docs/04-best-practices/#程序检查和-panic)。在任何情况下，让调用者控制有助于避免日志垃圾。
   然而，这种方法的缺点是，任何日志都是用调用者的行座标写的。
 - 对[PII](https://en.wikipedia.org/wiki/Personal_data)要小心。许多日志汇不是敏感的终端用户信息的合适目的地。
 - 尽量少使用`log.Error`。ERROR级别的日志会导致刷新，比低级别的日志更昂贵。这可能会对你的代码产生严重的性能影响。当决定错误级别还是警告级别时，考虑最佳实践，即错误级别的消息应该是可操作的，而不是比警告 "更严重"。
@@ -840,7 +840,7 @@ log.V(2).Infof("Handling %v", sql.Explain())
 
 ### 程序检查和 panic
 
-正如[反对 panic 的决定](https://google.github.io/styleguide/go/decisions#dont-panic)中所述，标准的错误处理应该围绕错误返回值进行结构化。库应该倾向于向调用者返回错误，而不是中止程序，特别是对于瞬时错误。
+正如[反对 panic 的决定](https://gocn.github.io/styleguide/docs/03-decisions/#不要-panic)中所述，标准的错误处理应该围绕错误返回值进行结构化。库应该倾向于向调用者返回错误，而不是中止程序，特别是对于瞬时错误。
 
 偶尔有必要对一个不变量进行一致性检查，如果违反了这个不变量，就终止程序。一般来说，只有当不变量检查失败意味着内部状态已经无法恢复时，才会这样做。在谷歌代码库中，最可靠的方法是调用`log.Fatal`。在这种情况下使用`panic`是不可靠的，因为延迟函数有可能会出现死锁或进一步破坏内部或外部状态。
 
@@ -850,7 +850,7 @@ log.V(2).Infof("Handling %v", sql.Explain())
 
 ### 何时 panic
 
-标准库对 API 的误用感到 panic。例如，[`reflect`](https://pkg.go.dev/reflect)在许多情况下，如果一个值的访问方式表明它被误读，就会发出 panic。这类似于对核心语言错误的 panic，如访问一个越界的 slice 元素。代码审查和测试应该发现这样的错误，这些错误预计不会出现在生产代码中。这些 panic 作为不依赖库的不变性检查，因为标准库不能访问谷歌代码库使用的[levelled `log`](https://google.github.io/styleguide/go/decisions#logging) 包。
+标准库对 API 的误用感到 panic。例如，[`reflect`](https://pkg.go.dev/reflect)在许多情况下，如果一个值的访问方式表明它被误读，就会发出 panic。这类似于对核心语言错误的 panic，如访问一个越界的 slice 元素。代码审查和测试应该发现这样的错误，这些错误预计不会出现在生产代码中。这些 panic 作为不依赖库的不变性检查，因为标准库不能访问谷歌代码库使用的[levelled `log`](https://gocn.github.io/styleguide/docs/03-decisions/#日志) 包。
 
 另一种情况下，panic 可能是有用的，尽管不常见，是作为一个包的内部实现细节，在调用链中总是有一个匹配的恢复。解析器和类似的深度嵌套、紧密耦合的内部函数组可以从这种设计中受益，其中管道错误返回增加了复杂性而没有价值。这种设计的关键属性是，这些 panic 永远不允许跨越包的边界，不构成包的API的一部分。这通常是通过一个顶层的延迟恢复来实现的，它将传播的 panic 转化为公共API表面的返回错误。
 
@@ -877,8 +877,8 @@ func answer(i int) string {
 
 ### 公约
 
-本节是对决策文件的[注释](https://google.github.io/styleguide/go/decisions#commentary)部分的补充。
-以熟悉的风格记录的 Go 代码比那些错误记录或根本没有记录的代码更容易阅读，更不容易被误用。可运行的[实例](https://google.github.io/styleguide/go/decisions#examples)会出现在 Godoc 和代码搜索中，是解释如何使用你的代码的绝佳方式。
+本节是对决策文件的[注释](https://gocn.github.io/styleguide/docs/03-decisions/#评论commentary)部分的补充。
+以熟悉的风格记录的 Go 代码比那些错误记录或根本没有记录的代码更容易阅读，更不容易被误用。可运行的[实例](https://gocn.github.io/styleguide/docs/03-decisions/#示例examples)会出现在 Godoc 和代码搜索中，是解释如何使用你的代码的绝佳方式。
 
 #### 参数和配置
 
@@ -920,8 +920,8 @@ func Sprintf(format string, data ...interface{}) string
 
 也请参见。
 
--   [GoTip #41: 识别函数调用参数](https://google.github.io/styleguide/go/index.html#gotip)
--   [GoTip #51: 配置的模式](https://google.github.io/styleguide/go/index.html#gotip)
+-   [GoTip #41: 识别函数调用参数](https://gocn.github.io/styleguide/docs/01-overview/#gotip)
+-   [GoTip #51: 配置的模式](https://gocn.github.io/styleguide/docs/01-overview/#gotip)
 
 #### 上下文
 
@@ -1103,7 +1103,7 @@ func (c *Client) Get(url string) (resp *Response, err error)
 
 ### 预览
 
-Go 的特点是有一个[文档服务器](https://pkg.go.dev/golang.org/x/pkgsite/cmd/pkgsite)。建议在代码审查前和审查过程中预览你的代码产生的文档。这有助于验证[ godoc 格式化](https://google.github.io/styleguide/go/best-practices#godoc-formatting)是否正确呈现。
+Go 的特点是有一个[文档服务器](https://pkg.go.dev/golang.org/x/pkgsite/cmd/pkgsite)。建议在代码审查前和审查过程中预览你的代码产生的文档。这有助于验证[ godoc 格式化](https://gocn.github.io/styleguide/docs/04-best-practices/#godoc-格式化)是否正确呈现。
 
 ### Godoc 格式化
 
@@ -1118,7 +1118,7 @@ Go 的特点是有一个[文档服务器](https://pkg.go.dev/golang.org/x/pkgsit
   // See some/shortlink for config file format details.
   ```
 
-- 测试文件可以包含[可运行的例子](https://google.github.io/styleguide/go/decisions#examples)，这些例子出现在 godoc 中相应的文档后面：
+- 测试文件可以包含[可运行的例子](https://gocn.github.io/styleguide/docs/03-decisions/#示例examples)，这些例子出现在 godoc 中相应的文档后面：
 
   ```go
   // Good:
@@ -1208,6 +1208,13 @@ if err := doSomething(); err == nil { // if NO error
 
 为了保持一致性，当用非零值初始化一个新的变量时，首选`:=`而不是`var`。
 
+```go
+// Good:
+i := 42
+// Bad:
+var i = 42
+```
+
 ### 非指针式零值
 
 下面的声明使用[零值](https://golang.org/ref/spec#The_zero_value)：
@@ -1240,7 +1247,7 @@ var coords Point
 if err := json.Unmarshal(data, &coords); err != nil {
 ```
 
-在你的结构体中，如果你需要一个[不得复制](https://google.github.io/styleguide/go/decisions#copying)的锁或其他字段，可以将其设为值类型以利用零值初始化。这确实意味着，现在必须通过指针而不是值来传递包含的类型。该类型的方法必须采用指针接收器。
+在你的结构体中，如果你需要一个[不得复制](https://gocn.github.io/styleguide/docs/03-decisions/#复制)的锁或其他字段，可以将其设为值类型以利用零值初始化。这确实意味着，现在必须通过指针而不是值来传递包含的类型。该类型的方法必须采用指针接收器。
 
 ```go
 // Good:
@@ -1282,7 +1289,7 @@ var myMsg = pb.Bar{}
 ```
 
 > **重要的是：** Map 类型在被修改之前必须明确地初始化。然而，从零值 Map 中读取是完全可以的。
-> 对于 map 和 slice 类型，如果代码对性能特别敏感，并且你事先知道大小，请参见[size hints](https://google.github.io/styleguide/go/best-practices#vardeclsize)部分。
+> 对于 map 和 slice 类型，如果代码对性能特别敏感，并且你事先知道大小，请参见[size hints](https://gocn.github.io/styleguide/docs/04-best-practices/#size-提示)部分。
 
 ### 复合字面量
 
@@ -1332,9 +1339,9 @@ var (
 
 大多数代码不需要 size 提示或预分配，可以允许运行时根据需要增长 slice 或 map。当最终大小已知时，预分配是可以接受的（例如，在 slice 或 map 之间转换时），但这不是一个可读性要求，而且在少数情况下可能不值得这样做。
 
-**警告：**预先分配比你需要的更多的内存，会在队列中浪费内存，甚至损害性能。如有疑问，请参阅[GoTip #3: Benchmarking Go Code](https://google.github.io/styleguide/go/index.html#gotip)并默认为[零初始化](https://google.github.io/styleguide/go/best-practices#vardeclzero)或[复合字面量声明](https://google.github.io/styleguide/go/best-practices#vardeclcomposite)。
+**警告：**预先分配比你需要的更多的内存，会在队列中浪费内存，甚至损害性能。如有疑问，请参阅[GoTip #3: Benchmarking Go Code](https://gocn.github.io/styleguide/docs/01-overview/#gotip)并默认为[零初始化](https://gocn.github.io/styleguide/docs/04-best-practices/#非指针式零值)或[复合字面量声明](https://gocn.github.io/styleguide/docs/04-best-practices/#复合字面量)。
 
-### [Channel 方向](https://google.github.io/styleguide/go/best-practices#channel-direction)
+### Channel 方向
 
 尽可能地指定[ Channel 方向](https://go.dev/ref/spec#Channel_types)。
 
@@ -1374,7 +1381,7 @@ func sum(values chan int) (out int) {
 
 下面的建议主要适用于导出的 API，它比未导出的 API 的标准要高。这些技术对于你的用例可能是不必要的。使用你的判断，并平衡清晰性和最小机制的原则。
 
-也请参见。[Go技巧#24：使用特定案例的结构]((https://google.github.io/styleguide/go/index.html#gotip))
+也请参见。[Go技巧#24：使用特定案例的结构](https://gocn.github.io/styleguide/docs/01-overview/#gotip)
 
 ### option 模式
 
@@ -1445,7 +1452,7 @@ func foo(ctx context.Context) {
 }
 ```
 
-**注意**：[option 模式中从不包含上下文](https://google.github.io/styleguide/go/decisions#contexts)。
+**注意**：[option 模式中从不包含上下文](https://gocn.github.io/styleguide/docs/03-decisions/#上下文)。
 
 当遇到以下某些情况时，通常首选 option 模式：
 
@@ -1602,18 +1609,18 @@ func foo(ctx context.Context) {
 
 Go 区分了 "测试辅助函数 "和 "断言辅助函数"。
 
-- **测试辅助函数**就是做设置或清理任务的函数。所有发生在测试辅助函数中的故障都被认为是环境的故障（而不是来自被测试的代码）--例如，当一个测试数据库不能被启动，因为在这台机器上没有更多的空闲端口。对于这样的函数，调用`t.Helper`通常是合适的，[将其标记为测试辅助函数](https://google.github.io/styleguide/go/decisions#mark-test-helpers)。参见 [测试辅助函数的错误处理](https://google.github.io/styleguide/go/best-practices#test-helper-error-handling) 了解更多细节。
-- **断言辅助函数**是检查系统正确性的函数，如果没有达到预期，则测试失败。断言辅助函数在 Go 中[不被认为是常见用法](https://google.github.io/styleguide/go/decisions#assert)。
+- **测试辅助函数**就是做设置或清理任务的函数。所有发生在测试辅助函数中的故障都被认为是环境的故障（而不是来自被测试的代码）--例如，当一个测试数据库不能被启动，因为在这台机器上没有更多的空闲端口。对于这样的函数，调用`t.Helper`通常是合适的，[将其标记为测试辅助函数](https://gocn.github.io/styleguide/docs/03-decisions/#测试辅助函数)。参见 [测试辅助函数的错误处理](https://gocn.github.io/styleguide/docs/04-best-practices/#在测试辅助函数中处理错误) 了解更多细节。
+- **断言辅助函数**是检查系统正确性的函数，如果没有达到预期，则测试失败。断言辅助函数在 Go 中[不被认为是常见用法](https://gocn.github.io/styleguide/docs/03-decisions/#断言库)。
 
-测试的目的是报告被测试代码的通过/失败情况。测试失败的理想场所是在`Test`函数本身，因为这样可以确保[失败信息](https://google.github.io/styleguide/go/decisions#useful-test-failures)和测试逻辑是清晰的。
+测试的目的是报告被测试代码的通过/失败情况。测试失败的理想场所是在`Test`函数本身，因为这样可以确保[失败信息](https://gocn.github.io/styleguide/docs/03-decisions/#有用的测试失败)和测试逻辑是清晰的。
 
 随着你的测试代码的增长，可能有必要将一些功能分解到独立的函数中。标准的软件工程考虑仍然适用，因为_测试代码仍然是代码_。如果这些功能不与测试框架交互，那么所有的常规规则都适用。然而，当通用代码与框架交互时，必须注意避免常见的陷阱，这些陷阱会导致语焉不详的失败信息和不可维护的测试。
 
 如果许多独立的测试用例需要相同的验证逻辑，请以下列方式之一安排测试，而不是使用断言辅助函数或复杂的验证函数。
 
 - 在`Test`函数中内联逻辑（包括验证和失败），即使它是重复的。这在简单的情况下效果最好。
-- 如果输入是类似的，可以考虑把它们统一到一个[表格驱动的测试](https://google.github.io/styleguide/go/decisions#table-driven-tests)，同时在循环中保持逻辑的内联。这有助于避免重复，同时在 "测试 "中保持验证和失败。
-- 如果有多个调用者需要相同的验证功能，但表格测试不适合（通常是因为输入不够简单或验证需要作为操作序列的一部分），安排验证功能，使其返回一个值（通常是一个 "错误"），而不是接受一个 "testing.T "参数并使用它来让测试失败。在`测试`中使用逻辑来决定是否失败，并提供[有用的测试失败](https://google.github.io/styleguide/go/decisions#useful-test-failures)。你也可以创建测试辅助函数，以剔除常见的模板设置代码。
+- 如果输入是类似的，可以考虑把它们统一到一个[表格驱动的测试](https://gocn.github.io/styleguide/docs/03-decisions/#表驱动测试)，同时在循环中保持逻辑的内联。这有助于避免重复，同时在 "测试 "中保持验证和失败。
+- 如果有多个调用者需要相同的验证功能，但表格测试不适合（通常是因为输入不够简单或验证需要作为操作序列的一部分），安排验证功能，使其返回一个值（通常是一个 "错误"），而不是接受一个 "testing.T "参数并使用它来让测试失败。在`测试`中使用逻辑来决定是否失败，并提供[有用的测试失败](https://gocn.github.io/styleguide/docs/03-decisions/#有用的测试失败)。你也可以创建测试辅助函数，以剔除常见的模板设置代码。
 
 最后一点中概述的设计保持了正交性。例如，[`cmp` 包 ](https://pkg.go.dev/github.com/google/go-cmp/cmp)不是为了测试失败而设计的，而是为了比较（和差异）值。因此，它不需要知道进行比较的上下文，因为调用者可以提供这个。如果你的普通测试代码为你的数据类型提供了一个`cmp.Transformer`，这通常是最简单的设计。对于其他的验证，可以考虑返回一个`error`值。
 
@@ -1663,7 +1670,7 @@ func FuzzFencepost(f *testing.F) {
 
 `polygonCmp`函数对它的调用方式是不可知的；它不接受具体的输入类型，也不规定在两个对象不匹配的情况下该怎么做。因此，更多的调用者可以使用它。
 
-**注意：**在测试辅助函数和普通库代码之间有一个类比。库中的代码通常应该[不 panic](https://google.github.io/styleguide/go/decisions#dont-panic)，除非在极少数情况下；从测试中调用的代码不应该停止测试，除非[继续进行没有意义](https://google.github.io/styleguide/go/best-practices#t-fatal)。
+**注意：**在测试辅助函数和普通库代码之间有一个类比。库中的代码通常应该[不 panic](https://gocn.github.io/styleguide/docs/03-decisions/#不要-panic)，除非在极少数情况下；从测试中调用的代码不应该停止测试，除非[继续进行没有意义](https://gocn.github.io/styleguide/docs/04-best-practices/#terror-vs-tfatal)。
 
 ### 设计可扩展的验证API
 
@@ -1673,7 +1680,7 @@ func FuzzFencepost(f *testing.F) {
 
 这种测试被称为[验收测试](https://en.wikipedia.org/wiki/Acceptance_testing)。这种测试的前提是，使用测试的人不知道测试中发生的每一个细节；他们只是把输入交给测试机构来完成。这可以被认为是一种[控制反转](https://en.wikipedia.org/wiki/Inversion_of_control)的形式。
 
-在典型的Go测试中，测试函数控制着程序流程，[无断言](https://google.github.io/styleguide/go/decisions#assert)和[测试函数](https://google.github.io/styleguide/go/best-practices#test-functions)指南鼓励你保持这种方式。本节解释了如何以符合 Go 风格的方式来编写对这些测试的支持。
+在典型的Go测试中，测试函数控制着程序流程，[无断言](https://gocn.github.io/styleguide/docs/03-decisions/#断言库)和[测试函数](https://gocn.github.io/styleguide/docs/04-best-practices/#把测试留给-test-函数)指南鼓励你保持这种方式。本节解释了如何以符合 Go 风格的方式来编写对这些测试的支持。
 
 在深入探讨如何做之前，请看下面摘录的[`io/fs`](https://pkg.go.dev/io/fs)中的一个例子：
 
@@ -1689,7 +1696,7 @@ type FS interface {
 
 现在我们知道了什么是验收测试以及为什么要使用验收测试，让我们来探讨为`package chess`建立一个验收测试，这是一个用于模拟国际象棋游戏的包。`chess` 的用户应该实现 `chess.Player` 接口。这些实现是我们要验证的主要内容。我们的验收测试关注的是棋手的实现是否走了合法的棋，而不是这些棋是否聪明。
 
-1.为验证行为创建一个新的包，[习惯上命名为](https://google.github.io/styleguide/go/best-practices#naming-doubles-helper-package)，在包名后面加上 "test "一词（例如：`chesstest`）。
+1.为验证行为创建一个新的包，[习惯上命名为](https://gocn.github.io/styleguide/docs/04-best-practices/#测试替身包和类型)，在包名后面加上 "test "一词（例如：`chesstest`）。
 
 2.创建执行验证的函数，接受被测试的实现作为参数，并对其进行练习：
 
@@ -1708,7 +1715,7 @@ func ExercisePlayer(b *chess.Board, p chess.Player) error
 
 - **快速失败**：一旦实现违反了一个不变式，就返回一个错误。
 
-  这是最简单的方法，如果预计验收测试会快速执行，那么它的效果很好。简单的错误 [sentinels](https://google.github.io/styleguide/go/index.html#gotip)和[自定义类型](https://google.github.io/styleguide/go/index.html#gotip)在这里可以很容易地使用，反过来说，这使得测试验收测试变得很容易。
+  这是最简单的方法，如果预计验收测试会快速执行，那么它的效果很好。简单的错误 [sentinels](https://gocn.github.io/styleguide/docs/01-overview/#gotip)和[自定义类型](https://gocn.github.io/styleguide/docs/01-overview/#gotip)在这里可以很容易地使用，反过来说，这使得测试验收测试变得很容易。
 
   ```go
   for color, army := range b.Armies {
@@ -1721,9 +1728,9 @@ func ExercisePlayer(b *chess.Board, p chess.Player) error
   ```
 
 - **集合所有的失败**：收集所有的失败，并报告它们。
-  这种方法类似于[keep going](https://google.github.io/styleguide/go/decisions#keep-going)的指导，如果验收测试预计会执行得很慢，这种方法可能更可取。
+  这种方法类似于[keep going](https://gocn.github.io/styleguide/docs/03-decisions/#测试继续进行)的指导，如果验收测试预计会执行得很慢，这种方法可能更可取。
 
-  你如何聚集故障，应该由你是否想让用户或你自己有能力询问个别故障（例如，为你测试你的验收测试）来决定的。下面演示了使用一个[自定义错误类型](https://google.github.io/styleguide/go/index.html#gotip)，[聚合错误](https://google.github.io/styleguide/go/index.html#gotip)。
+  你如何聚集故障，应该由你是否想让用户或你自己有能力询问个别故障（例如，为你测试你的验收测试）来决定的。下面演示了使用一个[自定义错误类型](https://gocn.github.io/styleguide/docs/01-overview/#gotip)，[聚合错误](https://gocn.github.io/styleguide/docs/01-overview/#gotip)。
 
   ```go
   var badMoves []error
@@ -1740,8 +1747,8 @@ func ExercisePlayer(b *chess.Board, p chess.Player) error
   ```
 
 
-验收测试应该遵守 [keep going](https://google.github.io/styleguide/go/decisions#keep-going) 的指导，不调用`t.Fatal`，除非测试检测到被测试系统中的不变量损坏。
-例如，`t.Fatal`应该保留给特殊情况，如[设置失败](https://google.github.io/styleguide/go/best-practices#test-helper-error-handling)，像往常一样：
+验收测试应该遵守 [keep going](https://gocn.github.io/styleguide/docs/03-decisions/#测试继续进行) 的指导，不调用`t.Fatal`，除非测试检测到被测试系统中的不变量损坏。
+例如，`t.Fatal`应该保留给特殊情况，如[设置失败](https://gocn.github.io/styleguide/docs/04-best-practices/#在测试辅助函数中处理错误)，像往常一样：
 
 ```go
 func ExerciseGame(t *testing.T, cfg *Config, p chess.Player) error {
@@ -1758,7 +1765,7 @@ func ExerciseGame(t *testing.T, cfg *Config, p chess.Player) error {
 }
 ```
 
-这种技术可以帮助你创建简明、规范的验证。但不要试图用它来绕过[断言指南](https://google.github.io/styleguide/go/decisions#assert)。
+这种技术可以帮助你创建简明、规范的验证。但不要试图用它来绕过[断言指南](https://gocn.github.io/styleguide/docs/03-decisions/#断言库)。
 最终产品应该以类似这样的形式提供给终端用户：
 
 ```go
@@ -1789,20 +1796,20 @@ func TestAcceptance(t *testing.T) {
 
 **提示：**在可能的情况下，使用由被测服务的作者提供的测试库。
 
-### [`t.Error` vs. `t.Fatal`](https://google.github.io/styleguide/go/best-practices#terror-vs-tfatal)
+### `t.Error` vs. `t.Fatal`
 
-正如在[执行策略](https://google.github.io/styleguide/go/decisions#keep-going)中讨论的一样, 测试过程不应该在遇到问题的地方中断。
+正如在[执行策略](https://gocn.github.io/styleguide/docs/03-decisions/#测试继续进行)中讨论的一样, 测试过程不应该在遇到问题的地方中断。
 
 然而，有些情况需要终止当前测试。当某些测试需要标记失败时，调用t.Fatal是合适的，特别是在 使用测试辅助函数时，没有它，你就不能运行测试的其余部分。在表格驱动的测试中，t.Fatal适合于在测试在进入循环之前整个测试函数标记为失败状态。它只会影响整个测试列表中被标记为失败的测试函数不能继续向前推进, 而不会影响其他的测试函数, 所以, 错误报告应该像下面这样:
 
 - 如果你不使用 `t.Run子` 测试，使用 `t.Error`，后面跟一个 `continue` 语句，继续到下一个测试项。
 - 如果你使用子测试（并且你在调用`t.Run`时），使用`t.Fatal`，结束当前子测试，并允许你的测试用例进入下一个子测试。
 
-**警告：**调用和`t.Fatal`和类似函数并不总是安全的。[更多细节在这里](https://google.github.io/styleguide/go/best-practices#t-fatal-goroutine)。
+**警告：**调用和`t.Fatal`和类似函数并不总是安全的。[更多细节在这里](https://gocn.github.io/styleguide/docs/04-best-practices/#不要从独立的-goroutines-中调用tfatal)。
 
 ### 在测试辅助函数中处理错误
 
-**注意：**本节讨论的[测试辅助函数](https://google.github.io/styleguide/go/decisions#mark-test-helpers)是 Go 使用的术语：这些函数用于准备测试环境和清理测试现场，而不是普通的断言设施。更多的讨论请参见 [test functions](https://google.github.io/styleguide/go/best-practices#test-functions) 部分。
+**注意：**本节讨论的[测试辅助函数](https://gocn.github.io/styleguide/docs/03-decisions/#测试辅助函数)是 Go 使用的术语：这些函数用于准备测试环境和清理测试现场，而不是普通的断言设施。更多的讨论请参见 [test functions](https://gocn.github.io/styleguide/docs/04-best-practices/#把测试留给-test-函数) 部分。
 
 由测试辅助函数执行的操作有时会失败。例如，设置一个带有文件的目录涉及到 I/O，这可能会失败。当测试辅助函数失败时，它们的失败往往标志着测试不能继续，因为一个设置的前提条件失败了。当这种情况发生时，最好在辅助函数中调用一个`Fatal`函数：
 
@@ -1835,11 +1842,11 @@ func addGameAssets(t *testing.T, dir string) error {
 }
 ```
 
-**警告：**调用和 `t.Fatal`类似函数并不总是安全的。点击这里查看[更多细节](https://google.github.io/styleguide/go/best-practices#t-fatal-goroutine)。
+**警告：**调用和 `t.Fatal`类似函数并不总是安全的。点击这里查看[更多细节](https://gocn.github.io/styleguide/docs/04-best-practices/#不要从独立的-goroutines-中调用tfatal)。
 
 失败信息应该包括对错误的详细描述信息。这一点很重要，因为你可能会向许多用户提供测试 API，特别是在测试辅助函数中产生错误的场景增多时。用户应该知道在哪里，以及为什么产生错误。
 
-**提示：** Go 1.14引入了一个[`t.Cleanup`](https://pkg.go.dev/testing#T.Cleanup)函数，可以用来注册清理函数，在你的测试完成后运行。该函数也适用于测试辅助函数。参见 [GoTip #4: Cleaning Up Your Tests](https://google.github.io/styleguide/go/index.html#gotip) 以获得简化测试辅助程序的指导。
+**提示：** Go 1.14引入了一个[`t.Cleanup`](https://pkg.go.dev/testing#T.Cleanup)函数，可以用来注册清理函数，在你的测试完成后运行。该函数也适用于测试辅助函数。参见 [GoTip #4: Cleaning Up Your Tests](https://gocn.github.io/styleguide/docs/01-overview/#gotip) 以获得简化测试辅助程序的指导。
 
 下面是一个名为`paint_test.go`的虚构文件中的片段，演示了`(*testing.T).Helper`如何影响 Go 测试中的失败报告：
 
@@ -1911,7 +1918,7 @@ FAIL
 
 正如[package testing](https://pkg.go.dev/testing#T)中记载的那样，在测试函数或子测试函数之外的任何 goroutine 中调用 `t.FailNow`，`t.Fatal` 等都是不正确的。如果你的测试启动了新的 goroutine，它们不能从这些 goroutine 内部调用这些函数。
 
-[测试辅助函数](https://google.github.io/styleguide/go/best-practices#test-functions)通常不会从新的 goroutine 发出失败信号，因此它们使用`t.Fatal`是完全正确的。如果有疑问，可以调用 t.Error 并返回。
+[测试辅助函数](https://gocn.github.io/styleguide/docs/04-best-practices/#把测试留给-test-函数)通常不会从新的 goroutine 发出失败信号，因此它们使用`t.Fatal`是完全正确的。如果有疑问，可以调用 t.Error 并返回。
 
 ```go
 // Good:
@@ -1947,7 +1954,7 @@ func TestRevEngine(t *testing.T) {
 
 在测试或子测试中添加`t.Parallel`并不会使调用`t.Fatal`变得不安全。
 
-当所有对 `testing` API 的调用都在 [test function](https://google.github.io/styleguide/go/best-practices#test-functions) 中时，通常很容易发现不正确的用法，因为`go`关键字是显而易见的。传递`testing.T`参数会使跟踪这种用法更加困难。通常，传递这些参数的原因是为了引入一个测试辅助函数，而这些测试辅助函数不应该依赖于被测系统。因此，如果一个测试辅助函数[注册了一个致命的测试失败](https://google.github.io/styleguide/go/best-practices#test-helper-error-handling)，它可以而且应该从测试的 goroutine 中这样做。
+当所有对 `testing` API 的调用都在 [test function](https://gocn.github.io/styleguide/docs/04-best-practices/#把测试留给-test-函数) 中时，通常很容易发现不正确的用法，因为`go`关键字是显而易见的。传递`testing.T`参数会使跟踪这种用法更加困难。通常，传递这些参数的原因是为了引入一个测试辅助函数，而这些测试辅助函数不应该依赖于被测系统。因此，如果一个测试辅助函数[注册了一个致命的测试失败](https://gocn.github.io/styleguide/docs/04-best-practices/#在测试辅助函数中处理错误)，它可以而且应该从测试的 goroutine 中这样做。
 
 ### 对结构字使用字段标签
 
@@ -2065,7 +2072,7 @@ $ go test -run TestRegression682831
 
 如果**包中的所有测试**都需要共同设置，并且**设置需要拆解**，你可以使用[自定义测试主入口](https://golang.org/pkg/testing/#hdr-Main)。如果测试用例所需的资源的设置特别昂贵，而且成本应该被摊销，就会发生这种情况。通常情况下，你在这一点上已经从测试套件中提取了任何无关的测试。它通常只用于[功能测试](https://en.wikipedia.org/wiki/Functional_testing)。
 
-使用自定义的 `TestMain` **不应该是你的首选**，因为要正确使用它，必须要有足够的谨慎。首先考虑[_摊销普通测试设置_](https://google.github.io/styleguide/go/best-practices#t-setup-amortization)部分的解决方案或普通的[测试辅助函数](https://google.github.io/styleguide/go/best-practices#t-common-setup-scope)是否足以满足你的需求。
+使用自定义的 `TestMain` **不应该是你的首选**，因为要正确使用它，必须要有足够的谨慎。首先考虑[_摊销普通测试设置_](https://gocn.github.io/styleguide/docs/04-best-practices/#摊销共同测试设置)部分的解决方案或普通的[测试辅助函数](https://gocn.github.io/styleguide/docs/04-best-practices/#保持设置代码在特定的测试范围内)是否足以满足你的需求。
 
 ```go
 // Good:
@@ -2223,7 +2230,7 @@ for i, d := range digitsOfPi {
 str := b.String()
 ```
 
-**注意**。更多的讨论，请参见[GoTip #29: 高效地构建字符串](https://google.github.io/styleguide/go/index.html#gotip)。
+**注意**。更多的讨论，请参见[GoTip #29: 高效地构建字符串](https://gocn.github.io/styleguide/docs/01-overview/#gotip)。
 
 ### 常量字符串
 
