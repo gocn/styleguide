@@ -2,7 +2,7 @@
 
 原文：[https://google.github.io/styleguide/go](https://google.github.io/styleguide/go)
 
-[概述](https://google.github.io/styleguide/go/index) | [指南](https://google.github.io/styleguide/go/guide) | [决策](https://google.github.io/styleguide/go/decisions) | [最佳实践](https://google.github.io/styleguide/go/best-practices)
+[概述](https://gocn.github.io/styleguide/docs/01-overview/) | [风格指南](https://gocn.github.io/styleguide/docs/02-guide/) | [风格决策](https://gocn.github.io/styleguide/docs/03-decisions/) | [最佳实践](https://gocn.github.io/styleguide/docs/04-best-practices/)
 
 ## 风格原则
 
@@ -14,7 +14,7 @@
 4. [可维护](https://google.github.io/styleguide/go/guide#maintainability)：代码可以很容易地被维护。
 5. [一致](https://google.github.io/styleguide/go/guide#consistency)：代码与更广泛的 Google 代码库一致。
 
-### 清晰
+### [清晰](#clarity)
 
 可读性的核心目标是写出对读者来说很清晰的代码。
 
