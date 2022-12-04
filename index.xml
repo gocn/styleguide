@@ -29,8 +29,8 @@ Go 代码应该以最简单的方式编写，在行为和性能方面都能实�
 混合大写字母MixedCaps: 参见 https://gocn.github.io/styleguide/docs/02-guide/#大小写混合 格式化Formatting: 参见 https://gocn.github.io/styleguide/docs/02-guide/#格式化 行长度Line Length: 参见 https://gocn.github.io/styleguide/docs/02-guide/#行长度 命名Naming # 有关命名的总体指导，请参阅核心风格指南 中的命名部分，以下部分对命名中的特定区域提供进一步的说明。
 下划线Underscores # Go 中的命名通常不应包含下划线。这个原则有三个例外：
 仅由生成代码导入的包名称可能包含下划线。有关如何选择多词包名称的更多详细信息，请参阅包名称。 *_test.go 文件中的测试、基准和示例函数名称可能包含下划线。 与操作系统或 cgo 互操作的低级库可能会重用标识符，如 syscall 中所做的那样。在大多数代码库中，这预计是非常罕见的。 包名称Package names # Go 包名称应该简短并且只包含小写字母。由多个单词组成的包名称应全部小写。例如，包 tabwriter 不应该命名为 tabWriter、TabWriter 或 tab_writer。</description></item><item><title/><link>https://gocn.github.io/styleguide/docs/04-best-practices/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://gocn.github.io/styleguide/docs/04-best-practices/</guid><description>Go 编程风格指南 - 最佳实践 # 原文：https://google.github.io/styleguide/go
-概述 | 指南 | 决策 | 最佳实践
-**注意：**本文是 Google Go 风格 系列文档的一部分。本文档是 规范性(normative) 但不是强制规范(canonical)，并且从属于Google 风格指南。请参阅概述获取更多详细信息。
+概述 | 风格指南 | 风格决策 | 最佳实践
+注意： 本文是 Google Go 风格 系列文档的一部分。本文档是 规范性(normative) 但不是强制规范(canonical)，并且从属于Google 风格指南。请参阅概述获取更多详细信息。
 关于 # 本文件记录了关于如何更好地应用 Go 风格指南的指导意见。该指导旨在解决经常出现的通用问题，但不一定适用于所有情况。在可能的情况下，我们讨论了多种替代方法，以及决定何时该用和何时不该用这些方法的考虑因素。
 查看概述来获取完整的风格指导文档
 命名 # 函数和方法名称 # 避免重复 # 在为一个函数或方法选择名称时，要考虑该名称将被阅读的环境。请考虑以下建议，以避免在调用地点出现过多的重复:
