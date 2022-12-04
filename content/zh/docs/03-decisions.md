@@ -4,7 +4,7 @@
 
 [概述](https://gocn.github.io/styleguide/docs/01-overview/) | [风格指南](https://gocn.github.io/styleguide/docs/02-guide/) | [风格决策](https://gocn.github.io/styleguide/docs/03-decisions/) | [最佳实践](https://gocn.github.io/styleguide/docs/04-best-practices/)
 
-**注意：** 本文是 Google [Go 风格](https://gocn.github.io/styleguide/docs/01-overview/) 系列文档的一部分。本文档是 **[规范性(normative)](https://google.github.io/styleguide/go/index#normative) 但不是[强制规范(canonical)](https://google.github.io/styleguide/go/index#canonical )**，并且从属于[Google 风格指南](https://gocn.github.io/styleguide/docs/02-guide/)。请参阅[概述](https://gocn.github.io/styleguide/docs/01-overview/#关于)获取更多详细信息。
+**注意：** 本文是 Google [Go 风格](https://gocn.github.io/styleguide/docs/01-overview/) 系列文档的一部分。本文档是 **[规范性(normative)](https://gocn.github.io/styleguide/docs/01-overview/#标准normative) 但不是[强制规范(canonical)](https://gocn.github.io/styleguide/docs/01-overview/#规范canonical)**，并且从属于[Google 风格指南](https://gocn.github.io/styleguide/docs/02-guide/)。请参阅[概述](https://gocn.github.io/styleguide/docs/01-overview/#关于)获取更多详细信息。
 
 ## 关于
 
