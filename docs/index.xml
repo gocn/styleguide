@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docs on Google Style Guides</title><link>https://gocn.github.io/styleguide/docs/</link><description>Recent content in Docs on Google Style Guides</description><generator>Hugo -- gohugo.io</generator><language>zh</language><atom:link href="https://gocn.github.io/styleguide/docs/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://gocn.github.io/styleguide/docs/01-overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://gocn.github.io/styleguide/docs/01-overview/</guid><description>概览 # 原文：https://google.github.io/styleguide/go
-概述 | 指南 | 决策 | 最佳实践
+概述 | 风格指南 | 风格决策 | 最佳实践
 关于 # 本系列的 Go 风格指南和相关文档整理了当前，最佳的一个编写易读和惯用方式的 Go 写法。 遵守风格指南并不是绝对的，这份文件也永远不会详尽无遗。我们的目的是尽量减少编写可读 Go 代码的猜测，以便该语言的新手可以避免常见的错误。此风格指南也用于统一 Google 内 Go 代码 review 者的风格指南。
-文档 链接 主要受众 视为标准(Normative) 视为规范(Canonical) 风格指南 https://google.github.io/styleguide/go/guide 所有人 Yes Yes 风格决策 https://google.github.io/styleguide/go/decisions 可读性导师 Yes No 最佳实践 https://google.github.io/styleguide/go/best-practices 任何有兴趣的人 No No 文档说明 # 风格指南(Style Guide) (https://google.github.io/styleguide/go/guide) 概述了 Google Go 风格的基础。本文档为定义名词性质的文件，用作风格决策和最佳实践中建议的基础。
-风格决策(Style Decisions) (https://google.github.io/styleguide/go/decisions) 是一份更详细的文档，它总结了特定场景下风格的决策理由，并在适当的时候讨论了决策背后的原因。
+文档 链接 主要受众 视为标准(Normative) 视为规范(Canonical) 风格指南 https://gocn.github.io/styleguide/docs/02-guide/ 所有人 Yes Yes 风格决策 https://gocn.github.io/styleguide/docs/03-decisions/ 可读性导师 Yes No 最佳实践 https://gocn.github.io/styleguide/docs/04-best-practices/ 任何有兴趣的人 No No 文档说明 # 风格指南(Style Guide) (https://gocn.github.io/styleguide/docs/02-guide/) 概述了 Google Go 风格的基础。本文档为定义名词性质的文件，用作风格决策和最佳实践中建议的基础。
+风格决策(Style Decisions) (https://gocn.github.io/styleguide/docs/03-decisions/) 是一份更详细的文档，它总结了特定场景下风格的决策理由，并在适当的时候讨论了决策背后的原因。
 这些决定可能偶尔会根据新数据、新语言特性、新代码库或新出现的模式而改变，但不期望 Google 的 Go 程序员能及时了解本文档的更新。
-最佳实践(Best Practices) (https://google.github.io/styleguide/go/best-practices) 描述了一些随时间演变的模式，这些模式可以解决通用问题，可读性强，并且对代码可维护的需要有很好的健壮性。
+最佳实践(Best Practices) (https://gocn.github.io/styleguide/docs/04-best-practices/) 描述了一些随时间演变的模式，这些模式可以解决通用问题，可读性强，并且对代码可维护的需要有很好的健壮性。
 这些最佳实践并不规范，但鼓励 Google 的 Go 程序员尽可能使用它们，以保持代码库的统一和一致。</description></item><item><title/><link>https://gocn.github.io/styleguide/docs/02-guide/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://gocn.github.io/styleguide/docs/02-guide/</guid><description>Go 编程规范 # 原文：https://google.github.io/styleguide/go
 概述 | 指南 | 决策 | 最佳实践
 风格原则 # 以下几条总体原则总结了如何编写可读的 Go 代码。以下为具有可读性的代码特征，按重要性排序：
