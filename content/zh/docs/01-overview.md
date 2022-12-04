@@ -2,7 +2,7 @@
 
 原文：[https://google.github.io/styleguide/go](https://google.github.io/styleguide/go)
 
-[概述](https://google.github.io/styleguide/go/index) | [指南](https://google.github.io/styleguide/go/guide) | [决策](https://google.github.io/styleguide/go/decisions) | [最佳实践](https://google.github.io/styleguide/go/best-practices)
+[概述](https://gocn.github.io/styleguide/docs/01-overview/) | [风格指南](https://gocn.github.io/styleguide/docs/02-guide/) | [风格决策](https://gocn.github.io/styleguide/docs/03-decisions/) | [最佳实践](https://gocn.github.io/styleguide/docs/04-best-practices/)
 
 ## 关于
 
@@ -10,21 +10,21 @@
 
 | 文档            | 链接                                                  | 主要受众    | [视为标准(Normative)](https://google.github.io/styleguide/go/index#normative) | [视为规范(Canonical)](https://google.github.io/styleguide/go/index#canonical) |
 | ------------------- | ----------------------------------------------------- | ------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| **风格指南**     | https://google.github.io/styleguide/go/guide          | 所有人            | Yes                                                          | Yes                                                          |
-| **风格决策** | https://google.github.io/styleguide/go/decisions      | 可读性导师 | Yes                                                          | No                                                           |
-| **最佳实践**  | https://google.github.io/styleguide/go/best-practices | 任何有兴趣的人   | No                                                           | No                                                           |
+| **风格指南**     | https://gocn.github.io/styleguide/docs/02-guide/          | 所有人            | Yes                                                          | Yes                                                          |
+| **风格决策** | https://gocn.github.io/styleguide/docs/03-decisions/      | 可读性导师 | Yes                                                          | No                                                           |
+| **最佳实践**  | https://gocn.github.io/styleguide/docs/04-best-practices/ | 任何有兴趣的人   | No                                                           | No                                                           |
 
 
 
 ### 文档说明
 
-1. **风格指南(Style Guide)** (https://google.github.io/styleguide/go/guide) 概述了 Google Go 风格的基础。本文档为定义名词性质的文件，用作风格决策和最佳实践中建议的基础。
+1. **风格指南(Style Guide)** (https://gocn.github.io/styleguide/docs/02-guide/) 概述了 Google Go 风格的基础。本文档为定义名词性质的文件，用作风格决策和最佳实践中建议的基础。
 
-2. **风格决策(Style Decisions)** (https://google.github.io/styleguide/go/decisions) 是一份更详细的文档，它总结了特定场景下风格的决策理由，并在适当的时候讨论了决策背后的原因。
+2. **风格决策(Style Decisions)** (https://gocn.github.io/styleguide/docs/03-decisions/) 是一份更详细的文档，它总结了特定场景下风格的决策理由，并在适当的时候讨论了决策背后的原因。
 
    这些决定可能偶尔会根据新数据、新语言特性、新代码库或新出现的模式而改变，但不期望 Google 的 Go 程序员能及时了解本文档的更新。
 
-3. **最佳实践(Best Practices)** (https://google.github.io/styleguide/go/best-practices) 描述了一些随时间演变的模式，这些模式可以解决通用问题，可读性强，并且对代码可维护的需要有很好的健壮性。
+3. **最佳实践(Best Practices)** (https://gocn.github.io/styleguide/docs/04-best-practices/) 描述了一些随时间演变的模式，这些模式可以解决通用问题，可读性强，并且对代码可维护的需要有很好的健壮性。
 
    这些最佳实践并不规范，但鼓励 Google 的 Go 程序员尽可能使用它们，以保持代码库的统一和一致。
 
@@ -56,19 +56,13 @@
 
   在这些文档中，“规范”用于描述被认为是所有代码（旧的和新的）都应该遵循的标准，并且预计不会随着时间的推移而发生重大变化。规范文档中的原则应该被作者和审稿人理解，因此规范文档中包含的所有内容都必须达到高标准。 如此一来，与非规范文档相比，规范文档通常更短并且规定的风格元素更少。
 
-  https://google.github.io/styleguide/go#canonical
-
 - **标准(Normative)**: 旨在建立一致性
 
   在这些文档中，“规范”用于描述 Go 代码审查者使用的一致同意的风格元素，以便建议、术语和理由保持一致。 这些元素可能会随着时间的推移而发生变化，本文涉及的这些文件将反映出这些变化，以便审阅者可以保持一致和及时更新。 Go 代码编写者不被要求熟悉此文档，但这些文档将经常被审阅者用作可读性审查的参考。
 
-  https://google.github.io/styleguide/go#normative
-
 - **惯用写法(Idiomatic)**: 常见且熟悉
 
  在这些文档中，“惯用写法”指在 Go 代码中普遍存在的东西，并已成为一种易于识别的常见写法。一般来说，如果两者在上下文中服务于相同的目的，那么惯用写法应该优先于非惯用写法，因为这将是读者最熟悉的写法。
-
-  https://google.github.io/styleguide/go#idiomatic
 
 ## 附加参考
 
