@@ -1,4 +1,4 @@
-# Go 编程规范
+# Go 风格指南
 
 原文：[https://google.github.io/styleguide/go](https://google.github.io/styleguide/go)
 
