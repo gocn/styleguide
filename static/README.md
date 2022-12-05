@@ -4,7 +4,7 @@
 
 贡献者（按昵称首字母排序）:
 
-> [astaxie](https://github.com/astaxie) | [Fivezh](https://github.com/fivezh) | [Xiaomin Zheng](https://github.com/zxmfke) | [Yu Zhang](https://github.com/pseudoyu) | [朱亚光](https://github.com/zhuyaguang)
+> [astaxie](https://github.com/astaxie) | [Fivezh](https://github.com/fivezh) | [刘思家](https://github.com/lsj1342) | [Sijing233](https://github.com/sijing233) | [小超人](https://github.com/focozz) | [Xiaomin Zheng](https://github.com/zxmfke) | [Yu Zhang](https://github.com/pseudoyu) | [朱亚光](https://github.com/zhuyaguang) | [784909593](https://github.com/784909593)
 
 安装完 `hugo` 之后，需要先同步主题文件
 
