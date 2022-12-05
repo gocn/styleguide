@@ -27,10 +27,10 @@ hugo server
 
 ## 目录
 
-1. 概览
-2. Go 编程规范
-3. Go 风格决策
-4. Go 编程风格指南 - 最佳实践
+1. 概述
+2. 风格指南
+3. 风格决策
+4. 最佳实践
 
 {{< button relref="./docs/01-overview.md" >}}开始阅读{{< /button >}}
 
