@@ -104,4 +104,5 @@
 - [用于解析的正则表达式](https://commandcenter.blogspot.com/2011/08/regular-expressions-in-lexing-and.html)
 - [Gofmt 的风格没有人喜欢，但 Gofmt 却是每个人的最爱](https://www.youtube.com/watch?v=PAAkCSZUG1c&t=8m43s) (YouTube)
 
+{{< button relref="/" >}}首页{{< /button >}}
 {{< button relref="./02-guide.md" >}}下一章{{< /button >}}

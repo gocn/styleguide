@@ -2535,3 +2535,6 @@ Go标准库提供了[`testing`包](https://pkg.go.dev/testing)。这是Google代
 如果有特殊情况，它们又出现了，可读性导师可能会做一个可选的注释，但一般来说，作者可以自由选择他们在特定情况下喜欢的风格。
 
 当然，如果风格指南中没有涉及的东西确实需要更多的讨论，欢迎在具体的审查中，或者在内部留言板上提出来。
+
+{{< button relref="./02-guide.md" >}}上一章{{< /button >}}
+{{< button relref="./04-best-practices.md" >}}下一章{{< /button >}}
