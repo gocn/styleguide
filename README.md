@@ -72,13 +72,20 @@ The articles in 《Google Go 编程规范》 are licensed under a [Creative Comm
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/sijing233">
+            <img src="https://avatars.githubusercontent.com/u/48935581?v=4" width="100;" alt="sijing233"/>
+            <br />
+            <sub><b>Sijing233</b></sub>
+        </a>
+    </td></tr>
+<tr>
+    <td align="center">
         <a href="https://github.com/focozz">
             <img src="https://avatars.githubusercontent.com/u/67250607?v=4" width="100;" alt="focozz"/>
             <br />
             <sub><b>小超人</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/pseudoyu">
             <img src="https://avatars.githubusercontent.com/u/69753389?v=4" width="100;" alt="pseudoyu"/>
