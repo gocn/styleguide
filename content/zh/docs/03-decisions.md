@@ -108,16 +108,16 @@ const (
 - 在具有多个首字母缩写的名称中（例如 `XMLAPI` 因为它包含 `XML` 和 `API`），给定首字母缩写中的每个字母都应该具有相同的大小写，但名称中的每个首字母缩写不需要具有相同的大小写。
 - 在带有包含小写字母的首字母缩写的名称中（例如`DDoS`、`iOS`、`gRPC`），首字母缩写应该像在标准中一样出现，除非你需要为了满足 [导出](https://golang.org/ref/spec#Exported_identifiers) 而更改第一个字母。在这些情况下，整个缩写词应该是相同的情况（例如 `ddos`、`IOS`、`GRPC`）。
 
-| 缩写词 | 范围      | 正确  | 错误                              |
-| ------------- | ---------- | -------- | -------------------------------------- |
-| XML API       | Exported   | `XMLAPI` | `XmlApi`, `XMLApi`, `XmlAPI`, `XMLapi` |
-| XML API       | Unexported | `xmlAPI` | `xmlapi`, `xmlApi`                     |
-| iOS           | Exported   | `IOS`    | `Ios`, `IoS`                           |
-| iOS           | Unexported | `iOS`    | `ios`                                  |
-| gRPC          | Exported   | `GRPC`   | `Grpc`                                 |
-| gRPC          | Unexported | `gRPC`   | `grpc`                                 |
-| DDoS          | Exported   | `DDoS`   | `DDOS`, `Ddos`                         |
-| DDoS          | Unexported | `ddos`   | `dDoS`, `dDOS`                         |
+| 缩写词     | 范围         | 正确       | 错误                                     |
+|---------|------------|----------|----------------------------------------|
+| XML API | Exported   | `XMLAPI` | `XmlApi`, `XMLApi`, `XmlAPI`, `XMLapi` |
+| XML API | Unexported | `xmlAPI` | `xmlapi`, `xmlApi`                     |
+| iOS     | Exported   | `IOS`    | `Ios`, `IoS`                           |
+| iOS     | Unexported | `iOS`    | `ios`                                  |
+| gRPC    | Exported   | `GRPC`   | `Grpc`                                 |
+| gRPC    | Unexported | `gRPC`   | `grpc`                                 |
+| DDoS    | Exported   | `DDoS`   | `DDOS`, `Ddos`                         |
+| DDoS    | Unexported | `ddos`   | `dDoS`, `dDOS`                         |
 
 ### Get方法Getters
 
@@ -193,8 +193,8 @@ const (
 
 编译器总是知道变量的类型，并且在大多数情况下，阅读者也可以通过变量的使用方式清楚地知道变量是什么类型。只有当一个变量的值在同一范围内出现两次时，才有需要明确变量的类型。
 
-| 重复的名称               | 更好的名称            |
-| ----------------------------- | ---------------------- |
+| 重复的名称                         | 更好的名称                  |
+|-------------------------------|------------------------|
 | `var numUsers int`            | `var users int`        |
 | `var nameString string`       | `var name string`      |
 | `var primaryProject *Project` | `var primary *Project` |
@@ -213,7 +213,6 @@ limit, err := strconv.Atoi(limitRaw)
 #### 外部上下文 vs 本地名称External context vs. local names
 
 包含来自周围上下文信息的名称通常会产生额外的噪音，而没有任何好处。包名、方法名、类型名、函数名、导入路径，包含来自其上下文信息的名称。
-Names that include information from their surrounding context often create extra noise without benefit. The package name, method name, type name, function name, import path, and even filename can all provide context that automatically qualifies all names within.
 
 ```
 // Bad:
@@ -277,7 +276,7 @@ func (db *DB) UserCount() (int, error) {
 
 最佳实践文档关于 [文档约定](https://gocn.github.io/styleguide/docs/04-best-practices/#公约) 的部分进一步讨论了这一点。
 
-**最佳实践：**在开发和代码审查期间使用[文档预览](https://gocn.github.io/styleguide/docs/04-best-practices/#预览) 查看文档和可运行示例是否有用并以你期望的方式呈现。
+**最佳实践：** 在开发和代码审查期间使用[文档预览](https://gocn.github.io/styleguide/docs/04-best-practices/#预览) 查看文档和可运行示例是否有用并以你期望的方式呈现。
 
 **提示：** Godoc 使用很少的特殊格式； 列表和代码片段通常应该缩进以避免换行。除缩进外，通常应避免装饰。
 
@@ -354,7 +353,7 @@ type Options struct {
 }
 ```
 
-**最佳实践：**如果你对未导出的代码有文档注释，请遵循与导出代码相同的习惯（即，以未导出的名称开始注释）。这使得以后导出它变得容易，只需在注释和代码中用新导出的名称替换未导出的名称即可。
+**最佳实践：** 如果你对未导出的代码有文档注释，请遵循与导出代码相同的习惯（即，以未导出的名称开始注释）。这使得以后导出它变得容易，只需在注释和代码中用新导出的名称替换未导出的名称即可。
 
 ### 注释语句Comment sentences
 
@@ -575,11 +574,11 @@ Google 程序有时也是 AppEngine 应用程序，应该有一个单独的组�
 
 Gofmt 负责按导入路径对每个组进行排序。但是，它不会自动将导入分成组。流行的 [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) 工具结合了 Gofmt 和导入管理，根据上述规则将导入进行分组。通过 [goimports](https://google.github.io/styleguide/go/golang.org/x/tools/cmd/goimports) 来管理导入顺序是可行的，但随着文件的修改，其导入列表必须保持内部一致。
 
-### 导入"空" (`import _`)
+### 导入"blank" (`import _`)
 
 使用语法 `import _ "package"`导入的包，称为副作用导入，只能在主包或需要它们的测试中导入。
 
-此类软件包的一些示例包括：
+此类包的一些示例包括：
 
 - [time/tzdata](https://pkg.go.dev/time/tzdata)
 - [image/jpeg](https://pkg.go.dev/image/jpeg) 在图像处理中的代码
@@ -591,9 +590,9 @@ Gofmt 负责按导入路径对每个组进行排序。但是，它不会自动�
 - 你可以使用空白导入来绕过 [nogo 静态检查器](https://github.com/bazelbuild/rules_go/blob/master/go/nogo.rst) 中对不允许导入的检查。
 - 你可以在使用 `//go:embed` 编译器指令的源文件中使用 [embed](https://pkg.go.dev/embed) 包的空白导入。
 
-**提示：**如果生产环境中你创建的工具包间接依赖于副作用导入，请记录这里的预期用途。
+**提示：** 如果生产环境中你创建的工具包间接依赖于副作用导入，请记录这里的预期用途。
 
-### 导入 “.” (`import .`)
+### 导入 "dot" (`import .`)
 
 `import .` 形式是一种语言特性，它允许将从另一个包导出的标识符无条件地带到当前包中。有关更多信息，请参阅[语言规范](https://go.dev/ref/spec#Import_declarations)。
 
@@ -757,7 +756,7 @@ if err != nil {
 }
 ```
 
-> **提示：**如果你使用一个变量超过几行代码，通常不值得使用`带有初始化的 if `风格。在这种情况下，通常最好将声明移出，使用标准的`if`语句。
+> **提示：** 如果你使用一个变量超过几行代码，通常不值得使用`带有初始化的 if `风格。在这种情况下，通常最好将声明移出，使用标准的`if`语句。
 >
 > ```
 > // Good:
@@ -926,7 +925,7 @@ repetitive := map[Type1]*Type2{
 }
 ```
 
-**提示：**如果你想删除结构字中重复的类型名称，可以运行`gofmt -s`。
+**提示：** 如果你想删除结构字中重复的类型名称，可以运行`gofmt -s`。
 
 #### 零值字段
 
@@ -1035,7 +1034,7 @@ s = append(s, 42)
 fmt.Println(s)      // [42]
 ```
 
-如果你声明一个空切片作为局部变量（特别是如果它可以成为返回值的来源），最好选择 nil 初始化，以减少调用者的错误风险
+如果你声明一个空切片作为局部变量（特别是如果它可以成为返回值的来源），最好选择 nil 初始化，以减少调用者的错误风险。
 
 ```
 // Good:
@@ -2496,7 +2495,7 @@ go_test(
   import "testing"
   ```
 
-- 如果在同一软件包中定义测试会导致循环依赖性
+- 如果在同一包中定义测试会导致循环依赖性
 
   ```
   // Good:
