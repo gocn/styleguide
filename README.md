@@ -80,8 +80,8 @@ The articles in 《Google Go 编程规范》 are licensed under a [Creative Comm
     </td></tr>
 <tr>
     <td align="center">
-        <a href="https://github.com/focozz">
-            <img src="https://avatars.githubusercontent.com/u/67250607?v=4" width="100;" alt="focozz"/>
+        <a href="https://github.com/xuxicheng00">
+            <img src="https://avatars.githubusercontent.com/u/67250607?v=4" width="100;" alt="xuxicheng00"/>
             <br />
             <sub><b>小超人</b></sub>
         </a>
@@ -91,6 +91,13 @@ The articles in 《Google Go 编程规范》 are licensed under a [Creative Comm
             <img src="https://avatars.githubusercontent.com/u/69753389?v=4" width="100;" alt="pseudoyu"/>
             <br />
             <sub><b>Yu ZHANG</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/liuzengh">
+            <img src="https://avatars.githubusercontent.com/u/53028871?v=4" width="100;" alt="liuzengh"/>
+            <br />
+            <sub><b>Goodliu</b></sub>
         </a>
     </td></tr>
 </table>
