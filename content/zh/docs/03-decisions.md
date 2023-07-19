@@ -1425,7 +1425,7 @@ func Consumer(r Record) {...} // Makes a copy of r.buf
 
 在 `package main` 和初始化代码中，考虑 [`log.Exit`](https://pkg.go.dev/github.com/golang/glog#Exit) 中应该终止程序的错误（例如，无效配置 )，因为在许多这些情况下，堆栈跟踪对阅读者没有帮助。请注意 [`log.Exit`](https://pkg.go.dev/github.com/golang/glog#Exit) 中调用了 [`os.Exit`](https://pkg.go.dev/os#Exit) ，此时所有`defer`函数都将不会运行。
 
-对于那些表示“不可能”出现的条件错误、命名错误，应该在代码评审、测试期间发现，函数应合理地返回错误或调用 [`log.Fatal`](https://pkg.go.dev /github.com/golang/glog#Fatal）。
+对于那些表示“不可能”出现的条件错误、命名错误，应该在代码评审、测试期间发现，函数应合理地返回错误或调用 [`log.Fatal`](https://pkg.go.dev/github.com/golang/glog#Fatal）。
 
 **注意：** `log.Fatalf` 不是标准库日志。请参阅 [#logging]。
 
