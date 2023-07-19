@@ -99,6 +99,13 @@ The articles in 《Google Go 编程规范》 are licensed under a [Creative Comm
             <br />
             <sub><b>Goodliu</b></sub>
         </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/LinkinStars">
+            <img src="https://avatars.githubusercontent.com/u/19712692?v=4" width="100;" alt="LinkinStars"/>
+            <br />
+            <sub><b>LinkinStars</b></sub>
+        </a>
     </td></tr>
 </table>
 <!-- readme: collaborators,contributors -end -->
